@@ -8,5 +8,6 @@
     <string name="login_email_text_hint">Email or username</string>
     <string name="login_password_text_hint">Password</string>
     <string name="login_submit_button">Login</string>
+    <string name="title_activity_main_screen">MainScreen</string>
 
 </resources>

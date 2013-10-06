@@ -1,8 +1,7 @@
 package com.quizzingbricks;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -25,10 +24,20 @@ public class Login extends Activity {
         return true;
     }
     
-    public void sendLoginUserInfo(View view)	{
-    	Intent intent = new Intent(this, MainScreen.class);
-    	EditText email = (EditText) findViewById(R.id.login_email_edit);
-    	String message = email.getText().toString();
-    	intent.putExtra(EXTRA_MESSAGE, message);
+    public void sendLoginUserInfo(View view) {
+//    	Intent intent = new Intent(this, MainScreen.class);
+//    	EditText email = (EditText) findViewById(R.id.login_email_edit);
+//    	String message = email.getText().toString();
+//    	intent.putExtra(EXTRA_MESSAGE, message);
+//    	startActivity(intent);
+    	
+    	EditText emailEdit = (EditText) findViewById(R.id.login_email_edit);
+    	String email = emailEdit.getText().toString();
+    	
+    	EditText passwordEdit = (EditText) findViewById(R.id.login_password_edit);
+    	String password = passwordEdit.getText().toString();
+    	
+    	AuthManager authManager = new AuthManager();
+    	authManager.sendJson(email, password);
     }
 }
