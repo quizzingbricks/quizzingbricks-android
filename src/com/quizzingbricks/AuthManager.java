@@ -1,11 +1,10 @@
 package com.quizzingbricks;
 
-import java.io.IOException;
 import java.net.URI;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
@@ -29,9 +28,11 @@ public class AuthManager {
 					StringEntity message = new StringEntity(jsonMessage.toString());
 					message.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 					
-					HttpGet get = new HttpGet();
-					get.setURI(new URI("http://130.240.94.144:5000/login"));
-					HttpEntity entity = client.execute(get).getEntity();
+					HttpPost post = new HttpPost();
+					post.setURI(new URI("http://192.168.1.6:5000/login"));
+//					post.setHeader("Content-Type", "application/json");
+					post.setEntity(message);
+					HttpEntity entity = client.execute(post).getEntity();
 					
 					if(entity != null)	{
 						String response = EntityUtils.toString(entity); 
