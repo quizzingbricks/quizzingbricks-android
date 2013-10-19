@@ -20,8 +20,7 @@ public class MainScreenActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_main_screen);
 		Intent loginIntent = getIntent();
-		String message = loginIntent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
-		message = "Logged in as " + message; 
+		String message = "Logged in as " + getSharedPreferences("quizzingbricks-android", 0).getString("email", "Not logged in"); 
 	
 		TextView welcomeText = (TextView)findViewById(R.id.welcome_text);
 		welcomeText.setText(message);
