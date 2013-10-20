@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,16 +44,8 @@ public class AuthenticationManager {
 	}
 	
 	public void login(String email, String password)		{
-//		AuthenticateTask authenticateTask = new AuthenticateTask();
-//		authenticateTask.execute(email, password);
-		editor.putBoolean(IS_LOGIN, true);
-		editor.putString(KEY_EMAIL, email);
-		editor.commit();
-		System.out.println(sharedPref.getString(KEY_EMAIL, ""));
-		Intent intent = new Intent(context, MainScreenActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		context.startActivity(intent);
+		AuthenticateTask authenticateTask = new AuthenticateTask();
+		authenticateTask.execute(email, password);
 	}
 	
 	public void logout()	{
@@ -81,15 +74,26 @@ public class AuthenticationManager {
 
 		private String email;
 		private String password;
+		private ProgressDialog progressDialog;
+		
+		private HttpClient client = new DefaultHttpClient();
+		private HttpPost httppost = new HttpPost("http://192.168.1.6:5000/login");
+		
+		@Override
+		protected void onPreExecute() {
+			progressDialog = new ProgressDialog(context);
+			progressDialog.setTitle("Processing...");
+			progressDialog.setMessage("Please wait.");
+			progressDialog.setCancelable(false);
+			progressDialog.setIndeterminate(true);
+			progressDialog.show();
+		}
+		
 		
 		@Override
 		protected AsyncTaskResult<String> doInBackground(String... params) {
-			HttpClient client = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost();
 			
 			try {
-				httppost.setURI(new URI("http://192.168.1.6:5000/login"));
-//				httppost.setURI(new URI("http://130.240.96.181:5000/login"));
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 				this.email = params[0];
 				this.password = params[1];
@@ -101,7 +105,6 @@ public class AuthenticationManager {
 				if(entity != null)	{
 					String response = EntityUtils.toString(entity); 
 			        entity.consumeContent();
-			        // When HttpClient instance is no longer needed, shut down the connection manager to ensure immediate deallocation of all system resources
 			        client.getConnectionManager().shutdown();
 			        JSONObject object = new JSONObject(response.trim());
 			        try {
@@ -136,6 +139,7 @@ public class AuthenticationManager {
 				editor.putString(KEY_EMAIL, this.email);
 				editor.putString(KEY_TOKEN, result.getResult());
 				editor.commit();
+				progressDialog.dismiss();
 				Intent intent = new Intent(context, MainScreenActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
