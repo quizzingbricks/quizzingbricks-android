@@ -1,6 +1,7 @@
 package com.quizzingbricks.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,8 +19,9 @@ public class LoginActivity extends Activity {
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 	
+	
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
@@ -32,25 +34,16 @@ public class LoginActivity extends Activity {
         return true;
     }
     
+    //TODO: disable the button when this function is called
     public void sendLoginUserInfo(View view) {
+    	
     	EditText emailEdit = (EditText) findViewById(R.id.login_email_edit);
     	String email = emailEdit.getText().toString();
     	
     	EditText passwordEdit = (EditText) findViewById(R.id.login_password_edit);
     	String password = passwordEdit.getText().toString();
     	
-    	AuthenticationManager authManager = new AuthenticationManager(getApplicationContext());
-    	try {
-    		authManager.login(email, password);
-			Intent intent = new Intent(this, MainScreenActivity.class);
-	    	intent.putExtra(EXTRA_MESSAGE, email);
-	    	startActivity(intent);
-		} catch (ServerConnectionException e) {
-			// TODO: make a pop up notification
-			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			// TODO: make a pop up notification
-			e.printStackTrace();
-		}
+    	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
+    	authManager.login(email, password);
     }
 }
