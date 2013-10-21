@@ -76,7 +76,7 @@ public class AuthenticationManager {
 		HttpPost httppost = new HttpPost();
 		
 		try {
-			httppost.setURI(new URI("http://130.240.96.181:5000/login"));
+			httppost.setURI(new URI("http://130.240.93.45:5000/login"));
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 			nameValuePairs.add(new BasicNameValuePair("email", email));
 			nameValuePairs.add(new BasicNameValuePair("password", password));
