@@ -77,7 +77,7 @@ public class AuthenticationManager {
 		private ProgressDialog progressDialog;
 		
 		private HttpClient client = new DefaultHttpClient();
-		private HttpPost httppost = new HttpPost("http://192.168.1.6:5000/login");
+		private HttpPost httppost = new HttpPost("http://130.240.94.184:5000/login");
 		
 		@Override
 		protected void onPreExecute() {
