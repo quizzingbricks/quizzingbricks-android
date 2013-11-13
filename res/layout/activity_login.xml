@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+ 	android:background="@color/white"
     tools:context=".Login" >
 
     <TextView
@@ -38,11 +39,22 @@
     <Button
         android:id="@+id/login_submit"
         android:text="@string/login_submit_button"
+        android:gravity="center"
         android:layout_below="@id/login_password_edit"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"  
-        android:padding="16dp"
+        android:layout_width="fill_parent"  
+        android:padding="20dp"
         android:onClick="sendLoginUserInfo"
+        
         />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_toRightOf="@+id/login_text_header"
+        android:src="@drawable/blue" />
 
 </RelativeLayout>

@@ -25,10 +25,15 @@ public class Login extends Activity {
         return true;
     }
     
+//    public void sendLoginUserInfo(View view)	{
+//    	Intent intent = new Intent(this, MainScreen.class);
+//    	EditText email = (EditText) findViewById(R.id.login_email_edit);
+//    	String message = email.getText().toString();
+//    	intent.putExtra(EXTRA_MESSAGE, message);
+//    }
     public void sendLoginUserInfo(View view)	{
-    	Intent intent = new Intent(this, MainScreen.class);
-    	EditText email = (EditText) findViewById(R.id.login_email_edit);
-    	String message = email.getText().toString();
-    	intent.putExtra(EXTRA_MESSAGE, message);
+    	Intent intent = new Intent(this, Gameboard.class);
+    	startActivity(intent);
+//    	setContentView(R.layout.activity_gameboard);
     }
 }
