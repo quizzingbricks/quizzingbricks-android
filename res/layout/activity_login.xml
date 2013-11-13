@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".LoginActivity"
+    >
+
+    <TextView
+        android:id="@+id/login_text_header"
+        style="@style/textHeader"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_header" 
+        />
+    
+    <EditText 
+        android:id="@+id/login_email_edit"
+        android:layout_below="@id/login_text_header"
+        style="@style/inputBoxScreenWidth"
+        android:hint="@string/login_email_text_hint"
+        />
+    
+    <EditText 
+        android:id="@+id/login_password_edit"
+        android:layout_below="@id/login_email_edit"
+        style="@style/inputBoxScreenWidth"
+        android:hint="@string/login_password_text_hint"
+        android:inputType="textPassword"
+        />
+    
+    <Button
+        android:id="@+id/login_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/login_password_edit"
+        android:layout_alignRight="@+id/login_password_edit"
+        android:layout_below="@id/login_password_edit"
+        android:onClick="sendLoginUserInfo"
+        android:padding="16dp"
+        android:text="@string/login_submit_button" 
+        />
+
+</RelativeLayout>
