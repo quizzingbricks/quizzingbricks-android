@@ -54,7 +54,7 @@ public class AuthenticationManager {
 	}
 	
 	/**
-	 * Checks if the users if authenticated (i.e. has a token) and changes activity to LoginActivity if necessary
+	 * Checks if the users if authenticated (i.e. has a token) and changes activity to LoginActivity if not 
 	 */
 	public void checkAuthentication()	{
 		if(!isLoggedIn())	{
