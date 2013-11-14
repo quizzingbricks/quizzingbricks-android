@@ -70,6 +70,10 @@ public class AuthenticationManager {
 		return sharedPref.getBoolean(IS_LOGIN, false);
 	}
 	
+	public String getToken()	{
+		return sharedPref.getString(KEY_TOKEN, null);
+	}
+	
 	private class AuthenticateTask extends AsyncTask<String, Void, AsyncTaskResult<String>> {
 
 		private String email;
@@ -106,12 +110,12 @@ public class AuthenticationManager {
 					String response = EntityUtils.toString(entity); 
 			        entity.consumeContent();
 			        client.getConnectionManager().shutdown();
-			        JSONObject object = new JSONObject(response.trim());
+			        JSONObject jsonObject = new JSONObject(response.trim());
 			        try {
-			        	return new AsyncTaskResult<String>(object.getString("token"));
+			        	return new AsyncTaskResult<String>(jsonObject.getString("token"));
 			        }
 			        catch (JSONException je){
-			        	return new AsyncTaskResult<String>(object.getString("error"));
+			        	return new AsyncTaskResult<String>(jsonObject.getString("error"));
 			        }
 				}
 				else	{
