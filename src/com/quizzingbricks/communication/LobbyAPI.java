@@ -1,4 +1,4 @@
-package communication;
+package com.quizzingbricks.communication;
 
 import java.io.IOException;
 
