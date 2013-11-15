@@ -5,6 +5,7 @@ public class ServerConnectionException extends RuntimeException {
 	
 	private String message;
 	private int errorCode;
+	private int httpErrorCode;
 	
 	public ServerConnectionException() {
 	}
@@ -16,6 +17,12 @@ public class ServerConnectionException extends RuntimeException {
 	public ServerConnectionException(String message, int errorCode) {
 		this.message = message;
 		this.errorCode = errorCode;
+	}
+	
+	public ServerConnectionException(String message, int errorCode, int httpErrorCode)	{
+		this.message = message;
+		this.errorCode = errorCode;
+		this.httpErrorCode = httpErrorCode;
 	}
 	
 	public String getMessage()	{
