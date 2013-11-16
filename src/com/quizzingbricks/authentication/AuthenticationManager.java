@@ -37,6 +37,8 @@ public class AuthenticationManager {
 	private final String KEY_EMAIL = "email";
 	private final String KEY_TOKEN = "token";
 	
+	private final String serverUrl = "http://130.240.94.184:5000/login";
+	
 	public AuthenticationManager(Context context)	{
 		this.context = context;
 		this.sharedPref = context.getSharedPreferences("quizzingbricks-android", 0);
@@ -81,8 +83,9 @@ public class AuthenticationManager {
 		private ProgressDialog progressDialog;
 		
 		private HttpClient client = new DefaultHttpClient();
-		private HttpPost httppost = new HttpPost("http://130.240.94.184:5000/login");
+		private HttpPost httppost = new HttpPost(serverUrl);
 		
+		//TODO: add a cancel button to the progress dialog
 		@Override
 		protected void onPreExecute() {
 			progressDialog = new ProgressDialog(context);

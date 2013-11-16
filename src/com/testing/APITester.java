@@ -1,15 +1,19 @@
 package com.testing;
 
+import org.json.JSONObject;
+
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.renderscript.Sampler.Value;
+import android.view.LayoutInflater;
 
 import com.quizzingbricks.communication.LobbyAPI;
 import com.quizzingbricks.exceptions.ServerConnectionException;
 
 public class APITester {
 	
-	private LobbyAPI lobbyAPI;
 	private Context context;
 	
 	public APITester(Context context)	{
@@ -18,11 +22,13 @@ public class APITester {
 	
 	public void testGetLobbies()	{
 		EndPointTester task = new EndPointTester();
-		task.doInBackground("/api/games/lobby");
+		System.out.println("Starting async task");
+		task.execute("/api/games/lobby");
 	}
 	
-	private class EndPointTester extends AsyncTask<String, Void, AsyncTaskResult<String>> {
+	private class EndPointTester extends AsyncTask<String, Void, AsyncTaskResult<JSONObject>> {
 		
+		private LobbyAPI lobbyAPI = new LobbyAPI();
 		private ProgressDialog progressDialog;
 		
 		@Override
@@ -30,27 +36,39 @@ public class APITester {
 			progressDialog = new ProgressDialog(context);
 			progressDialog.setTitle("Processing...");
 			progressDialog.setMessage("Please wait.");
-			progressDialog.setCancelable(false);
+			progressDialog.setCancelable(false); //Controls the back button
 			progressDialog.setIndeterminate(true);
+			progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			    	lobbyAPI.cancelRequest();
+			    	progressDialog.dismiss();
+			    }
+			});
 			progressDialog.show();
 		}
 		
+		/**
+		 * @param params, param[0] is the api url path
+		 */
 		@Override
-		protected AsyncTaskResult doInBackground(String... params) {
+		protected AsyncTaskResult<JSONObject> doInBackground(String... params) {
 			try {
 				if(params[0] == "/api/games/lobby")	{
-					return new AsyncTaskResult<String>(lobbyAPI.getGameLobbies());
+					JSONObject result = lobbyAPI.getGameLobbies();
+					return new AsyncTaskResult<JSONObject>(result);
 				}
 				else	{
-					return new AsyncTaskResult<String>(new ServerConnectionException("Error: no endpoint given"));
+					return new AsyncTaskResult<JSONObject>(new ServerConnectionException("Error: no endpoint given"));
 				}
 			}
 			catch(Exception e)	{
-				return new AsyncTaskResult<String>(e);
+				e.printStackTrace();
+				return new AsyncTaskResult<JSONObject>(e);
 			}
 		}
 		
-		protected void onPostExecute(AsyncTaskResult result)	{
+		protected void onPostExecute(AsyncTaskResult<JSONObject> result)	{
 			progressDialog.dismiss();
 			if(result.getException() != null)	{
 				result.getException().printStackTrace();
@@ -59,9 +77,14 @@ public class APITester {
 				//Remove the pop up
 			}
 			else	{
-				
+				System.out.println("Return string: " + result.result.toString());
 			}
 		}
+		
+		@Override
+        protected void onCancelled() {
+			progressDialog.dismiss();
+        }
 	}
 	
 	/**

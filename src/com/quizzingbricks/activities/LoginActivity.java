@@ -14,18 +14,17 @@ import com.quizzingbricks.R.layout;
 import com.quizzingbricks.R.menu;
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.exceptions.ServerConnectionException;
+import com.testing.*;
 
 public class LoginActivity extends Activity {
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,5 +44,8 @@ public class LoginActivity extends Activity {
     	
     	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
     	authManager.login(email, password);
+    	
+//    	APITester tester = new APITester(LoginActivity.this);
+//    	tester.testGetLobbies();
     }
 }

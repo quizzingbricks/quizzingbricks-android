@@ -1,61 +1,27 @@
 package com.quizzingbricks.communication;
 
-import java.io.IOException;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.util.JsonWriter;
 
-import com.quizzingbricks.exceptions.ServerConnectionException;
-
-public class LobbyAPI {
-	
-	private String serverUrl = "http://130.240.94.184:5000/games/lobby"; 
-	private String token = "RandomStringGoesHere"; //Token for testing
-	private HttpClient httpClient = new DefaultHttpClient();
+public class LobbyAPI extends AbstractAPI {
 	
 	/**
-	 * 
-	 * @param context, needed to get the token from the shared preferences
+	 * Empty constructor for testing
 	 */
-	public LobbyAPI(Context context)	{
-//		AuthenticationManager authManager = new AuthenticationManager(context);
-//		this.token = authManager.getToken();
-//		if(token == null)	{
-//			authManager.checkAuthentication();
-//		}
+	public LobbyAPI()	{}
+	
+	public LobbyAPI(Context context) {
+		super(context);
 	}
-	//TODO: change the return type to string list
-	public String getGameLobbies() throws ServerConnectionException	{
-		try	{
-			HttpGet httpGet= new HttpGet(serverUrl);
-			httpGet.addHeader("X-Auth-Token", token);
-			HttpResponse httpResponse = httpClient.execute(httpGet);
-			HttpEntity httpEntiry = httpResponse.getEntity();
-			httpClient.getConnectionManager().shutdown();
-			int httpStatusCode = httpResponse.getStatusLine().getStatusCode();
-			if(httpStatusCode == 200)	{
-		        JSONObject jsonObject = new JSONObject(EntityUtils.getContentCharSet(httpEntiry).trim());
-		        System.out.println("Game Lobbies: " + jsonObject.getString("lobbies"));
-		        return jsonObject.getString("lobbies");
-			}
-			else	{
-				throw new ServerConnectionException("API Error: /api/games/lobby", 0, httpStatusCode);
-			}
-		}
-		catch(Exception e)	{
-			e.printStackTrace();
-			throw new ServerConnectionException("Unknown error", 0);
-		}
+
+	private String serverLobbyApiUrl = super.requestParser.getServerApiAddr() + "games/lobby"; 
+	
+	public JSONObject getGameLobbies()	{
+		return super.requestParser.getServerEndpointInfo(this.serverLobbyApiUrl, super.token);
+	}
+	
+	public JSONObject getLobbyInfo(int id)	{
+		return super.requestParser.getServerEndpointInfo(this.serverLobbyApiUrl + "/" + Integer.toString(id), super.token);
 	}
 }

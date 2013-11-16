@@ -12,7 +12,7 @@ import com.quizzingbricks.authentication.AuthenticationManager;
 public abstract class AbstractActivity extends Activity {
 	
 	protected void onStart()	{
-		AuthenticationManager authManager = new AuthenticationManager(this);
-		authManager.checkAuthentication();
+//		AuthenticationManager authManager = new AuthenticationManager(this);
+//		authManager.checkAuthentication();
 	}
 }
