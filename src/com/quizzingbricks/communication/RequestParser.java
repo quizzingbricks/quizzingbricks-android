@@ -13,6 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import com.quizzingbricks.communication.jsonObject.SimpleJsonObject;
 import com.quizzingbricks.exceptions.ServerConnectionException;
 
 public class RequestParser {
