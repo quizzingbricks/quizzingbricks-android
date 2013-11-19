@@ -36,16 +36,16 @@ public class LoginActivity extends Activity {
     //TODO: disable the button when this function is called
     public void sendLoginUserInfo(View view) {
     	
-    	EditText emailEdit = (EditText) findViewById(R.id.login_email_edit);
-    	String email = emailEdit.getText().toString();
+//    	EditText emailEdit = (EditText) findViewById(R.id.login_email_edit);
+//    	String email = emailEdit.getText().toString();
+//    	
+//    	EditText passwordEdit = (EditText) findViewById(R.id.login_password_edit);
+//    	String password = passwordEdit.getText().toString();
+//    	
+//    	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
+//    	authManager.login(email, password);
     	
-    	EditText passwordEdit = (EditText) findViewById(R.id.login_password_edit);
-    	String password = passwordEdit.getText().toString();
-    	
-    	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
-    	authManager.login(email, password);
-    	
-//    	APITester tester = new APITester(LoginActivity.this);
-//    	tester.testGetLobbies();
+    	APITester tester = new APITester(LoginActivity.this);
+    	tester.testGetLobbies();
     }
 }
