@@ -1,4 +1,4 @@
-package com.quizzingbricks.communication.jsonObject;
+package com.quizzingbricks.communication.jsonObject.jsonPairs;
 
 
 public class JsonPairInt extends JsonPair {

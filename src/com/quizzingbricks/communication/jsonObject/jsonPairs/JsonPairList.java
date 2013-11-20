@@ -1,4 +1,6 @@
-package com.quizzingbricks.communication.jsonObject;
+package com.quizzingbricks.communication.jsonObject.jsonPairs;
+
+import com.quizzingbricks.communication.jsonObject.SimpleJsonObject;
 
 
 public class JsonPairList extends JsonPair {

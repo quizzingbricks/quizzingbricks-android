@@ -3,6 +3,9 @@ package com.quizzingbricks.communication.jsonObject;
 
 import java.util.LinkedList;
 
+import com.quizzingbricks.communication.jsonObject.jsonPairs.JsonPair;
+import com.quizzingbricks.communication.jsonObject.jsonPairs.JsonPairList;
+
 public class SimpleJsonObject implements JsonObject {
 
 	LinkedList<JsonObject> jsonPairList = new LinkedList<JsonObject>();

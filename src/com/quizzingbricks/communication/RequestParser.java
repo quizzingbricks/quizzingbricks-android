@@ -31,7 +31,6 @@ public class RequestParser {
 	}
 	
 	public void cancelRequest()	{
-		System.out.println("Shutting down http client");
 		httpClient.getConnectionManager().shutdown(); //This will throw a java.net.SocketException: Socket closed
 	}
 	
@@ -40,6 +39,25 @@ public class RequestParser {
 			HttpPost httpPost= new HttpPost(serverUrl);
 			httpPost.addHeader("token", token);
 
+			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
+			return executeAndGetRequest(httpPost, serverUrl);
+		}
+		catch(Exception e)	{
+			e.printStackTrace();
+			throw new ServerConnectionException("API Error: " + serverUrl);
+		}
+	}
+	
+	//Just for the /api/games/lobby/<I_id>/invite endpoint 
+	public JSONObject sendPostToServer(String serverUrl, String token, SimpleJsonObject simpleJsonObject, BasicNameValuePair... nameValuePairs) throws ServerConnectionException	{
+		try	{
+			HttpPost httpPost= new HttpPost(serverUrl);
+			httpPost.addHeader("token", token);
+			List<BasicNameValuePair> nameValuePairList = new ArrayList<BasicNameValuePair>();
+			nameValuePairList.add(new BasicNameValuePair("invite", simpleJsonObject.toJsonString()));
+			for(BasicNameValuePair nameValuePair : nameValuePairs)	{
+				nameValuePairList.add(nameValuePair);
+			}
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
 			return executeAndGetRequest(httpPost, serverUrl);
 		}
