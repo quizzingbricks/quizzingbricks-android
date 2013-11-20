@@ -39,7 +39,6 @@ public class RequestParser {
 			for(SimpleJsonObject pair : stringPairs)	{
 				
 			}
-			
 			HttpResponse httpResponse = httpClient.execute(httpPost);
 			HttpEntity httpEntiry = httpResponse.getEntity();
 			httpEntiry.consumeContent();
