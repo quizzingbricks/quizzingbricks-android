@@ -1,4 +1,7 @@
-package com.quizzingbricks.communication;
+package com.quizzingbricks.communication.apiObjects;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.apache.http.message.BasicNameValuePair;
@@ -43,10 +46,13 @@ public class LobbyAPI extends AbstractAPI {
 		else 	{
 			acceptPair = new BasicNameValuePair("answer", "deny");
 		}
-		return this.requestParser.sendPostToServer(this.serverLobbyApiUrl + Integer.toString(lobbyId) + "/accept", this.token, new BasicNameValuePair("lobby", Integer.toString(lobbyId)), acceptPair);
+		return this.requestParser.sendPostToServer(this.serverLobbyApiUrl + "/" + Integer.toString(lobbyId) + "/accept", this.token, new BasicNameValuePair("lobby", Integer.toString(lobbyId)), acceptPair);
 	}
 	
-	public JSONObject inviteToLobby(int lobbyId, String... user)	{
-		return null;
+	public JSONObject inviteToLobby(int lobbyId, String... users)	{
+		List<BasicNameValuePair> nameValuePairList = new ArrayList<BasicNameValuePair>();
+		for(String user : users)	{
+		}
+		return this.requestParser.sendPostToServer(this.serverLobbyApiUrl + "/" + Integer.toString(lobbyId), serverLobbyApiUrl, nameValuePairList);
 	}
 }

@@ -9,7 +9,7 @@ import android.os.AsyncTask;
 import android.renderscript.Sampler.Value;
 import android.view.LayoutInflater;
 
-import com.quizzingbricks.communication.LobbyAPI;
+import com.quizzingbricks.communication.apiObjects.LobbyAPI;
 import com.quizzingbricks.exceptions.ServerConnectionException;
 
 public class APITester {
@@ -23,8 +23,8 @@ public class APITester {
 	public void testGetLobbies()	{
 		EndPointTester task = new EndPointTester();
 		System.out.println("Starting async task");
-		task.execute("api/games/lobby");
-//		task.execute("api/games/lobby/create");
+//		task.execute("api/games/lobby");
+		task.execute("api/games/lobby/create");
 	}
 	
 	private class EndPointTester extends AsyncTask<String, Void, AsyncTaskResult<JSONObject>> {

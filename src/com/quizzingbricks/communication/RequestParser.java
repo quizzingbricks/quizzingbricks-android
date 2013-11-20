@@ -24,18 +24,18 @@ import com.quizzingbricks.exceptions.ServerConnectionException;
 
 public class RequestParser {
 	private HttpClient httpClient = new DefaultHttpClient();
-	private String serverApiAddr = "http://192.168.1.6:5000/api/";
+	private String serverApiAddr = "http://130.240.93.16:5000/api/";
 	
-	protected String getServerApiAddr()	{
+	public String getServerApiAddr()	{
 		return serverApiAddr;
 	}
 	
-	protected void cancelRequest()	{
+	public void cancelRequest()	{
 		System.out.println("Shutting down http client");
 		httpClient.getConnectionManager().shutdown(); //This will throw a java.net.SocketException: Socket closed
 	}
 	
-	protected JSONObject sendPostToServer(String serverUrl, String token, List<BasicNameValuePair> nameValuePairList) throws ServerConnectionException	{
+	public JSONObject sendPostToServer(String serverUrl, String token, List<BasicNameValuePair> nameValuePairList) throws ServerConnectionException	{
 		try	{
 			HttpPost httpPost= new HttpPost(serverUrl);
 			httpPost.addHeader("token", token);
@@ -49,7 +49,7 @@ public class RequestParser {
 		}
 	}
 	
-	protected JSONObject sendPostToServer(String serverUrl, String token, BasicNameValuePair... nameValuePairs) throws ServerConnectionException	{
+	public JSONObject sendPostToServer(String serverUrl, String token, BasicNameValuePair... nameValuePairs) throws ServerConnectionException	{
 		try	{
 			HttpPost httpPost= new HttpPost(serverUrl);
 			httpPost.addHeader("token", token);
@@ -67,7 +67,7 @@ public class RequestParser {
 		}
 	}
 	
-	protected JSONObject postJsonToServer(String serverUrl, String token, SimpleJsonObject simpleJsonObject) throws ServerConnectionException	{
+	public JSONObject postJsonToServer(String serverUrl, String token, SimpleJsonObject simpleJsonObject) throws ServerConnectionException	{
 		try	{
 			HttpPost httpPost= new HttpPost(serverUrl);
 			httpPost.addHeader("token", token);
@@ -82,7 +82,7 @@ public class RequestParser {
 		}
 	}
 	
-	protected JSONObject getServerEndpointInfo(String serverUrl, String token) throws ServerConnectionException	{
+	public JSONObject getServerEndpointInfo(String serverUrl, String token) throws ServerConnectionException	{
 		try	{
 			HttpGet httpGet= new HttpGet(serverUrl);
 			httpGet.addHeader("token", token);

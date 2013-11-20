@@ -1,6 +1,7 @@
-package com.quizzingbricks.communication;
+package com.quizzingbricks.communication.apiObjects;
 
 import com.quizzingbricks.authentication.AuthenticationManager;
+import com.quizzingbricks.communication.RequestParser;
 
 import android.content.Context;
 
