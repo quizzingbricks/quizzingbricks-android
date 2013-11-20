@@ -23,7 +23,8 @@ public class APITester {
 	public void testGetLobbies()	{
 		EndPointTester task = new EndPointTester();
 		System.out.println("Starting async task");
-		task.execute("/api/games/lobby");
+		task.execute("api/games/lobby");
+//		task.execute("api/games/lobby/create");
 	}
 	
 	private class EndPointTester extends AsyncTask<String, Void, AsyncTaskResult<JSONObject>> {
@@ -54,8 +55,12 @@ public class APITester {
 		@Override
 		protected AsyncTaskResult<JSONObject> doInBackground(String... params) {
 			try {
-				if(params[0] == "/api/games/lobby")	{
+				if(params[0] == "api/games/lobby")	{
 					JSONObject result = lobbyAPI.getGameLobbies();
+					return new AsyncTaskResult<JSONObject>(result);
+				}
+				else if(params[0] == "api/games/lobby/create")	{
+					JSONObject result = lobbyAPI.createLobby(2);
 					return new AsyncTaskResult<JSONObject>(result);
 				}
 				else	{
