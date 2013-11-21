@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -93,6 +94,16 @@ public class AuthenticationManager {
 			progressDialog.setMessage("Please wait.");
 			progressDialog.setCancelable(false);
 			progressDialog.setIndeterminate(true);
+			final AuthenticateTask authTask = this; //Declared so that the class is in the scope of the OnClickListener 
+			progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			    	client.getConnectionManager().shutdown();
+			    	authTask.cancel(true);
+			    	progressDialog.dismiss();
+			    }
+			});
+			progressDialog.show();
 			progressDialog.show();
 		}
 		
@@ -135,6 +146,7 @@ public class AuthenticationManager {
 		}
 		
 		protected void onPostExecute(AsyncTaskResult<String> result)	{
+			progressDialog.dismiss();
 			if(result.getException() != null)	{
 				result.getException().printStackTrace();
 			}
@@ -146,7 +158,6 @@ public class AuthenticationManager {
 				editor.putString(KEY_EMAIL, this.email);
 				editor.putString(KEY_TOKEN, result.getResult());
 				editor.commit();
-				progressDialog.dismiss();
 				Intent intent = new Intent(context, MainScreenActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
