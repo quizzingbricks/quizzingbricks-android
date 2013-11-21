@@ -1,4 +1,4 @@
-package com.quizzingbricks.communication.apiObjects;
+package com.quizzingbricks.communication.apiObjects.nonThreaded;
 
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.RequestParser;

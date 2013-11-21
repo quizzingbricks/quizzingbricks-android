@@ -86,7 +86,6 @@ public class AuthenticationManager {
 		private HttpClient client = new DefaultHttpClient();
 		private HttpPost httppost = new HttpPost(serverUrl);
 		
-		//TODO: add a cancel button to the progress dialog
 		@Override
 		protected void onPreExecute() {
 			progressDialog = new ProgressDialog(context);

@@ -1,5 +1,7 @@
 package com.quizzingbricks.activities;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,10 +15,13 @@ import com.quizzingbricks.R.id;
 import com.quizzingbricks.R.layout;
 import com.quizzingbricks.R.menu;
 import com.quizzingbricks.authentication.AuthenticationManager;
+import com.quizzingbricks.communication.apiObjects.asyncTasks.LobbyThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskComplete;
 import com.quizzingbricks.exceptions.ServerConnectionException;
+import com.quizzingbricks.tools.AsyncTaskResult;
 import com.testing.*;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements OnTaskComplete	{
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 	
@@ -36,16 +41,30 @@ public class LoginActivity extends Activity {
     //TODO: disable the button when this function is called
     public void sendLoginUserInfo(View view) {
     	
-    	EditText emailEdit = (EditText) findViewById(R.id.login_email_edit);
-    	String email = emailEdit.getText().toString();
-    	
-    	EditText passwordEdit = (EditText) findViewById(R.id.login_password_edit);
-    	String password = passwordEdit.getText().toString();
-    	
-    	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
-    	authManager.login(email, password);
+//    	EditText emailEdit = (EditText) findViewById(R.id.login_email_edit);
+//    	String email = emailEdit.getText().toString();
+//    	
+//    	EditText passwordEdit = (EditText) findViewById(R.id.login_password_edit);
+//    	String password = passwordEdit.getText().toString();
+//    	
+//    	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
+//    	authManager.login(email, password);
     	
 //    	APITester tester = new APITester(LoginActivity.this);
 //    	tester.testGetLobbies();
+    	
+//    	new LobbyThreadedAPI().createLobby(2, this);
+    	new LobbyThreadedAPI().getGameLobbies(this);
+    	
     }
+
+	@Override
+	public void onComplete(AsyncTaskResult<JSONObject> result) {
+		if(result.getException() == null)	{
+			System.out.println("Yay I got a response from the server");
+		}
+		else	{
+			result.getException().printStackTrace();
+		}
+	}
 }

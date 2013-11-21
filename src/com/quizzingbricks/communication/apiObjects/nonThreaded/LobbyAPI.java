@@ -1,4 +1,4 @@
-package com.quizzingbricks.communication.apiObjects;
+package com.quizzingbricks.communication.apiObjects.nonThreaded;
 
 import org.json.JSONObject;
 import org.apache.http.message.BasicNameValuePair;

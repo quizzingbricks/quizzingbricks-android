@@ -9,7 +9,7 @@ import android.os.AsyncTask;
 import android.renderscript.Sampler.Value;
 import android.view.LayoutInflater;
 
-import com.quizzingbricks.communication.apiObjects.LobbyAPI;
+import com.quizzingbricks.communication.apiObjects.nonThreaded.LobbyAPI;
 import com.quizzingbricks.exceptions.ServerConnectionException;
 
 public class APITester extends AsyncTask<String, Void, AsyncTaskResult<JSONObject>> {
@@ -24,7 +24,7 @@ public class APITester extends AsyncTask<String, Void, AsyncTaskResult<JSONObjec
 	
 	public void testGetLobbies()	{
 		System.out.println("Starting async task");
-		this.execute("api/games/lobby");
+		this.execute("api/games/lobby/create");
 	}
 	
 	@Override
