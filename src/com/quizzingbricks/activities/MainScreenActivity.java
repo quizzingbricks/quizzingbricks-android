@@ -14,7 +14,7 @@ import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainScreenActivity extends Activity {
+public class MainScreenActivity extends AbstractActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

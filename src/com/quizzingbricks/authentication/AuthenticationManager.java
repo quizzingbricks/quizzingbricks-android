@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -37,6 +38,8 @@ public class AuthenticationManager {
 	private final String KEY_EMAIL = "email";
 	private final String KEY_TOKEN = "token";
 	
+	private final String serverUrl = "http://130.240.94.184:5000/login";
+	
 	public AuthenticationManager(Context context)	{
 		this.context = context;
 		this.sharedPref = context.getSharedPreferences("quizzingbricks-android", 0);
@@ -54,7 +57,7 @@ public class AuthenticationManager {
 	}
 	
 	/**
-	 * Checks if the users if authenticated (i.e. has a token) and changes activity to LoginActivity if necessary
+	 * Checks if the users if authenticated (i.e. has a token) and changes activity to LoginActivity if not 
 	 */
 	public void checkAuthentication()	{
 		if(!isLoggedIn())	{
@@ -70,6 +73,10 @@ public class AuthenticationManager {
 		return sharedPref.getBoolean(IS_LOGIN, false);
 	}
 	
+	public String getToken()	{
+		return sharedPref.getString(KEY_TOKEN, null);
+	}
+	
 	private class AuthenticateTask extends AsyncTask<String, Void, AsyncTaskResult<String>> {
 
 		private String email;
@@ -77,7 +84,7 @@ public class AuthenticationManager {
 		private ProgressDialog progressDialog;
 		
 		private HttpClient client = new DefaultHttpClient();
-		private HttpPost httppost = new HttpPost("http://130.240.94.184:5000/login");
+		private HttpPost httppost = new HttpPost(serverUrl);
 		
 		@Override
 		protected void onPreExecute() {
@@ -86,6 +93,16 @@ public class AuthenticationManager {
 			progressDialog.setMessage("Please wait.");
 			progressDialog.setCancelable(false);
 			progressDialog.setIndeterminate(true);
+			final AuthenticateTask authTask = this; //Declared so that the class is in the scope of the OnClickListener 
+			progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			    	client.getConnectionManager().shutdown();
+			    	authTask.cancel(true);
+			    	progressDialog.dismiss();
+			    }
+			});
+			progressDialog.show();
 			progressDialog.show();
 		}
 		
@@ -106,12 +123,12 @@ public class AuthenticationManager {
 					String response = EntityUtils.toString(entity); 
 			        entity.consumeContent();
 			        client.getConnectionManager().shutdown();
-			        JSONObject object = new JSONObject(response.trim());
+			        JSONObject jsonObject = new JSONObject(response.trim());
 			        try {
-			        	return new AsyncTaskResult<String>(object.getString("token"));
+			        	return new AsyncTaskResult<String>(jsonObject.getString("token"));
 			        }
 			        catch (JSONException je){
-			        	return new AsyncTaskResult<String>(object.getString("error"));
+			        	return new AsyncTaskResult<String>(jsonObject.getString("error"));
 			        }
 				}
 				else	{
@@ -128,6 +145,7 @@ public class AuthenticationManager {
 		}
 		
 		protected void onPostExecute(AsyncTaskResult<String> result)	{
+			progressDialog.dismiss();
 			if(result.getException() != null)	{
 				result.getException().printStackTrace();
 			}
@@ -139,7 +157,6 @@ public class AuthenticationManager {
 				editor.putString(KEY_EMAIL, this.email);
 				editor.putString(KEY_TOKEN, result.getResult());
 				editor.commit();
-				progressDialog.dismiss();
 				Intent intent = new Intent(context, MainScreenActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
