@@ -1,31 +1,32 @@
-package com.quizzingbricks.communication.apiObjects.asyncTasks;
-
-import org.json.JSONObject;
+package com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls;
 
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.RequestParser;
-import com.quizzingbricks.tools.AsyncTaskResult;
+import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskComplete;
+import com.quizzingbricks.communication.jsonObject.SimpleJsonObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 
-public class AsyncApiGetCall extends AsyncTask<Void, Void, AsyncTaskResult<JSONObject>> {
-
-	private RequestParser requestParser = new RequestParser();
-	private OnTaskComplete onTaskCompleteClass;
-	private String url = requestParser.getServerApiAddr();
-	private String token;
+public abstract class AbstractApiCall<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 	
-	private Boolean popup = false;
-	private ProgressDialog progressDialog;
+	protected RequestParser requestParser = new RequestParser();
+	protected OnTaskComplete<Result> onTaskCompleteClass;
+	protected String url = requestParser.getServerApiAddr();
+	protected String token;
 	
-	public AsyncApiGetCall(String token)	{
+	protected Boolean popup = false;
+	protected ProgressDialog progressDialog;
+	
+	protected SimpleJsonObject simpleJsonObject;
+	
+	public AbstractApiCall(String token)	{
 		this.token = token;
 	}
 	
-	public AsyncApiGetCall(String popUpTitle, String popUpMessage, Context context)	{
+	public AbstractApiCall(String popUpTitle, String popUpMessage, Context context)	{
 		progressDialog = new ProgressDialog(context);
 		progressDialog.setTitle(popUpTitle);
 		progressDialog.setMessage(popUpMessage);
@@ -45,8 +46,12 @@ public class AsyncApiGetCall extends AsyncTask<Void, Void, AsyncTaskResult<JSONO
 		this.url += endOfUrl;
 	}
 	
-	public void addOnTaskComplete(OnTaskComplete onTaskCompleteClass)	{
+	public void addOnTaskComplete(OnTaskComplete<Result> onTaskCompleteClass)	{
 		this.onTaskCompleteClass = onTaskCompleteClass;
+	}
+	
+	public void addSimpleJsonObject(SimpleJsonObject simpleJsonObject)	{
+		this.simpleJsonObject = simpleJsonObject;
 	}
 	
 	@Override
@@ -54,7 +59,7 @@ public class AsyncApiGetCall extends AsyncTask<Void, Void, AsyncTaskResult<JSONO
 		if(popup == true)	{
 			progressDialog.setCancelable(false);
 			progressDialog.setIndeterminate(true);
-			final AsyncApiGetCall authTask = this; //Declared so that the class is in the scope of the OnClickListener 
+			final AbstractApiCall authTask = this; //Declared so that the class is in the scope of the OnClickListener 
 			progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 			    @Override
 			    public void onClick(DialogInterface dialog, int which) {
@@ -66,23 +71,11 @@ public class AsyncApiGetCall extends AsyncTask<Void, Void, AsyncTaskResult<JSONO
 			progressDialog.show();
 		}
 	}
-
-	@Override
-	protected AsyncTaskResult<JSONObject> doInBackground(Void... params) {
-		try	{
-			return new AsyncTaskResult<JSONObject>(this.requestParser.getServerEndpointInfo(url, token));
-		}
-		catch(Exception e)	{
-			return new AsyncTaskResult<JSONObject>(e);
-		}
-	}
 	
-	@Override
-	protected void onPostExecute(AsyncTaskResult<JSONObject> result)	{
+	protected void onPostExecute(Result result)	{
 		if(popup == true)	{
 			progressDialog.dismiss();
 		}
 		onTaskCompleteClass.onComplete(result);
 	}
-
 }

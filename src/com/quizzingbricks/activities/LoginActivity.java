@@ -3,25 +3,19 @@ package com.quizzingbricks.activities;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
 
 import com.quizzingbricks.R;
-import com.quizzingbricks.R.id;
-import com.quizzingbricks.R.layout;
-import com.quizzingbricks.R.menu;
-import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.LobbyThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskComplete;
-import com.quizzingbricks.exceptions.ServerConnectionException;
+import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 import com.testing.*;
 
-public class LoginActivity extends Activity implements OnTaskComplete	{
+public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
 
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 	
@@ -54,8 +48,8 @@ public class LoginActivity extends Activity implements OnTaskComplete	{
 //    	tester.testGetLobbies();
     	
 //    	new LobbyThreadedAPI().createLobby(2, this);
-    	new LobbyThreadedAPI().getGameLobbies(this);
-    	
+//    	new LobbyThreadedAPI().getGameLobbies(this);
+    	new UserThreadedAPI().removeFriendFromFriendsList(1, this);
     }
 
 	@Override

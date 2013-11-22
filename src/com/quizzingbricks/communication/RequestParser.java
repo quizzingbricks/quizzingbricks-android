@@ -9,6 +9,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -113,16 +114,34 @@ public class RequestParser {
 		}
 	}
 	
+	public JSONObject sendDeleteRequestToServer(String serverUrl, String token) throws ServerConnectionException	{
+			HttpDelete httpDelete = new HttpDelete(serverUrl);
+			httpDelete.addHeader("token", token);
+			try {
+				return executeAndGetRequest(httpDelete, serverUrl);
+			} 
+			catch(Exception e)	{
+				e.printStackTrace();
+				throw new ServerConnectionException("API Error: " + serverUrl);
+			}
+	}
+	
 	private JSONObject executeAndGetRequest(HttpUriRequest httpRequest, String serverUrl) throws ServerConnectionException, ClientProtocolException, IOException, JSONException	{
 		HttpResponse httpResponse = httpClient.execute(httpRequest);
-		HttpEntity httpEntiry = httpResponse.getEntity();
+		HttpEntity httpEntiry = httpClient.execute(httpRequest).getEntity();
 		httpEntiry.consumeContent();
 		
 		httpClient.getConnectionManager().shutdown();
 		int httpStatusCode = httpResponse.getStatusLine().getStatusCode();
 		if(httpStatusCode == 200)	{
+			JSONObject jsonObject;
 			String response = EntityUtils.toString(httpEntiry);
-			JSONObject jsonObject = new JSONObject(response.trim());
+			try	{
+				jsonObject = new JSONObject(response.trim());
+			}
+			catch(JSONException je)	{
+				jsonObject = new JSONObject("{\"result\":\"ok\"}");
+			}
 			return jsonObject;
 		}
 		else if(httpStatusCode == 404)	{

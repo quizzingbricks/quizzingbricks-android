@@ -6,44 +6,63 @@ import android.content.Context;
 
 public class UserThreadedAPI extends AbstractThreadedAPI {
 	
-	private String serverLobbyApiPath = postCall.getServerUrl() + "users/";
+	private String serverUserApiPath = "users/";
+	
+	/**
+	 * Empty constructor for testing
+	 */
+	public UserThreadedAPI()	{}
 	
 	public UserThreadedAPI(Context context) {
 		super(context);
 	}
 	
-	public void registerUser(String email, String username, String password, OnTaskComplete onTaskCompleteClass)	{
+	public void registerUser(String email, String username, String password, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(this.serverLobbyApiPath + "register");
+		postCall.addToTheEndOfUrl(this.serverUserApiPath);
 		postCall.execute(new BasicNameValuePair("email", email), new BasicNameValuePair("username", username), new BasicNameValuePair("password", password));
 	}
 	
-	public void loginUser(String email, String password, OnTaskComplete onTaskCompleteClass)	{
+	public void loginUser(String email, String password, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverLobbyApiPath + "login");
+		postCall.addToTheEndOfUrl(serverUserApiPath + "login");
 		postCall.execute(new BasicNameValuePair("email", email), new BasicNameValuePair("password", password));
 	}
 	
-	public void getCurrentUserInfo(OnTaskComplete onTaskCompleteClass)	{
+	public void getCurrentUserInfo(OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverLobbyApiPath + "me");
+		getCall.addToTheEndOfUrl(serverUserApiPath + "me");
 		getCall.execute();
 	}
 	
-	public void getFriendsList(OnTaskComplete onTaskCompleteClass)	{
+	
+	public void getActiveGamesList(OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverLobbyApiPath + "me/friends");
+		getCall.addToTheEndOfUrl(serverUserApiPath + "me/activegames");
 		getCall.execute();
 	}
 	
-	public void getActiveGamesList(OnTaskComplete onTaskCompleteClass)	{
+	public void getOldGamesList(OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverLobbyApiPath + "me/activegames");
+		getCall.addToTheEndOfUrl(serverUserApiPath + "/me/oldgames");
+	}
+	
+	public void getFriendsList(OnTaskCompleteAsync onTaskCompleteClass)	{
+		getCall.addOnTaskComplete(onTaskCompleteClass);
+		getCall.addToTheEndOfUrl(serverUserApiPath + "me/friends");
 		getCall.execute();
 	}
 	
-	public void getOldGamesList(OnTaskComplete onTaskCompleteClass)	{
-		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverLobbyApiPath + "/me/oldgames");
+	public void addFriendToFriendsList(String email, OnTaskCompleteAsync onTaskCompleteClass)	{
+		postCall.addOnTaskComplete(onTaskCompleteClass);
+		postCall.addToTheEndOfUrl(serverUserApiPath + "me/friends");
+		postCall.execute(new BasicNameValuePair("friend", email));
 	}
+	
+	public void removeFriendFromFriendsList(int userId, OnTaskCompleteAsync onTaskCompleteClass)	{
+		deleteCall.addOnTaskComplete(onTaskCompleteClass);
+		deleteCall.addToTheEndOfUrl(serverUserApiPath + "me/friends/" + Integer.toString(userId));
+		deleteCall.execute();
+	}
+	
 }

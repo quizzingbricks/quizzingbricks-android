@@ -1,10 +1,6 @@
 package com.quizzingbricks.communication.apiObjects.asyncTasks;
 
-import org.json.JSONObject;
-
-import com.quizzingbricks.tools.AsyncTaskResult;
-
-public interface OnTaskComplete {
+public interface OnTaskComplete<ResultType> {
 	
-	public abstract void onComplete(AsyncTaskResult<JSONObject> result);
+	public abstract void onComplete(ResultType result);
 }
