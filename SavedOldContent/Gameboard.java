@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 
 public class Gameboard extends Activity {//implements OnClickListener{
 //	private GameView view;
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -45,10 +46,10 @@ public class Gameboard extends Activity {//implements OnClickListener{
 //		but.
 		setContentView(R.layout.grid_layout);
 		 
-        GridView gridView = (GridView) findViewById(R.id.grid_view);
- 
-        // Instance of ImageAdapter Class
-        gridView.setAdapter(new ImageAdapter(this));
+//        GridView gridView = (GridView) findViewById(R.id.grid_view);
+// 
+//        // Instance of ImageAdapter Class
+//        gridView.setAdapter(new ImageAdapter(this));
 		
         
 	}

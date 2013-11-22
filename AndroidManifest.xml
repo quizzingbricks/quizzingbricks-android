@@ -23,12 +23,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.quizzingbricks.GameBoardActivity"
+            android:name="com.quizzingbricks.MenuActivity"
             android:label="@string/title_activity_game_board" >
         </activity>
         <activity
-            android:name="com.quizzingbricks.Gameboard"
+            android:name="com.quizzingbricks.MainActivity"
             android:label="@string/title_activity_game_board" >
+        </activity>
+        <activity
+            android:name="com.quizzingbricks.QuestionPromptActivity">
+        </activity>
+        <activity 
+            android:name="com.quizzingbricks.GridViewActivity">
+        </activity>
+        <activity 
+            android:name="com.quizzingbricks.ScrollViewActivity">
+        </activity>
+        <activity 
+            android:name="com.quizzingbricks.HorizontalViewActivity">
+        </activity> 
+        <activity 
+            android:name="com.quizzingbricks.MultiScrollActivity">
+        </activity>
+        <activity 
+            android:name="com.quizzingbricks.MultiScrollView">
         </activity>
        
     </application>

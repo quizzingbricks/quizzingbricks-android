@@ -48,13 +48,6 @@
         
         />
 
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
-        android:layout_toRightOf="@+id/login_text_header"
-        android:src="@drawable/blue" />
+   
 
 </RelativeLayout>

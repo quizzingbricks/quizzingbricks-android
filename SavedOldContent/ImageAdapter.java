@@ -1,30 +1,26 @@
 package com.quizzingbricks;
 
 
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
-
+ 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-    public Integer[] mThumbIds;
+ 
     // Keep all Images in array
-//     = {
-//            R.drawable.boardcellempty, R.drawable.boardcellempty,
-//            R.drawable.boardcellempty, R.drawable.boardcellempty,
-//            R.drawable.boardcellempty, 
-//    };
+    public Integer[] mThumbIds = {
+            R.drawable.boardcellempty, R.drawable.boardcellempty,
+            R.drawable.boardcellempty, R.drawable.boardcellempty,
+            R.drawable.boardcellblue, 
+    };
  
     // Constructor
-    public ImageAdapter(Context c, int size){
+    public ImageAdapter(Context c){
         mContext = c;
-        mThumbIds = new Integer[size];
-        for (int i = 0; i < size; i++) {
-			mThumbIds[i]= R.drawable.boardcellempty;
-		}
     }
  
     @Override
@@ -47,9 +43,7 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageView = new ImageView(mContext);        
         imageView.setImageResource(mThumbIds[position]);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        
-        //Size of the picture
-//        imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
+        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
         return imageView;
 //    	ImageButton imageButton = new ImageButton(mContext);
 //    	imageButton.setImageResource(mThumbIds[position]);//(R.drawable.boardcellempty);

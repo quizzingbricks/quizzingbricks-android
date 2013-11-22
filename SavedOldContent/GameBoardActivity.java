@@ -9,13 +9,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Bitmap.Config;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 public class GameBoardActivity extends Activity implements OnClickListener {
@@ -32,8 +29,8 @@ public class GameBoardActivity extends Activity implements OnClickListener {
         
         
 		RelativeLayout layout = new RelativeLayout(this);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-		LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+		android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
 		layout.addView(imageView, params);
 		
@@ -115,8 +112,8 @@ public class GameBoardActivity extends Activity implements OnClickListener {
 		imageView.setImageBitmap(bitmap);
 		
 		RelativeLayout layout = new RelativeLayout(this);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-		LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+		android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
 		layout.addView(imageView, params);
 		layout.setBackgroundColor(Color.WHITE);
@@ -161,8 +158,8 @@ public class GameBoardActivity extends Activity implements OnClickListener {
 		 
 		// Create a simple layout and add our image view to it.
 		RelativeLayout layout = new RelativeLayout(this);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-		LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+		android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
 		layout.addView(imageView, params);
 		layout.setBackgroundColor(Color.BLACK);
