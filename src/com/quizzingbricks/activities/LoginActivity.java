@@ -6,12 +6,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
 
 import com.quizzingbricks.R;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.LobbyThreadedAPI;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskComplete;
+import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 
@@ -35,18 +34,15 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
     //TODO: disable the button when this function is called
     public void sendLoginUserInfo(View view) {
     	
-//    	EditText emailEdit = (EditText) findViewById(R.id.login_email_edit);
-//    	String email = emailEdit.getText().toString();
-//    	
-//    	EditText passwordEdit = (EditText) findViewById(R.id.login_password_edit);
-//    	String password = passwordEdit.getText().toString();
-//    	
-//    	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
-//    	authManager.login(email, password);
+    	EditText emailEdit = (EditText) findViewById(R.id.login_email_edit);
+    	String email = emailEdit.getText().toString();
     	
-//    	new LobbyThreadedAPI().createLobby(2, this);
-//    	new LobbyThreadedAPI().getGameLobbies(this);
-    	new UserThreadedAPI().removeFriendFromFriendsList(1, this);
+    	EditText passwordEdit = (EditText) findViewById(R.id.login_password_edit);
+    	String password = passwordEdit.getText().toString();
+    	
+    	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
+    	authManager.login(email, password);
+    	
     }
 
 	@Override

@@ -15,20 +15,17 @@ public abstract class AbstractThreadedAPI {
 	private String token;
 	
 	/**
-	 * Empty constructor for testing
+	 * 
+	 * @param context, the apps context for getting the token
+	 * @param sendWithToken, if false the token header will just be a place holder (for the login function)
 	 */
-	public AbstractThreadedAPI()	{
-		this.token = "RandomStringGoesHere";
-		postCall = new AsyncApiPostCall(this.token);
-		getCall = new AsyncApiGetCall(token);
-		deleteCall = new AsyncApiDeleteCall(token);
-	}
-	
-	public AbstractThreadedAPI(Context context)	{
-		AuthenticationManager authManager = new AuthenticationManager(context);
-		token = authManager.getToken();
-		if(token == null)	{
-			authManager.checkAuthentication();
+	public AbstractThreadedAPI(Context context, boolean sendWithToken)	{
+		if(sendWithToken == true)	{
+			AuthenticationManager authManager = new AuthenticationManager(context);
+			token = authManager.getToken();
+		}
+		else	{
+			this.token = "PlaceHolder";
 		}
 		postCall = new AsyncApiPostCall(token);
 		getCall = new AsyncApiGetCall(token);

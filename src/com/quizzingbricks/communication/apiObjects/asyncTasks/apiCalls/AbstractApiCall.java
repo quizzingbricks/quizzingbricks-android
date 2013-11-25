@@ -26,18 +26,6 @@ public abstract class AbstractApiCall<Params, Progress, Result> extends AsyncTas
 		this.token = token;
 	}
 	
-	public AbstractApiCall(String popUpTitle, String popUpMessage, Context context)	{
-		progressDialog = new ProgressDialog(context);
-		progressDialog.setTitle(popUpTitle);
-		progressDialog.setMessage(popUpMessage);
-		this.popup = true;
-		AuthenticationManager authManager = new AuthenticationManager(context);
-		token = authManager.getToken();
-		if(token == null)	{
-			authManager.checkAuthentication();
-		}
-	}
-	
 	public String getServerUrl()	{
 		return requestParser.getServerApiAddr();
 	}
@@ -52,6 +40,17 @@ public abstract class AbstractApiCall<Params, Progress, Result> extends AsyncTas
 	
 	public void addSimpleJsonObject(SimpleJsonObject simpleJsonObject)	{
 		this.simpleJsonObject = simpleJsonObject;
+	}
+	
+	public void addPopup(String popUpTitle, String popUpMessage, Context context)	{
+		progressDialog = new ProgressDialog(context);
+		progressDialog.setTitle(popUpTitle);
+		progressDialog.setMessage(popUpMessage);
+		this.popup = true;
+	}
+	
+	public void removePopup()	{
+		this.popup = false;
 	}
 	
 	@Override

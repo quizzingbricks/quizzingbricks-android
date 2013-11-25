@@ -2,19 +2,16 @@ package com.quizzingbricks.communication.apiObjects.asyncTasks;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls.AsyncApiPostCall;
+
 import android.content.Context;
 
 public class UserThreadedAPI extends AbstractThreadedAPI {
 	
 	private String serverUserApiPath = "users/";
 	
-	/**
-	 * Empty constructor for testing
-	 */
-	public UserThreadedAPI()	{}
-	
-	public UserThreadedAPI(Context context) {
-		super(context);
+	public UserThreadedAPI(Context context, boolean sendWithToken) {
+		super(context, sendWithToken);
 	}
 	
 	public void registerUser(String email, String username, String password, OnTaskCompleteAsync onTaskCompleteClass)	{
@@ -26,6 +23,13 @@ public class UserThreadedAPI extends AbstractThreadedAPI {
 	public void loginUser(String email, String password, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
 		postCall.addToTheEndOfUrl(serverUserApiPath + "login");
+		postCall.execute(new BasicNameValuePair("email", email), new BasicNameValuePair("password", password));
+	}
+	
+	public void loginUserWithPopup(String email, String password, String popUpTitle, String popUpMessage, Context context, OnTaskCompleteAsync onTaskCompleteClass)	{
+		postCall.addOnTaskComplete(onTaskCompleteClass);
+		postCall.addToTheEndOfUrl(serverUserApiPath + "login");
+		postCall.addPopup(popUpTitle, popUpMessage, context);
 		postCall.execute(new BasicNameValuePair("email", email), new BasicNameValuePair("password", password));
 	}
 	

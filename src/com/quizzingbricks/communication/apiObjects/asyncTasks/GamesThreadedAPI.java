@@ -9,7 +9,7 @@ public class GamesThreadedAPI extends AbstractThreadedAPI {
 	private String serverLobbyApiPath = "games/";
 	
 	public GamesThreadedAPI(Context context) {
-		super(context);
+		super(context, true);
 	}
 	
 	public void getGameInfo(int gameId, OnTaskCompleteAsync onTaskCompleteClass)	{

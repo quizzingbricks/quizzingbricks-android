@@ -15,9 +15,6 @@ public abstract class AbstractAPI {
 	public AbstractAPI(Context context)	{
 		AuthenticationManager authManager = new AuthenticationManager(context);
 		token = authManager.getToken();
-		if(token == null)	{
-			authManager.checkAuthentication();
-		}
 	}
 	
 	public void cancelRequest()	{

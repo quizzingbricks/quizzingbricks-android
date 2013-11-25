@@ -14,10 +14,8 @@ public class LobbyThreadedAPI extends AbstractThreadedAPI {
 	private String serverLobbyApiPath = "games/lobby";
 	
 	public LobbyThreadedAPI(Context context) {
-		super(context);
+		super(context, true);
 	}
-	
-	public LobbyThreadedAPI()	{}
 	
 	public void createLobby(int size, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);

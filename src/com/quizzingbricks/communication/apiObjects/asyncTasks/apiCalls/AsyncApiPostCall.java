@@ -15,10 +15,6 @@ public class AsyncApiPostCall extends AbstractApiCall<BasicNameValuePair, Void, 
 		super(token);
 	}
 	
-	public AsyncApiPostCall(String popUpTitle, String popUpMessage, Context context)	{
-		super(popUpTitle, popUpMessage, context);
-	}
-
 	@Override
 	protected AsyncTaskResult<JSONObject> doInBackground(BasicNameValuePair... params) {
 		try	{
