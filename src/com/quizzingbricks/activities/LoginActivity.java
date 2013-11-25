@@ -13,7 +13,7 @@ import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskComplete;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
-import com.testing.*;
+
 
 public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
 
@@ -43,9 +43,6 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
 //    	
 //    	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
 //    	authManager.login(email, password);
-    	
-//    	APITester tester = new APITester(LoginActivity.this);
-//    	tester.testGetLobbies();
     	
 //    	new LobbyThreadedAPI().createLobby(2, this);
 //    	new LobbyThreadedAPI().getGameLobbies(this);

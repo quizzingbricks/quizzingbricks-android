@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
+
 	
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -15,20 +16,48 @@
 	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>    
 	<uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
+
             android:name="com.quizzingbricks.activities.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+
+            android:name="com.quizzingbricks.activities.menu.MenuActivity"
+            android:label="@string/title_activity_game_board" >
+        </activity>
+        <activity
+            android:name="com.quizzingbricks.MainActivity"
+            android:label="@string/title_activity_game_board" >
+        </activity>
+        <activity
+            android:name="com.quizzingbricks.activities.gameboard.QuestionPromptActivity">
+        </activity>
+        <activity 
+     android:name="com.quizzingbricks.activities.gameboard.MenuActivity">
+        </activity><activity 
+   android:name="com.quizzingbricks.activities.gameboard.ScrollViewActivity">
+        </activity><activity 
+   android:name="com.quizzingbricks.activities.gameboard.HorizontalViewActivity">
+        </activity> <activity 
+   android:name="com.quizzingbricks.activities.gameboard.MultiScrollViewity">
+            </activity>
+        <activity 
+            android:name="com.quizzingbricks.activities.gameboard.MultiScrollView">
+        </activity>
+       
+		<activity
             android:name="com.quizzingbricks.activities.MainScreenActivity"
             android:label="@string/title_activity_main_screen"
             android:parentActivityName="com.quizzingbricks.activities.LoginActivity" >
@@ -36,6 +65,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.quizzingbricks.Login" />
         </activity>
+
     </application>
 
 </manifest>
