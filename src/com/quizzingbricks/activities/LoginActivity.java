@@ -3,10 +3,12 @@ package com.quizzingbricks.activities;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.quizzingbricks.R;
 import com.quizzingbricks.authentication.AuthenticationManager;
@@ -22,6 +24,11 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Intent intent = getIntent();
+        if(intent.hasExtra("Message"))	{
+        	TextView textView = (TextView)findViewById(R.id.error_message_text);
+        	textView.setText(intent.getStringExtra("Message"));
+        }
     }
 
     @Override
