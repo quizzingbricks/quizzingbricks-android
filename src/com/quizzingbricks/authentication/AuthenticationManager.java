@@ -3,11 +3,11 @@ package com.quizzingbricks.authentication;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.sax.StartElementListener;
 
 import com.quizzingbricks.activities.LoginActivity;
 import com.quizzingbricks.activities.menu.MenuActivity;
@@ -15,7 +15,7 @@ import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsyn
 import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
-public class AuthenticationManager implements OnTaskCompleteAsync {
+public class AuthenticationManager extends Activity implements OnTaskCompleteAsync {
 
 	private Editor editor;
 	private Context context;
@@ -76,7 +76,7 @@ public class AuthenticationManager implements OnTaskCompleteAsync {
 				JSONObject error;
 				String errorMessage = "Unknown error message from server";
 				try {
-					error = jsonResult.getJSONObject("error");
+					error = jsonResult.getJSONObject("errors");
 					if(error.getString("code") == "010")	{
 						errorMessage = "Wrong username or password";
 					}
@@ -95,10 +95,10 @@ public class AuthenticationManager implements OnTaskCompleteAsync {
 	}
 	
 	private void changeToMainMenuActivity()	{
-		Intent intent = new Intent(context, MenuActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		Intent intent = new Intent(this.context, MenuActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		context.startActivity(intent);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		this.context.startActivity(intent);
 	}
 	
 	private void changeToLoginActivity()	{
