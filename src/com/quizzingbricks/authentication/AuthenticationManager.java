@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.quizzingbricks.activities.FirstStartActivity;
 import com.quizzingbricks.activities.LoginActivity;
+import com.quizzingbricks.activities.RegisterUserActivity;
 import com.quizzingbricks.activities.menu.MenuActivity;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
@@ -39,12 +41,17 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 		return sharedPref.getString(KEY_TOKEN, null);
 	}
 	
+	public void registerNewUser(String email, String password, String username)	{
+		UserThreadedAPI userAPI = new UserThreadedAPI(context, false);
+		userAPI.registerUser(email, username, password, this);
+	}
+	
 	/**
 	 * Checks if the users if authenticated (i.e. has a token) and changes activity to LoginActivity if not 
 	 */
 	public void checkAuthentication()	{
 		if(!isLoggedIn())	{
-			changeToLoginActivity();
+			changeToFirstStartActivity();
 		}
 	}
 	
@@ -77,10 +84,11 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 				String errorMessage = "Unknown error message from server";
 				try {
 					error = jsonResult.getJSONObject("errors");
-					if(error.getString("code") == "010")	{
+					String errorCode = error.getString("code");
+					if(errorCode == "010")	{
 						errorMessage = "Wrong username or password";
+						changeToLoginActivity(errorMessage);
 					}
-					changeToLoginActivity(errorMessage);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -101,8 +109,8 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 		this.context.startActivity(intent);
 	}
 	
-	private void changeToLoginActivity()	{
-		Intent intent = new Intent(context, LoginActivity.class);
+	private void changeToFirstStartActivity()	{
+		Intent intent = new Intent(context, FirstStartActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);

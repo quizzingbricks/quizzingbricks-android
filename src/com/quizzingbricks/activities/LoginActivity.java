@@ -54,10 +54,7 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
 
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
-		if(result.getException() == null)	{
-			System.out.println("Yay I got a response from the server");
-		}
-		else	{
+		if(result.getException() != null)	{
 			result.getException().printStackTrace();
 		}
 	}
