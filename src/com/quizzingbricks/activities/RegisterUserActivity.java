@@ -4,13 +4,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.quizzingbricks.R;
-import com.quizzingbricks.activities.menu.MenuActivity;
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
@@ -26,7 +25,7 @@ public class RegisterUserActivity extends Activity implements OnTaskCompleteAsyn
 	        setContentView(R.layout.activity_register_user);
 	    }
 	 
-	 public void sendRegisterUserInfo()	{
+	 public void sendRegisterUserInfo(View view)	{
 		EditText emailEdit = (EditText) findViewById(R.id.register_user_email_edit);
 		String email = emailEdit.getText().toString();
 		
@@ -43,7 +42,7 @@ public class RegisterUserActivity extends Activity implements OnTaskCompleteAsyn
 		if(email == null | username == null | password == null | rewrittenPassword == null)	{
 			textView.setText("Please fill in all the fields");
 		}
-		else if(password != rewrittenPassword)	{
+		else if(!password.equals(rewrittenPassword))	{
 			textView.setText("The passwords in the fields do not match");
 		}
 		else	{

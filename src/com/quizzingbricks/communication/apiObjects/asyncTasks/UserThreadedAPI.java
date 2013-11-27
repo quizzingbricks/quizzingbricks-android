@@ -20,6 +20,13 @@ public class UserThreadedAPI extends AbstractThreadedAPI {
 		postCall.execute(new BasicNameValuePair("email", email), new BasicNameValuePair("username", username), new BasicNameValuePair("password", password));
 	}
 	
+	public void registerUserWithPopup(String email, String username, String password, String popUpTitle, String popUpMessage, Context context, OnTaskCompleteAsync onTaskCompleteClass)	{
+		postCall.addOnTaskComplete(onTaskCompleteClass);
+		postCall.addToTheEndOfUrl(this.serverUserApiPath);
+		postCall.addPopup(popUpTitle, popUpMessage, context);
+		postCall.execute(new BasicNameValuePair("email", email), new BasicNameValuePair("username", username), new BasicNameValuePair("password", password));
+	}
+	
 	public void loginUser(String email, String password, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
 		postCall.addToTheEndOfUrl(serverUserApiPath + "login");

@@ -50,6 +50,7 @@
         android:layout_below="@id/register_user_email_edit_header"
         style="@style/inputBoxScreenWidth"
         android:hint="@string/register_user_email_text_hint"
+        android:inputType="textNoSuggestions|textVisiblePassword"
         />
     
     <TextView
@@ -63,7 +64,7 @@
         android:layout_below="@id/register_user_username_edit_header"
         style="@style/inputBoxScreenWidth"
         android:hint="@string/register_user_username_text_hint"
-        android:inputType="textPassword"
+        android:inputType="textNoSuggestions|textVisiblePassword"
         />
     
     
@@ -102,7 +103,7 @@
         android:gravity="center"
         style="@style/fillScreenWidth"
         android:layout_below="@id/register_user_rewrite_password_edit"
-        android:onClick="sendLoginUserInfo"
+        android:onClick="sendRegisterUserInfo"
         android:padding="16dp"
         android:text="@string/register_user_submit_button" 
         />
