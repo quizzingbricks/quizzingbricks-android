@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -15,6 +14,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
@@ -24,9 +24,13 @@ import com.quizzingbricks.communication.jsonObject.SimpleJsonObject;
 import com.quizzingbricks.exceptions.ServerConnectionException;
 
 public class RequestParser {
-	private HttpClient httpClient = new DefaultHttpClient();
+	private DefaultHttpClient httpClient = new DefaultHttpClient();
 	private String serverApiAddr = "http://192.168.1.6:5000/api/";
 //	private String serverApiAddr = "http://130.240.93.141:5000/api/";
+	
+	public RequestParser()	{
+		httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
+	}
 	
 	public String getServerApiAddr()	{
 		return serverApiAddr;
@@ -129,7 +133,7 @@ public class RequestParser {
 	
 	private JSONObject executeAndGetRequest(HttpUriRequest httpRequest, String serverUrl) throws ServerConnectionException, ClientProtocolException, IOException, JSONException	{
 		HttpResponse httpResponse = httpClient.execute(httpRequest);
-		HttpEntity httpEntiry = httpClient.execute(httpRequest).getEntity();
+		HttpEntity httpEntiry = httpResponse.getEntity();
 		httpEntiry.consumeContent();
 		
 		httpClient.getConnectionManager().shutdown();
