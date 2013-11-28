@@ -20,15 +20,17 @@
 
     <Button
         android:id="@+id/start_register_user_button"
-        style="@style/fillScreenWidth"
-        android:text="@string/register_user_button" 
         android:onClick="changeToRegisterUserActivity"
-        />
+        android:text="@string/register_user_button"
+        style="@style/startScreenButtons"
+        android:layout_marginBottom="10dp"
+         />
+
     <Button
         android:id="@+id/start_login_user_button"
-        style="@style/fillScreenWidth"
-        android:text="@string/login_user_button" 
+        style="@style/startScreenButtons"
         android:onClick="changeToLoginActivity"
+        android:text="@string/login_user_button" 
         />
     
 </LinearLayout>

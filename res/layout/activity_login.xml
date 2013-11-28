@@ -34,6 +34,7 @@
         android:layout_below="@id/error_message_text"
         style="@style/inputBoxScreenWidth"
         android:hint="@string/login_email_text_hint"
+        android:inputType="textNoSuggestions|textEmailAddress"
         />
     
     <EditText 
