@@ -30,7 +30,6 @@ public class RequestParser {
 	private String serverApiAddr = "http://130.240.233.81:8000/api/";
 	
 	public RequestParser()	{
-		httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
 	}
 	
 	public String getServerApiAddr()	{
@@ -48,6 +47,9 @@ public class RequestParser {
 
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
 			return executeAndGetRequest(httpPost, serverUrl);
+		}
+		catch(ServerConnectionException se)	{
+			throw se;
 		}
 		catch(Exception e)	{
 			e.printStackTrace();
@@ -68,6 +70,9 @@ public class RequestParser {
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
 			return executeAndGetRequest(httpPost, serverUrl);
 		}
+		catch(ServerConnectionException se)	{
+			throw se;
+		}
 		catch(Exception e)	{
 			e.printStackTrace();
 			throw new ServerConnectionException("API Error: " + serverUrl);
@@ -86,6 +91,9 @@ public class RequestParser {
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
 			return executeAndGetRequest(httpPost, serverUrl);
 		}
+		catch(ServerConnectionException se)	{
+			throw se;
+		}
 		catch(Exception e)	{
 			e.printStackTrace();
 			throw new ServerConnectionException("API Error: " + serverUrl);
@@ -101,6 +109,9 @@ public class RequestParser {
 			
 			return executeAndGetRequest(httpPost, serverUrl);
 		}
+		catch(ServerConnectionException se)	{
+			throw se;
+		}
 		catch(Exception e)	{
 			e.printStackTrace();
 			throw new ServerConnectionException("API Error: " + serverUrl);
@@ -114,6 +125,9 @@ public class RequestParser {
 			
 			return executeAndGetRequest(httpGet, serverUrl);
 		}
+		catch(ServerConnectionException se)	{
+			throw se;
+		}
 		catch(Exception e)	{
 			e.printStackTrace();
 			throw new ServerConnectionException("API Error: " + serverUrl);
@@ -126,6 +140,9 @@ public class RequestParser {
 			try {
 				return executeAndGetRequest(httpDelete, serverUrl);
 			} 
+			catch(ServerConnectionException se)	{
+				throw se;
+			}
 			catch(Exception e)	{
 				e.printStackTrace();
 				throw new ServerConnectionException("API Error: " + serverUrl);
@@ -151,7 +168,15 @@ public class RequestParser {
 			return jsonObject;
 		}
 		else if(httpStatusCode == 400)	{
-			throw new ServerConnectionException("API Error: bad request, " + serverUrl, 0, httpStatusCode);
+			JSONObject jsonObject;
+			String response = EntityUtils.toString(httpEntiry);
+			try	{
+				jsonObject = new JSONObject(response.trim());
+				throw new ServerConnectionException("API Error: " + jsonObject.getJSONObject("errors").getString("message") + " at " + serverUrl, 0, httpStatusCode);
+			}
+			catch(JSONException je)	{
+				throw new ServerConnectionException("API Error: bad request, " + serverUrl, 0, httpStatusCode);
+			}
 		}
 		else if(httpStatusCode == 404)	{
 			throw new ServerConnectionException("API Error: faulty endpoint path, " + serverUrl, 0, httpStatusCode);
