@@ -25,8 +25,9 @@ import com.quizzingbricks.exceptions.ServerConnectionException;
 
 public class RequestParser {
 	private DefaultHttpClient httpClient = new DefaultHttpClient();
-	private String serverApiAddr = "http://192.168.1.6:5000/api/";
+//	private String serverApiAddr = "http://192.168.1.6:5000/api/";
 //	private String serverApiAddr = "http://130.240.93.141:5000/api/";
+	private String serverApiAddr = "http://130.240.233.81:8000/api/";
 	
 	public RequestParser()	{
 		httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
@@ -149,8 +150,14 @@ public class RequestParser {
 			}
 			return jsonObject;
 		}
+		else if(httpStatusCode == 400)	{
+			throw new ServerConnectionException("API Error: bad request, " + serverUrl, 0, httpStatusCode);
+		}
 		else if(httpStatusCode == 404)	{
 			throw new ServerConnectionException("API Error: faulty endpoint path, " + serverUrl, 0, httpStatusCode);
+		}
+		else if(httpStatusCode == 500)	{
+			throw new ServerConnectionException("API Error: internal server error, " + serverUrl, 0, httpStatusCode);
 		}
 		else	{
 			System.out.println("HTTP status code: " + httpStatusCode);
