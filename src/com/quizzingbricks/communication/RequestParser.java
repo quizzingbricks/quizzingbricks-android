@@ -29,6 +29,7 @@ public class RequestParser {
 //	private String serverApiAddr = "http://130.240.93.141:5000/api/";
 	private String serverApiAddr = "http://130.240.233.81:8000/api/";
 	
+	
 	public RequestParser()	{
 	}
 	
@@ -151,29 +152,30 @@ public class RequestParser {
 	
 	private JSONObject executeAndGetRequest(HttpUriRequest httpRequest, String serverUrl) throws ServerConnectionException, ClientProtocolException, IOException, JSONException	{
 		HttpResponse httpResponse = httpClient.execute(httpRequest);
-		HttpEntity httpEntiry = httpResponse.getEntity();
-		httpEntiry.consumeContent();
+		HttpEntity httpEntity = httpResponse.getEntity();
 		
 		httpClient.getConnectionManager().shutdown();
 		int httpStatusCode = httpResponse.getStatusLine().getStatusCode();
 		if(httpStatusCode == 200)	{
 			JSONObject jsonObject;
 			try	{
-				String response = EntityUtils.toString(httpEntiry);
+				String response = EntityUtils.toString(httpEntity);
 				jsonObject = new JSONObject(response.trim());
 			}
 			catch(JSONException je)	{
+				je.printStackTrace();
 				jsonObject = new JSONObject("{\"result\":\"ok\"}");
 			}
-			catch(IOException je)	{
-				jsonObject = new JSONObject("{\"result\":\"ok\"}");
+			catch(IOException e)	{
+				e.printStackTrace();
+				jsonObject = new JSONObject("{\"responseContent\":\"empty\"}");
 			}
 			return jsonObject;
 		}
 		else if(httpStatusCode == 400)	{
 			try	{
 				JSONObject jsonObject;
-				String response = EntityUtils.toString(httpEntiry);
+				String response = EntityUtils.toString(httpEntity);
 				jsonObject = new JSONObject(response.trim());
 				throw new ServerConnectionException("API Error: " + jsonObject.getJSONObject("errors").getString("message") + " at " + serverUrl, 0, httpStatusCode);
 			}
