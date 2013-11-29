@@ -158,23 +158,27 @@ public class RequestParser {
 		int httpStatusCode = httpResponse.getStatusLine().getStatusCode();
 		if(httpStatusCode == 200)	{
 			JSONObject jsonObject;
-			String response = EntityUtils.toString(httpEntiry);
 			try	{
+				String response = EntityUtils.toString(httpEntiry);
 				jsonObject = new JSONObject(response.trim());
 			}
 			catch(JSONException je)	{
 				jsonObject = new JSONObject("{\"result\":\"ok\"}");
 			}
+			catch(IOException je)	{
+				jsonObject = new JSONObject("{\"result\":\"ok\"}");
+			}
 			return jsonObject;
 		}
 		else if(httpStatusCode == 400)	{
-			JSONObject jsonObject;
-			String response = EntityUtils.toString(httpEntiry);
 			try	{
+				JSONObject jsonObject;
+				String response = EntityUtils.toString(httpEntiry);
 				jsonObject = new JSONObject(response.trim());
 				throw new ServerConnectionException("API Error: " + jsonObject.getJSONObject("errors").getString("message") + " at " + serverUrl, 0, httpStatusCode);
 			}
-			catch(JSONException je)	{
+			catch(Exception e)	{
+				e.printStackTrace();
 				throw new ServerConnectionException("API Error: bad request, " + serverUrl, 0, httpStatusCode);
 			}
 		}

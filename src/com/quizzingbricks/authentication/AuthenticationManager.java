@@ -89,6 +89,9 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 						errorMessage = "Wrong username or password";
 						changeToLoginActivity(errorMessage);
 					}
+					else	{
+						changeToLoginActivity(error.getString("message"));
+					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}

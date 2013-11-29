@@ -29,33 +29,33 @@ public class UserThreadedAPI extends AbstractThreadedAPI {
 	
 	public void loginUser(String email, String password, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverUserApiPath + "login");
+		postCall.addToTheEndOfUrl(serverUserApiPath + "login/");
 		postCall.execute(new BasicNameValuePair("email", email), new BasicNameValuePair("password", password));
 	}
 	
 	public void loginUserWithPopup(String email, String password, String popUpTitle, String popUpMessage, Context context, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverUserApiPath + "login");
+		postCall.addToTheEndOfUrl(serverUserApiPath + "login/");
 		postCall.addPopup(popUpTitle, popUpMessage, context);
 		postCall.execute(new BasicNameValuePair("email", email), new BasicNameValuePair("password", password));
 	}
 	
 	public void getCurrentUserInfo(OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverUserApiPath + "me");
+		getCall.addToTheEndOfUrl(serverUserApiPath + "me/");
 		getCall.execute();
 	}
 	
 	
 	public void getActiveGamesList(OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverUserApiPath + "me/activegames");
+		getCall.addToTheEndOfUrl(serverUserApiPath + "me/activegames/");
 		getCall.execute();
 	}
 	
 	public void getOldGamesList(OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverUserApiPath + "/me/oldgames");
+		getCall.addToTheEndOfUrl(serverUserApiPath + "/me/oldgames/");
 	}
 	
 	public void getFriendsList(OnTaskCompleteAsync onTaskCompleteClass)	{
