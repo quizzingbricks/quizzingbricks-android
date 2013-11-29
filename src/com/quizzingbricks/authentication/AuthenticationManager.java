@@ -1,5 +1,6 @@
 package com.quizzingbricks.authentication;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -69,7 +70,10 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
 		if(result.getException() == null)	{
 			JSONObject jsonResult = result.getResult();
-			if(jsonResult.has("token"))	{
+			if(jsonResult == null)	{
+				changeToLoginActivity("Empty response from server");
+			}
+			else if(jsonResult.has("token"))	{
 				try {
 					editor.putString(KEY_TOKEN, jsonResult.getString("token"));
 				} catch (JSONException e) {
@@ -80,28 +84,25 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 				changeToMainMenuActivity();
 			}
 			else if(jsonResult.has("errors"))	{
-				JSONObject error;
-				String errorMessage;
-				try {
-					error = jsonResult.getJSONObject("errors");
-					String errorCode = error.getString("code");
-					if(errorCode == "010")	{
-						errorMessage = "Wrong username or password";
-						changeToLoginActivity(errorMessage);
-					}
-					else	{
-						changeToLoginActivity(error.getString("message"));
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
+				handleJSONErrorMessage(jsonResult);
 			}
 			else	{
-				changeToLoginActivity("Unknown answer from server");
+				changeToLoginActivity(jsonResult.toString());
 			}
 		}
 		else	{
 			result.getException().printStackTrace();
+		}
+	}
+	
+	//TODO: implement parsing of multiple error messages 
+	private void handleJSONErrorMessage(JSONObject jsonObject)	{
+		try	{
+			JSONObject errorObject = jsonObject.getJSONArray("errors").getJSONObject(0);
+			changeToLoginActivity(errorObject.getString("message"));
+		}
+		catch(JSONException je)	{
+			je.printStackTrace();
 		}
 	}
 	
