@@ -60,13 +60,13 @@ public class UserThreadedAPI extends AbstractThreadedAPI {
 	
 	public void getFriendsList(OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverUserApiPath + "me/friends");
+		getCall.addToTheEndOfUrl(serverUserApiPath + "me/friends/");
 		getCall.execute();
 	}
 	
 	public void addFriendToFriendsList(String email, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverUserApiPath + "me/friends");
+		postCall.addToTheEndOfUrl(serverUserApiPath + "me/friends/");
 		postCall.execute(new BasicNameValuePair("friend", email));
 	}
 	
