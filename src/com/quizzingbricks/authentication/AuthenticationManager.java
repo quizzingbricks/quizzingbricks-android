@@ -79,9 +79,9 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 				editor.commit();
 				changeToMainMenuActivity();
 			}
-			else if(jsonResult.has("error"))	{
+			else if(jsonResult.has("errors"))	{
 				JSONObject error;
-				String errorMessage = "Unknown error message from server";
+				String errorMessage;
 				try {
 					error = jsonResult.getJSONObject("errors");
 					String errorCode = error.getString("code");
