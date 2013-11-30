@@ -2,6 +2,7 @@ package com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls;
 
 import org.json.JSONObject;
 
+import com.quizzingbricks.exceptions.APIException;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 import android.content.Context;
@@ -17,7 +18,7 @@ public class AsyncApiGetCall extends AbstractApiCall<Void, Void, AsyncTaskResult
 		try	{
 			return new AsyncTaskResult<JSONObject>(this.requestParser.getServerEndpointInfo(url, token));
 		}
-		catch(Exception e)	{
+		catch(APIException e)	{
 			return new AsyncTaskResult<JSONObject>(e);
 		}
 	}

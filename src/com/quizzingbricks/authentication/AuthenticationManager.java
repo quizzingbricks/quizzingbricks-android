@@ -16,7 +16,7 @@ import com.quizzingbricks.activities.RegisterUserActivity;
 import com.quizzingbricks.activities.menu.MenuActivity;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
-import com.quizzingbricks.exceptions.ServerConnectionException;
+import com.quizzingbricks.exceptions.APIException;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 public class AuthenticationManager extends Activity implements OnTaskCompleteAsync {

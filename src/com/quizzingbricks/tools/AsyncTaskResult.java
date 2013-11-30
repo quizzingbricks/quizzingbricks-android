@@ -1,13 +1,15 @@
 package com.quizzingbricks.tools;
 
+import com.quizzingbricks.exceptions.APIException;
+
 public class AsyncTaskResult<ResultType>        {
     private ResultType result;
-    private Exception exception;
+    private APIException exception;
     
     public AsyncTaskResult(ResultType result){
         this.result = result;
     }
-    public AsyncTaskResult(Exception exception)        {
+    public AsyncTaskResult(APIException exception)        {
         this.exception = exception;
     }
     

@@ -21,7 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.quizzingbricks.communication.jsonObject.SimpleJsonObject;
-import com.quizzingbricks.exceptions.ServerConnectionException;
+import com.quizzingbricks.exceptions.APIException;
 
 public class RequestParser {
 	private DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -41,7 +41,7 @@ public class RequestParser {
 		httpClient.getConnectionManager().shutdown(); //This will throw a java.net.SocketException: Socket closed
 	}
 	
-	public JSONObject sendPostToServer(String serverUrl, String token, List<BasicNameValuePair> nameValuePairList) throws ServerConnectionException	{
+	public JSONObject sendPostToServer(String serverUrl, String token, List<BasicNameValuePair> nameValuePairList) throws APIException	{
 		try	{
 			HttpPost httpPost= new HttpPost(serverUrl);
 			httpPost.addHeader("token", token);
@@ -49,17 +49,17 @@ public class RequestParser {
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
 			return executeAndGetRequest(httpPost, serverUrl);
 		}
-		catch(ServerConnectionException se)	{
+		catch(APIException se)	{
 			throw se;
 		}
 		catch(Exception e)	{
 			e.printStackTrace();
-			throw new ServerConnectionException("API Error: " + serverUrl);
+			throw new APIException("API Error: " + serverUrl);
 		}
 	}
 	
 	//Just for the /api/games/lobby/<I_id>/invite endpoint 
-	public JSONObject sendPostToServer(String serverUrl, String token, SimpleJsonObject simpleJsonObject, BasicNameValuePair... nameValuePairs) throws ServerConnectionException	{
+	public JSONObject sendPostToServer(String serverUrl, String token, SimpleJsonObject simpleJsonObject, BasicNameValuePair... nameValuePairs) throws APIException	{
 		try	{
 			HttpPost httpPost= new HttpPost(serverUrl);
 			httpPost.addHeader("token", token);
@@ -71,16 +71,16 @@ public class RequestParser {
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
 			return executeAndGetRequest(httpPost, serverUrl);
 		}
-		catch(ServerConnectionException se)	{
+		catch(APIException se)	{
 			throw se;
 		}
 		catch(Exception e)	{
 			e.printStackTrace();
-			throw new ServerConnectionException("API Error: " + serverUrl);
+			throw new APIException("API Error: " + serverUrl);
 		}
 	}
 	
-	public JSONObject sendPostToServer(String serverUrl, String token, BasicNameValuePair... nameValuePairs) throws ServerConnectionException	{
+	public JSONObject sendPostToServer(String serverUrl, String token, BasicNameValuePair... nameValuePairs) throws APIException	{
 		try	{
 			HttpPost httpPost= new HttpPost(serverUrl);
 			httpPost.addHeader("token", token);
@@ -92,16 +92,16 @@ public class RequestParser {
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
 			return executeAndGetRequest(httpPost, serverUrl);
 		}
-		catch(ServerConnectionException se)	{
+		catch(APIException se)	{
 			throw se;
 		}
 		catch(Exception e)	{
 			e.printStackTrace();
-			throw new ServerConnectionException("API Error: " + serverUrl);
+			throw new APIException("API Error: " + serverUrl);
 		}
 	}
 	
-	public JSONObject postJsonToServer(String serverUrl, String token, SimpleJsonObject simpleJsonObject) throws ServerConnectionException	{
+	public JSONObject postJsonToServer(String serverUrl, String token, SimpleJsonObject simpleJsonObject) throws APIException	{
 		try	{
 			HttpPost httpPost= new HttpPost(serverUrl);
 			httpPost.addHeader("token", token);
@@ -110,47 +110,47 @@ public class RequestParser {
 			
 			return executeAndGetRequest(httpPost, serverUrl);
 		}
-		catch(ServerConnectionException se)	{
+		catch(APIException se)	{
 			throw se;
 		}
 		catch(Exception e)	{
 			e.printStackTrace();
-			throw new ServerConnectionException("API Error: " + serverUrl);
+			throw new APIException("API Error: " + serverUrl);
 		}
 	}
 	
-	public JSONObject getServerEndpointInfo(String serverUrl, String token) throws ServerConnectionException	{
+	public JSONObject getServerEndpointInfo(String serverUrl, String token) throws APIException	{
 		try	{
 			HttpGet httpGet= new HttpGet(serverUrl);
 			httpGet.addHeader("token", token);
 			
 			return executeAndGetRequest(httpGet, serverUrl);
 		}
-		catch(ServerConnectionException se)	{
+		catch(APIException se)	{
 			throw se;
 		}
 		catch(Exception e)	{
 			e.printStackTrace();
-			throw new ServerConnectionException("API Error: " + serverUrl);
+			throw new APIException("API Error: " + serverUrl);
 		}
 	}
 	
-	public JSONObject sendDeleteRequestToServer(String serverUrl, String token) throws ServerConnectionException	{
+	public JSONObject sendDeleteRequestToServer(String serverUrl, String token) throws APIException	{
 			HttpDelete httpDelete = new HttpDelete(serverUrl);
 			httpDelete.addHeader("token", token);
 			try {
 				return executeAndGetRequest(httpDelete, serverUrl);
 			} 
-			catch(ServerConnectionException se)	{
+			catch(APIException se)	{
 				throw se;
 			}
 			catch(Exception e)	{
 				e.printStackTrace();
-				throw new ServerConnectionException("API Error: " + serverUrl);
+				throw new APIException("API Error: " + serverUrl);
 			}
 	}
 	
-	private JSONObject executeAndGetRequest(HttpUriRequest httpRequest, String serverUrl) throws ServerConnectionException, ClientProtocolException, IOException, JSONException	{
+	private JSONObject executeAndGetRequest(HttpUriRequest httpRequest, String serverUrl) throws APIException, ClientProtocolException, IOException, JSONException	{
 		HttpResponse httpResponse = httpClient.execute(httpRequest);
 		HttpEntity httpEntity = httpResponse.getEntity();
 		
@@ -179,22 +179,22 @@ public class RequestParser {
 				jsonObject = new JSONObject(response.trim());
 				//TODO: handle multiple error objects in the JSON array
 				JSONObject jsonErrorMessage = jsonObject.getJSONArray("errors").getJSONObject(0);
-				throw new ServerConnectionException(jsonErrorMessage.getString("message"), jsonErrorMessage.getInt("code"), httpStatusCode);
+				throw new APIException(jsonErrorMessage.getString("message"), jsonErrorMessage.getInt("code"), httpStatusCode);
 			}
 			catch(JSONException e)	{
 				e.printStackTrace();
-				throw new ServerConnectionException("API Error: bad request, " + serverUrl, 0, httpStatusCode);
+				throw new APIException("API Error: bad request, " + serverUrl, 0, httpStatusCode);
 			}
 		}
 		else if(httpStatusCode == 404)	{
-			throw new ServerConnectionException("API Error: faulty endpoint path, " + serverUrl, 0, httpStatusCode);
+			throw new APIException("API Error: faulty endpoint path, " + serverUrl, 0, httpStatusCode);
 		}
 		else if(httpStatusCode == 500)	{
-			throw new ServerConnectionException("API Error: internal server error, " + serverUrl, 0, httpStatusCode);
+			throw new APIException("API Error: internal server error, " + serverUrl, 0, httpStatusCode);
 		}
 		else	{
 			System.out.println("HTTP status code: " + httpStatusCode);
-			throw new ServerConnectionException("API Error: " + serverUrl, 0, httpStatusCode);
+			throw new APIException("API Error: " + serverUrl, 0, httpStatusCode);
 		}
 	}
 }
