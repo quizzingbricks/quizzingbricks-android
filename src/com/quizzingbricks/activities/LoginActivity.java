@@ -3,6 +3,8 @@ package com.quizzingbricks.activities;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import com.quizzingbricks.R;
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
+import com.quizzingbricks.tools.ErrorPopupWindow;
 
 
 public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
@@ -28,6 +31,7 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
         if(intent.hasExtra("Message"))	{
         	TextView textView = (TextView)findViewById(R.id.error_message_text);
         	textView.setText(intent.getStringExtra("Message"));
+        	new ErrorPopupWindow(this).createErrorPopupWindow("Login error", intent.getStringExtra("Message"));
         }
     }
 
@@ -47,8 +51,15 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
     	EditText passwordEdit = (EditText) findViewById(R.id.login_password_edit);
     	String password = passwordEdit.getText().toString();
     	
-    	AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
-    	authManager.login(email, password);
+    	if(email.equals("") || password.equals(""))	{
+    		TextView textView = (TextView)findViewById(R.id.error_message_text);
+        	textView.setText("Please fill in all the fields");
+        	new ErrorPopupWindow(this).createErrorPopupWindow("Login error", "Please fill in all the fields");
+    	}
+    	else	{
+    		AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
+    		authManager.login(email, password);
+    	}
     	
     }
 

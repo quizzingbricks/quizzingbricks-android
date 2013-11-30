@@ -27,7 +27,7 @@ public class RequestParser {
 	private DefaultHttpClient httpClient = new DefaultHttpClient();
 //	private String serverApiAddr = "http://192.168.1.6:5000/api/";
 //	private String serverApiAddr = "http://130.240.93.141:5000/api/";
-	private String serverApiAddr = "http://130.240.233.81:8000/api/";
+	private String serverApiAddr = "http://api.quizzingbricks.130.240.233.81.xip.io/api/";
 	
 	
 	public RequestParser()	{
@@ -177,9 +177,11 @@ public class RequestParser {
 				JSONObject jsonObject;
 				String response = EntityUtils.toString(httpEntity);
 				jsonObject = new JSONObject(response.trim());
-				throw new ServerConnectionException("API Error: " + jsonObject.getJSONObject("errors").getString("message") + " at " + serverUrl, 0, httpStatusCode);
+				//TODO: handle multiple error objects in the JSON array
+				JSONObject jsonErrorMessage = jsonObject.getJSONArray("errors").getJSONObject(0);
+				throw new ServerConnectionException(jsonErrorMessage.getString("message"), jsonErrorMessage.getInt("code"), httpStatusCode);
 			}
-			catch(Exception e)	{
+			catch(JSONException e)	{
 				e.printStackTrace();
 				throw new ServerConnectionException("API Error: bad request, " + serverUrl, 0, httpStatusCode);
 			}

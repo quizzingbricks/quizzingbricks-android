@@ -1,7 +1,7 @@
 package com.quizzingbricks.exceptions;
 
 @SuppressWarnings("serial")
-public class ServerConnectionException extends RuntimeException {
+public class ServerConnectionException extends Exception {
 	
 	private String message;
 	private int errorCode;
@@ -31,5 +31,13 @@ public class ServerConnectionException extends RuntimeException {
 	
 	public String toString()	{
 		return this.message;
+	}
+	
+	public int getHttpErrorCode()	{
+		return this.errorCode;
+	}
+	
+	public int getErrorCode()	{
+		return this.errorCode;
 	}
 }

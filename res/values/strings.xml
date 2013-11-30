@@ -26,5 +26,6 @@
     <!-- Other -->
     <string name="title_activity_game_board">GameBoardActivity</string>
     <string name="title_activity_main_screen">MainScreen</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

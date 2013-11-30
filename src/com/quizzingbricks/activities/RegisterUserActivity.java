@@ -14,6 +14,7 @@ import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
+import com.quizzingbricks.tools.ErrorPopupWindow;
 
 public class RegisterUserActivity extends Activity implements OnTaskCompleteAsync {
 	
@@ -39,8 +40,9 @@ public class RegisterUserActivity extends Activity implements OnTaskCompleteAsyn
 		String rewrittenPassword = rewritePasswordEdit.getText().toString();
 		
 		TextView textView = (TextView)findViewById(R.id.error_message_text);
-		if(email == null | username == null | password == null | rewrittenPassword == null)	{
+		if(email.equals("") | username.equals("") | password.equals("") | rewrittenPassword.equals(""))	{
 			textView.setText("Please fill in all the fields");
+			new ErrorPopupWindow(this).createErrorPopupWindow("Form error", "Please fill in all the fields");
 		}
 		else if(!password.equals(rewrittenPassword))	{
 			textView.setText("The passwords in the fields do not match");
@@ -51,35 +53,19 @@ public class RegisterUserActivity extends Activity implements OnTaskCompleteAsyn
 			UserThreadedAPI userAPI = new UserThreadedAPI(this, false);
 			userAPI.registerUser(email, username, password, this);
 		}
-		
-		
 	 }
 
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
+		TextView textView = (TextView)findViewById(R.id.error_message_text);
 		if(result.hasException())	{
-			result.getException().printStackTrace();
+			String message = result.getException().getMessage();
+			textView.setText(message);
+			new ErrorPopupWindow(this).createErrorPopupWindow("Form error", message);
 		}
 		else	{
-			JSONObject jsonResult = result.getResult();
-			if(jsonResult.has("errors"))	{
-				try {
-					String errorCode = jsonResult.getJSONObject("errors").getString("code");
-					TextView textView = (TextView)findViewById(R.id.error_message_text);
-					if(errorCode == "101")	{
-						textView.setText("Email already taken");
-					}
-					else if(errorCode == "102")	{
-						textView.setText("Missing email or password");
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-			else	{
-				AuthenticationManager authManager = new AuthenticationManager(this);
-				authManager.login(email, password);
-			}
+			AuthenticationManager authManager = new AuthenticationManager(this);
+			authManager.login(email, password);
 		}
 	}
 }
