@@ -17,7 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
  
 public class GridViewActivity extends Activity {
-	ImageAdapter ia;
+	GridViewAdapter ia;
 	GridView gridView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class GridViewActivity extends Activity {
         gridView = (GridView) findViewById(R.id.grid_view);
         int SIZEOFBOARD = 36;
         // Instance of ImageAdapter Class
-        ia = new ImageAdapter(this, SIZEOFBOARD);
+        ia = new GridViewAdapter(this, SIZEOFBOARD);
         gridView.setAdapter(ia);
 //        gridView.setMinimumWidth(1200);
         

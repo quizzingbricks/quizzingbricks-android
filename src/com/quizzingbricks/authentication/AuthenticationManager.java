@@ -103,7 +103,6 @@ public class AuthenticationManager {
 			    }
 			});
 			progressDialog.show();
-			progressDialog.show();
 		}
 		
 		
