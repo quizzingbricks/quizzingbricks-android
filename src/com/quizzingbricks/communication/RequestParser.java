@@ -29,10 +29,6 @@ public class RequestParser {
 //	private String serverApiAddr = "http://130.240.93.141:5000/api/";
 	private String serverApiAddr = "http://api.quizzingbricks.130.240.233.81.xip.io/api/";
 	
-	
-	public RequestParser()	{
-	}
-	
 	public String getServerApiAddr()	{
 		return serverApiAddr;
 	}

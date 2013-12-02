@@ -27,5 +27,10 @@
     <string name="title_activity_game_board">GameBoardActivity</string>
     <string name="title_activity_main_screen">MainScreen</string>
     <string name="cancel">Cancel</string>
+    <string name="Question_Prompt">Question Prompt</string>
+    <string name="menu">Menu</string>
+    <string name="friends_list">Friends List</string>
+    <string name="your_games">Your Games</string>
+    <string name="create_game">Create Game</string>
 
 </resources>

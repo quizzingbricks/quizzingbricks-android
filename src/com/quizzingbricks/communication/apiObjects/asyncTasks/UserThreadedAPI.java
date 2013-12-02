@@ -10,6 +10,10 @@ public class UserThreadedAPI extends AbstractThreadedAPI {
 	
 	private String serverUserApiPath = "users/";
 	
+	public UserThreadedAPI(Context context) {
+		super(context, true);
+	}
+	
 	public UserThreadedAPI(Context context, boolean sendWithToken) {
 		super(context, sendWithToken);
 	}

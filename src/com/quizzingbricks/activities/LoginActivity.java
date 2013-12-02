@@ -3,8 +3,6 @@ package com.quizzingbricks.activities;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.quizzingbricks.R;
+
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
@@ -44,7 +43,6 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
     
     //TODO: disable the button when this function is called
     public void sendLoginUserInfo(View view) {
-    	
     	EditText emailEdit = (EditText) findViewById(R.id.login_email_edit);
     	String email = emailEdit.getText().toString();
     	
@@ -60,7 +58,6 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
     		AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);
     		authManager.login(email, password);
     	}
-    	
     }
 
 	@Override

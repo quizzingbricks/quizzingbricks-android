@@ -1,16 +1,25 @@
 package com.quizzingbricks.activities.menu;
 
 
+import com.quizzingbricks.R;
 import com.quizzingbricks.activities.gameboard.GridViewActivity;
-import com.quizzingbricks.activities.gameboard.HorizontalViewActivity;
-import com.quizzingbricks.activities.gameboard.MultiScrollActivity;
-import com.quizzingbricks.activities.gameboard.MultiScrollView;
+
+import com.quizzingbricks.activities.gameboard.GameBoardActivity;
+
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
  
 public class MenuActivity extends ListActivity {
@@ -31,16 +40,16 @@ public class MenuActivity extends ListActivity {
 				//get selected items
 				
 				if (position == 0){
-					Intent intent = new Intent(this, GridViewActivity.class);
+					Intent intent = new Intent(this, ActiveGamesMenuActivity.class);
 			    	startActivity(intent);
 				} else if (position == 1){
-					Intent intent = new Intent(this, MultiScrollView.class);
+					Intent intent = new Intent(this, FriendsListActivity.class);
 			    	startActivity(intent);
 				} else if (position == 2){
-					Intent intent = new Intent(this, HorizontalViewActivity.class);
+					Intent intent = new Intent(this, LobbyActivity.class);
 			    	startActivity(intent);
 				} else if (position == 3){
-					Intent intent = new Intent(this, MultiScrollActivity.class);
+					Intent intent = new Intent(this, GridViewActivity.class);
 			    	startActivity(intent);
 				}
 				else {
@@ -67,4 +76,45 @@ public class MenuActivity extends ListActivity {
 //			});
 	 
 	
+}
+
+
+class MenuAdapter extends ArrayAdapter<String> {
+	private final Context context;
+	static final public String[] values = new String[] {  "Game List","Friends List","NewGame Test","GridView" };
+//	private final String[] values;
+ 
+	public MenuAdapter(Context context) {
+		super(context, R.layout.list_layout, values);		
+		this.context = context;
+//		this.values = values;
+	}
+	
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		LayoutInflater inflater = (LayoutInflater) context
+			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+ 
+		View rowView = inflater.inflate(R.layout.list_layout, parent, false);
+		TextView textView = (TextView) rowView.findViewById(R.id.label);
+		ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
+		textView.setText(values[position]);
+ 
+		// Change icon based on name
+		String s = values[position];
+ 
+		System.out.println(s);
+ 
+		if (s.equals(values[0])) {
+			imageView.setImageResource(R.drawable.boardcellblue);
+		} else if (s.equals(values[1])) {
+			imageView.setImageResource(R.drawable.boardcellgreen);
+		} else if (s.equals(values[2])) {
+			imageView.setImageResource(R.drawable.boardcellred);
+		} else if (s.equals(values[3])){
+			imageView.setImageResource(R.drawable.boardcellyellow);
+		}
+ 
+		return rowView;
+	}
 }
