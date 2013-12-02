@@ -38,8 +38,13 @@
             android:label="@string/title_activity_game_board" >
         </activity>
         <activity
-            android:name="com.quizzingbricks.activities.gameboard.QuestionPromptActivity"
-             android:label="@string/Question_Prompt">
+            android:name="com.quizzingbricks.activities.answerQuestion.QuestionPromptActivity"
+             android:label="@string/Question_Prompt"
+             >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity 
      android:name="com.quizzingbricks.activities.gameboard.GridViewActivity">
@@ -66,15 +71,15 @@
                 android:value="com.quizzingbricks.Login" 
                 />
         </activity>
-        <activity
-		    android:name="com.quizzingbricks.activities.FirstStartActivity"
-		    android:label="@string/app_name"
-		    >
-		     <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-		</activity>
+<!--         <activity -->
+<!-- 		    android:name="com.quizzingbricks.activities.FirstStartActivity" -->
+<!-- 		    android:label="@string/app_name" -->
+<!-- 		    > -->
+<!-- 			<intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
+<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
+<!--             </intent-filter> -->
+<!-- 		</activity> -->
 		
 		<activity
 		    android:name="com.quizzingbricks.activities.RegisterUserActivity"

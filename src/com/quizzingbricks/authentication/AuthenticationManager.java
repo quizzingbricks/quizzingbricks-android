@@ -39,6 +39,15 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 		userAPI.loginUserWithPopup(email, password, "Logging in", "Please wait...", context, this);
 	}
 	
+	public boolean hasToken()	{
+		if(getToken() == null)	{
+			return false;
+		}
+		else	{
+			return true;
+		}
+	}
+	
 	public String getToken()	{
 		return sharedPref.getString(KEY_TOKEN, null);
 	}

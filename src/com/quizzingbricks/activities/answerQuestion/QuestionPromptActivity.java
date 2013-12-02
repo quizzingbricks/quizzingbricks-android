@@ -1,4 +1,4 @@
-package com.quizzingbricks.activities.gameboard;
+package com.quizzingbricks.activities.answerQuestion;
 
 
 
@@ -39,11 +39,12 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 //        setContentView(R.layout.questionprompt);
 //        md = new QuestionPromptAdapter(this, new ArrayString[] {  "Question","Answer 1","Answer 2","Answer 3","Answer 4" });
 //		setListAdapter(md);
-		gameId = getIntent().getExtras().getInt("id");
-		GamesThreadedAPI gt = new GamesThreadedAPI(this);
-		
-		gt.getQuestion(gameId, this);
         
+//      gameId = getIntent().getExtras().getInt("id");
+//		GamesThreadedAPI gt = new GamesThreadedAPI(this);
+//		gt.getQuestion(gameId, this);
+        
+        new GamesThreadedAPI(this).getQuestion(0, this);
     }
         // get intent data
 //        Intent i = getIntent();
@@ -76,34 +77,36 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 	}
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
-//		String x = result.toString();
-//		md = new QuestionPromptAdapter(this, new String[] {  "THIS IS QUESTION","Answer 1","Answer 2","Answer 3",x });
-//		setListAdapter(md);
-		
-		ArrayList<String> list = new ArrayList<String>();
-		try {
-			JSONArray asd = result.getResult().getJSONArray("alternatives");
-			list.add(result.getResult().getJSONObject("question").toString());
-			for (int i = 0; i < asd.length(); i++) {
-	//			JSONObject test = asd.getJSONObject(i)get(i);
-	//			list[i]=asd.get(i).toString();
+		if(result.hasResult())	{
+			JSONArray jsonAlternatives = result.getResult().getJSONArray("alternatives");
+			
+			try {
+				JSONArray asd = result.getResult().getJSONArray("alternatives");
+				list.add(result.getResult().getJSONObject("question").toString());
+				for (int i = 0; i < asd.length(); i++) {
+					//			JSONObject test = asd.getJSONObject(i)get(i);
+					//			list[i]=asd.get(i).toString();
 //				list.add(asd.getJSONObject(i).get("name").toString());
-				list.add(asd.getJSONObject(i).toString());
+					list.add(asd.getJSONObject(i).toString());
+					
+				}
 				
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				list.add("Waiting for Question");
 			}
-			
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			list.add("Waiting for Question");
+			QuestionPromptAdapter md = new QuestionPromptAdapter(this, list);
+			setListAdapter(md);
 		}
-		QuestionPromptAdapter md = new QuestionPromptAdapter(this, list);
-		setListAdapter(md);
+		else	{
+			result.getException().printStackTrace();
+		}
 	}
-	public void loadQuestion(){
-		Toast.makeText(this, "lol", 2);
-	}
+//	public void loadQuestion(){
+//		Toast.makeText(this, "lol", 2);
+//	}
 }
 class QuestionPromptAdapter extends ArrayAdapter<String> {
 	private final Context context;
