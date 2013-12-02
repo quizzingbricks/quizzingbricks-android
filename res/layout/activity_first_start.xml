@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.quizzingbricks.activities.FirstStartActivity"
+    >
+    
+    <TextView
+        android:id="@+id/app_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textHeaderColor"
+        android:textSize="32sp" 
+        android:text="@string/app_name"
+        android:paddingBottom="32dp"
+        />
+
+    <Button
+        android:id="@+id/start_register_user_button"
+        android:onClick="changeToRegisterUserActivity"
+        android:text="@string/register_user_button"
+        style="@style/startScreenButtons"
+        android:layout_marginBottom="10dp"
+         />
+
+    <Button
+        android:id="@+id/start_login_user_button"
+        style="@style/startScreenButtons"
+        android:onClick="changeToLoginActivity"
+        android:text="@string/login_user_button" 
+        />
+    
+</LinearLayout>
