@@ -23,14 +23,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-
             android:name="com.quizzingbricks.activities.LoginActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/app_name" 
+            android:parentActivityName="com.quizzingbricks.activities.FirstStartActivity"
+            >
         </activity>
         <activity
 
@@ -58,7 +54,8 @@
             </activity>
       <activity 
           android:name="com.quizzingbricks.activities.menu.FriendsListActivity"
-          android:label="@string/friends_list"></activity>
+          android:label="@string/friends_list">
+      </activity>
        
 		<activity
             android:name="com.quizzingbricks.activities.MainScreenActivity"
@@ -66,8 +63,24 @@
             android:parentActivityName="com.quizzingbricks.activities.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.quizzingbricks.Login" />
+                android:value="com.quizzingbricks.Login" 
+                />
         </activity>
+        <activity
+		    android:name="com.quizzingbricks.activities.FirstStartActivity"
+		    android:label="@string/app_name"
+		    >
+		     <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+		</activity>
+		
+		<activity
+		    android:name="com.quizzingbricks.activities.RegisterUserActivity"
+		    android:label="@string/app_name"
+		    android:parentActivityName="com.quizzingbricks.activities.FirstStartActivity"
+		    ></activity>
         <activity android:name="com.quizzingbricks.activities.menu.LobbyActivity"
             android:label="@string/create_game"
             ></activity>

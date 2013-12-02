@@ -1,44 +1,32 @@
 package com.quizzingbricks.authentication;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.AsyncTask;
 
-import com.quizzingbricks.activities.MainScreenActivity;
+import com.quizzingbricks.activities.FirstStartActivity;
 import com.quizzingbricks.activities.LoginActivity;
-import com.quizzingbricks.exceptions.ServerConnectionException;
+import com.quizzingbricks.activities.RegisterUserActivity;
+import com.quizzingbricks.activities.menu.MenuActivity;
+import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
+import com.quizzingbricks.exceptions.APIException;
+import com.quizzingbricks.tools.AsyncTaskResult;
 
-public class AuthenticationManager {
+public class AuthenticationManager extends Activity implements OnTaskCompleteAsync {
 
 	private Editor editor;
 	private Context context;
 	private SharedPreferences sharedPref;
 	
 	private final String IS_LOGIN = "isLoggedIn";
-	private final String KEY_EMAIL = "email";
 	private final String KEY_TOKEN = "token";
-	
-	private final String serverUrl = "http://130.240.94.184:5000/login";
 	
 	public AuthenticationManager(Context context)	{
 		this.context = context;
@@ -47,13 +35,17 @@ public class AuthenticationManager {
 	}
 	
 	public void login(String email, String password)		{
-		AuthenticateTask authenticateTask = new AuthenticateTask();
-		authenticateTask.execute(email, password);
+		UserThreadedAPI userAPI = new UserThreadedAPI(context, false);
+		userAPI.loginUserWithPopup(email, password, "Logging in", "Please wait...", context, this);
 	}
 	
-	public void logout()	{
-		editor.clear();
-		editor.commit();
+	public String getToken()	{
+		return sharedPref.getString(KEY_TOKEN, null);
+	}
+	
+	public void registerNewUser(String email, String password, String username)	{
+		UserThreadedAPI userAPI = new UserThreadedAPI(context, false);
+		userAPI.registerUser(email, username, password, this);
 	}
 	
 	/**
@@ -61,129 +53,83 @@ public class AuthenticationManager {
 	 */
 	public void checkAuthentication()	{
 		if(!isLoggedIn())	{
-			Intent intent = new Intent(this.context, LoginActivity.class);
-			// Closing all the Activities
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			this.context.startActivity(intent);
+			changeToFirstStartActivity();
 		}
 	}
 	
+	public void logout()	{
+		editor.clear();
+		editor.commit();
+	}
+
 	public boolean isLoggedIn()	{
 		return sharedPref.getBoolean(IS_LOGIN, false);
 	}
 	
-	public String getToken()	{
-		return sharedPref.getString(KEY_TOKEN, null);
-	}
 	
-	private class AuthenticateTask extends AsyncTask<String, Void, AsyncTaskResult<String>> {
-
-		private String email;
-		private String password;
-		private ProgressDialog progressDialog;
-		
-		private HttpClient client = new DefaultHttpClient();
-		private HttpPost httppost = new HttpPost(serverUrl);
-		
-		@Override
-		protected void onPreExecute() {
-			progressDialog = new ProgressDialog(context);
-			progressDialog.setTitle("Processing...");
-			progressDialog.setMessage("Please wait.");
-			progressDialog.setCancelable(false);
-			progressDialog.setIndeterminate(true);
-			final AuthenticateTask authTask = this; //Declared so that the class is in the scope of the OnClickListener 
-			progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-			    @Override
-			    public void onClick(DialogInterface dialog, int which) {
-			    	client.getConnectionManager().shutdown();
-			    	authTask.cancel(true);
-			    	progressDialog.dismiss();
-			    }
-			});
-			progressDialog.show();
-		}
-		
-		
-		@Override
-		protected AsyncTaskResult<String> doInBackground(String... params) {
-			
-			try {
-				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-				this.email = params[0];
-				this.password = params[1];
-				nameValuePairs.add(new BasicNameValuePair("email", this.email));
-				nameValuePairs.add(new BasicNameValuePair("password", this.password));
-				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-				HttpEntity entity = client.execute(httppost).getEntity();
-				
-				if(entity != null)	{
-					String response = EntityUtils.toString(entity); 
-			        entity.consumeContent();
-			        client.getConnectionManager().shutdown();
-			        JSONObject jsonObject = new JSONObject(response.trim());
-			        try {
-			        	return new AsyncTaskResult<String>(jsonObject.getString("token"));
-			        }
-			        catch (JSONException je){
-			        	return new AsyncTaskResult<String>(jsonObject.getString("error"));
-			        }
+	@Override
+	public void onComplete(AsyncTaskResult<JSONObject> result) {
+		if(result.getException() == null)	{
+			JSONObject jsonResult = result.getResult();
+			if(jsonResult == null)	{
+				changeToLoginActivity("Empty response from server");
+			}
+			else if(jsonResult.has("token"))	{
+				try {
+					editor.putString(KEY_TOKEN, jsonResult.getString("token"));
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
-				else	{
-					return new AsyncTaskResult<String>(new ServerConnectionException("No return message from server"));
-				}
-				
-			} 
-			catch (ClientProtocolException e) {
-				return new AsyncTaskResult<String>(new ServerConnectionException("Could not send HTTP Post to server"));
+				editor.putBoolean(IS_LOGIN, true);
+				editor.commit();
+				changeToMainMenuActivity();
 			}
-			catch (Exception e)	{
-				return new AsyncTaskResult<String>(e);
-			}
-		}
-		
-		protected void onPostExecute(AsyncTaskResult<String> result)	{
-			progressDialog.dismiss();
-			if(result.getException() != null)	{
-				result.getException().printStackTrace();
-			}
-			else if(isCancelled())	{
-				//Remove the pop up
+			else if(jsonResult.has("errors"))	{
+				handleJSONErrorMessage(jsonResult);
 			}
 			else	{
-				editor.putBoolean(IS_LOGIN, true);
-				editor.putString(KEY_EMAIL, this.email);
-				editor.putString(KEY_TOKEN, result.getResult());
-				editor.commit();
-				Intent intent = new Intent(context, MainScreenActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				context.startActivity(intent);
+				changeToLoginActivity(jsonResult.toString());
 			}
 		}
-
+		else	{
+			handleExceptions(result.getException());
+		}
 	}
-	/**
-	 *	Inspiration from http://stackoverflow.com/a/6312491 
-	 */
-	private class AsyncTaskResult<ResultType>	{
-		private ResultType result;
-		private Exception exception;
-		
-		public AsyncTaskResult(ResultType result){
-			this.result = result;
+	
+	private void handleExceptions(Exception exception)	{
+		changeToLoginActivity(exception.getMessage());
+	}
+	
+	//TODO: implement parsing of multiple error messages 
+	private void handleJSONErrorMessage(JSONObject jsonObject)	{
+		try	{
+			JSONObject errorObject = jsonObject.getJSONArray("errors").getJSONObject(0);
+			changeToLoginActivity(errorObject.getString("message"));
 		}
-		public AsyncTaskResult(Exception exception)	{
-			this.exception = exception;
+		catch(JSONException je)	{
+			je.printStackTrace();
 		}
-		
-		public ResultType getResult()	{
-			return this.result;
-		}
-		
-		public Exception getException()	{
-			return this.exception;
-		}
+	}
+	
+	private void changeToMainMenuActivity()	{
+		Intent intent = new Intent(this.context, MenuActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		this.context.startActivity(intent);
+	}
+	
+	private void changeToFirstStartActivity()	{
+		Intent intent = new Intent(context, FirstStartActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+	
+	private void changeToLoginActivity(String message)	{
+		Intent intent = new Intent(context, LoginActivity.class);
+		intent.putExtra("Message", message);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
 	}
 }

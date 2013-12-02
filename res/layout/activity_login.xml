@@ -1,16 +1,18 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+<RelativeLayout 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-
     tools:context=".LoginActivity"
     >
-
-
+    
     <TextView
         android:id="@+id/login_text_header"
         style="@style/textHeader"
@@ -23,11 +25,20 @@
         android:text="@string/login_header" 
         />
     
+    <TextView 
+        android:id="@+id/error_message_text"
+        style="@style/inputBoxScreenWidth"
+        android:layout_below="@id/login_text_header"
+        android:textColor="@color/warning_red"
+        android:textSize="16sp"
+        />
+    
     <EditText 
         android:id="@+id/login_email_edit"
-        android:layout_below="@id/login_text_header"
+        android:layout_below="@id/error_message_text"
         style="@style/inputBoxScreenWidth"
         android:hint="@string/login_email_text_hint"
+        android:inputType="textNoSuggestions|textEmailAddress"
         />
     
     <EditText 
@@ -40,13 +51,11 @@
     
     <Button
         android:id="@+id/login_submit"
-
         android:gravity="center"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/login_password_edit"
-        android:layout_alignRight="@+id/login_password_edit"
+        android:layout_alignLeft="@id/login_password_edit"
+        android:layout_alignRight="@id/login_password_edit"
         android:layout_below="@id/login_password_edit"
         android:onClick="sendLoginUserInfo"
         android:padding="16dp"
@@ -54,3 +63,7 @@
         />
 
 </RelativeLayout>
+    
+    
+</ScrollView>
+

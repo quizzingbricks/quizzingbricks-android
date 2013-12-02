@@ -11,17 +11,15 @@ import android.content.Context;
 
 public class LobbyThreadedAPI extends AbstractThreadedAPI {
 
-	private String serverLobbyApiPath = "games/lobby";
+	private String serverLobbyApiPath = "games/lobby/";
 	
 	public LobbyThreadedAPI(Context context) {
-		super(context);
+		super(context, true);
 	}
-	
-	public LobbyThreadedAPI()	{}
 	
 	public void createLobby(int size, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverLobbyApiPath + "/create");
+		postCall.addToTheEndOfUrl(serverLobbyApiPath + "/create/");
 		postCall.execute(new BasicNameValuePair("size", Integer.toString(size)));
 	}
 	
@@ -33,7 +31,7 @@ public class LobbyThreadedAPI extends AbstractThreadedAPI {
 	
 	public void acceptLobbyInvitation(int lobbyId, boolean accept, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverLobbyApiPath + "/" + Integer.toString(lobbyId) + "/accept");
+		postCall.addToTheEndOfUrl(serverLobbyApiPath + "/" + Integer.toString(lobbyId) + "/accept/");
 		BasicNameValuePair acceptPair;
 		if(accept == true)	{
 			acceptPair = new BasicNameValuePair("answer", "accept"); 
@@ -47,13 +45,13 @@ public class LobbyThreadedAPI extends AbstractThreadedAPI {
 	
 	public void getLobbyInfo(int id, OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverLobbyApiPath + "/" + Integer.toString(id));
+		getCall.addToTheEndOfUrl(serverLobbyApiPath + "/" + Integer.toString(id) + "/");
 		getCall.execute();
 	}
 	
 	public void invitetoLobby(int lobbyId, List<String> users, OnTaskCompleteAsync onTaskCompleteClass)		{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverLobbyApiPath + "/" + Integer.toString(lobbyId) + "/accept");
+		postCall.addToTheEndOfUrl(serverLobbyApiPath + "/" + Integer.toString(lobbyId) + "/accept/");
 		JsonPairStringList jsonStringList = new JsonPairStringList("invite", users);
 		SimpleJsonObject jsonObject = new SimpleJsonObject();
 		jsonObject.addJsonField(jsonStringList);

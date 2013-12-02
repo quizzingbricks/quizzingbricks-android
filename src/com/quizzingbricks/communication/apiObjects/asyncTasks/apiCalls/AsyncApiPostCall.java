@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
+import com.quizzingbricks.exceptions.APIException;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 
@@ -15,10 +16,6 @@ public class AsyncApiPostCall extends AbstractApiCall<BasicNameValuePair, Void, 
 		super(token);
 	}
 	
-	public AsyncApiPostCall(String popUpTitle, String popUpMessage, Context context)	{
-		super(popUpTitle, popUpMessage, context);
-	}
-
 	@Override
 	protected AsyncTaskResult<JSONObject> doInBackground(BasicNameValuePair... params) {
 		try	{
@@ -29,7 +26,7 @@ public class AsyncApiPostCall extends AbstractApiCall<BasicNameValuePair, Void, 
 				return new AsyncTaskResult<JSONObject>(this.requestParser.sendPostToServer(url, token, params));
 			}
 		}
-		catch(Exception e)	{
+		catch(APIException e)	{
 			return new AsyncTaskResult<JSONObject>(e);
 		}
 		

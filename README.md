@@ -1,4 +1,4 @@
 quizzingbricks-android
 ======================
 
-Android client for the Quizzing Bricks game
+Android client for the Quizzing Bricks game.

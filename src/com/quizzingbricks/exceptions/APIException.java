@@ -1,25 +1,25 @@
 package com.quizzingbricks.exceptions;
 
 @SuppressWarnings("serial")
-public class ServerConnectionException extends RuntimeException {
+public class APIException extends Exception {
 	
 	private String message;
 	private int errorCode;
 	private int httpErrorCode;
 	
-	public ServerConnectionException() {
+	public APIException() {
 	}
 	
-	public ServerConnectionException(String message) {
+	public APIException(String message) {
 		this.message = message;
 	}
 	
-	public ServerConnectionException(String message, int errorCode) {
+	public APIException(String message, int errorCode) {
 		this.message = message;
 		this.errorCode = errorCode;
 	}
 	
-	public ServerConnectionException(String message, int errorCode, int httpErrorCode)	{
+	public APIException(String message, int errorCode, int httpErrorCode)	{
 		this.message = message;
 		this.errorCode = errorCode;
 		this.httpErrorCode = httpErrorCode;
@@ -31,5 +31,13 @@ public class ServerConnectionException extends RuntimeException {
 	
 	public String toString()	{
 		return this.message;
+	}
+	
+	public int getHttpErrorCode()	{
+		return this.errorCode;
+	}
+	
+	public int getErrorCode()	{
+		return this.errorCode;
 	}
 }
