@@ -69,7 +69,7 @@ public abstract class AbstractApiCall<Params, Progress, Result> extends AsyncTas
 			});
 			progressDialog.show();
 		}
-	}
+	} 
 	
 	protected void onPostExecute(Result result)	{
 		if(popup == true)	{

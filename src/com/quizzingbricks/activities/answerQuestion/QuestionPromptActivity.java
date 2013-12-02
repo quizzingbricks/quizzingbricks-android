@@ -1,40 +1,28 @@
 package com.quizzingbricks.activities.answerQuestion;
 
-
-
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.quizzingbricks.R;
-import com.quizzingbricks.R.id;
-import com.quizzingbricks.R.layout;
 
 
 import com.quizzingbricks.communication.apiObjects.asyncTasks.GamesThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
+import com.quizzingbricks.tools.SimplePopupWindow;
 
-import android.app.Activity;
 import android.app.ListActivity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
  
 public class QuestionPromptActivity extends ListActivity implements OnTaskCompleteAsync {
- QuestionPromptAdapter md;
- GamesThreadedAPI GTAPI;
- int gameId;
-    public void onCreate(Bundle savedInstanceState) {
+	private int gameId;
+    
+	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.questionprompt);
 //        md = new QuestionPromptAdapter(this, new ArrayString[] {  "Question","Answer 1","Answer 2","Answer 3","Answer 4" });
@@ -43,88 +31,68 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 //      gameId = getIntent().getExtras().getInt("id");
 //		GamesThreadedAPI gt = new GamesThreadedAPI(this);
 //		gt.getQuestion(gameId, this);
-        
-        new GamesThreadedAPI(this).getQuestion(0, this);
+        this.gameId = 0; //Remove this later
+        new GamesThreadedAPI(this).getQuestion(gameId, this);
     }
-        // get intent data
-//        Intent i = getIntent();
+    
     @Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-    	
-		//get selected items
-		
-		if (position == 0){
-		}
-		 else if (position == 1){
-			 int lol = getIntent().getExtras().getInt("id");
-			 System.out.println(lol);
-			 Intent returnIntent = new Intent();
-			 returnIntent.putExtra("result",lol);
-			 setResult(RESULT_OK,returnIntent);     
-			 finish();
-//			finishActivity(1);
-//			GTAPI.sendAnswer(gameId, 1, this);
-		}
-		else {
-//			String selectedValue = (String) getListAdapter().getItem(position);
-//			Toast.makeText(this, selectedValue, Toast.LENGTH_SHORT).show();
-			Intent returnIntent = new Intent();
-//			 returnIntent.putExtra("result",1);
-			 setResult(RESULT_CANCELED,returnIntent);     
-			 finish();
-		}
- 
+    	new GamesThreadedAPI(this).sendAnswer(gameId, position, this);
 	}
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
-		if(result.hasResult())	{
-			JSONArray jsonAlternatives = result.getResult().getJSONArray("alternatives");
-			
-			try {
-				JSONArray asd = result.getResult().getJSONArray("alternatives");
-				list.add(result.getResult().getJSONObject("question").toString());
-				for (int i = 0; i < asd.length(); i++) {
-					//			JSONObject test = asd.getJSONObject(i)get(i);
-					//			list[i]=asd.get(i).toString();
-//				list.add(asd.getJSONObject(i).get("name").toString());
-					list.add(asd.getJSONObject(i).toString());
-					
-				}
-				
-				
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-				list.add("Waiting for Question");
-			}
-			QuestionPromptAdapter md = new QuestionPromptAdapter(this, list);
-			setListAdapter(md);
-		}
-		else	{
+		if(result.hasException())	{
 			result.getException().printStackTrace();
 		}
+		else if(result.getResult().has("question"))	{
+			handleQuestion(result.getResult());
+		}
+		else if(result.getResult().has("isCorrect"))	{
+			handleAnswer(result.getResult());
+		}
+		
 	}
-//	public void loadQuestion(){
-//		Toast.makeText(this, "lol", 2);
-//	}
-}
-class QuestionPromptAdapter extends ArrayAdapter<String> {
-	private final Context context;
-	public ArrayList<String> values;
- 
-	public QuestionPromptAdapter(Context context, ArrayList<String> values) {	
-		super(context, R.layout.list_layout_no_image, values);		
-		this.values = values;
-		this.context = context;
+	
+	private void handleQuestion(JSONObject questionObject)	{
+		try {
+			ArrayList<String> questionAlternatives = new ArrayList<String>();
+			JSONArray jsonAlternatives = questionObject.getJSONArray("alternatives");
+			for(int i=0; i<=jsonAlternatives.length()-1; i++)	{
+				questionAlternatives.add(jsonAlternatives.getString(i));
+			}
+			String question = questionObject.getString("question");
+			QuestionPromptAdapter md = new QuestionPromptAdapter(this, questionAlternatives, question);
+			ListView listView = getListView();
+			TextView textView = new TextView(this);
+			textView.setTextSize(18);
+			textView.setText(question);
+			int whiteSpacePadding = 20;
+			textView.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
+			listView.addHeaderView(textView, question, false);
+			setListAdapter(md);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
-
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context
-			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowView = inflater.inflate(R.layout.list_layout_no_image, parent, false);
-		TextView textView = (TextView) rowView.findViewById(R.id.label);
-		textView.setText(values.get(position));
-		return rowView;
+	
+	private void handleAnswer(JSONObject answerObject)	{
+		System.out.println("Yay handling questions");
+		try	{
+			String isAnswerCorrect = answerObject.getString("isCorrect");
+			if(isAnswerCorrect.equals("true"))	{ 
+				new SimplePopupWindow(this).createErrorPopupWindow("Answer", getApplicationContext().getString(R.string.correct_answer));
+			}
+			else if(isAnswerCorrect.equals("false"))	{
+				new SimplePopupWindow(this).createErrorPopupWindow("Answer", getApplicationContext().getString(R.string.incorrect_answer));
+			}
+			else	{
+				new SimplePopupWindow(this).createErrorPopupWindow("Error", getApplicationContext().getString(R.string.unknow_server_answer));
+			}
+		}
+		catch (Exception e)	{
+			e.printStackTrace();
+		}
 	}
 }

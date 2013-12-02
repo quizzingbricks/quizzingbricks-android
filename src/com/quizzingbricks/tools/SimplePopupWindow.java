@@ -4,11 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-public class ErrorPopupWindow {
+public class SimplePopupWindow {
 	
 	private Context context;
 	
-	public ErrorPopupWindow(Context context)	{
+	public SimplePopupWindow(Context context)	{
 		this.context = context;
 	}
 	

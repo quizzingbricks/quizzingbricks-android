@@ -34,7 +34,7 @@ public class GamesThreadedAPI extends AbstractThreadedAPI {
 	
 	public void sendAnswer(int gameId, int answer, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverLobbyApiPath + Integer.toString(answer) + "/play/question/");
+		postCall.addToTheEndOfUrl(serverLobbyApiPath + Integer.toString(gameId) + "/play/answer/");
 		postCall.execute(new BasicNameValuePair("answer", Integer.toString(answer)));
 	}
 }

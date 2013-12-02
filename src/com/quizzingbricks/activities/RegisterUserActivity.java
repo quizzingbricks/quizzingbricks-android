@@ -14,7 +14,7 @@ import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
-import com.quizzingbricks.tools.ErrorPopupWindow;
+import com.quizzingbricks.tools.SimplePopupWindow;
 
 public class RegisterUserActivity extends Activity implements OnTaskCompleteAsync {
 	
@@ -42,7 +42,7 @@ public class RegisterUserActivity extends Activity implements OnTaskCompleteAsyn
 		TextView textView = (TextView)findViewById(R.id.error_message_text);
 		if(email.equals("") | username.equals("") | password.equals("") | rewrittenPassword.equals(""))	{
 			textView.setText("Please fill in all the fields");
-			new ErrorPopupWindow(this).createErrorPopupWindow("Form error", "Please fill in all the fields");
+			new SimplePopupWindow(this).createErrorPopupWindow("Form error", "Please fill in all the fields");
 		}
 		else if(!password.equals(rewrittenPassword))	{
 			textView.setText("The passwords in the fields do not match");
@@ -61,7 +61,7 @@ public class RegisterUserActivity extends Activity implements OnTaskCompleteAsyn
 		if(result.hasException())	{
 			String message = result.getException().getMessage();
 			textView.setText(message);
-			new ErrorPopupWindow(this).createErrorPopupWindow("Form error", message);
+			new SimplePopupWindow(this).createErrorPopupWindow("Form error", message);
 		}
 		else	{
 			AuthenticationManager authManager = new AuthenticationManager(this);
