@@ -25,7 +25,7 @@ import com.quizzingbricks.exceptions.ServerConnectionException;
 
 public class RequestParser {
 	private HttpClient httpClient = new DefaultHttpClient();
-	private String serverApiAddr = "http://130.240.93.16:5000/api/";
+	private String serverApiAddr = "http://130.240.94.1:5000/api/";
 	
 	public String getServerApiAddr()	{
 		return serverApiAddr;
