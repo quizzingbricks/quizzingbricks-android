@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.quizzingbricks.R;
 import com.quizzingbricks.R.drawable;
 import com.quizzingbricks.activities.answerQuestion.QuestionPromptActivity;
-import com.quizzingbricks.activities.menu.MenuActivity;
+
 import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
@@ -35,18 +35,41 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
-//	GameBoardView mview;
-	int gameId = 1;
+	int gameID;
 	ArrayList<Integer> gameboard;
 	OnTaskCompleteAsync ontaskcomplete;
 	int BOARD_SIZE = 8;
+	GamesThreadedAPI gameThreadedAPI;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intentBuffer = getIntent();
+        gameID = intentBuffer.getExtras().getInt("id");
         ontaskcomplete = this;
         gameboard = new ArrayList<Integer>();
-//        setContentView(R.layout.multiscroll_layout);
-        
+        gameThreadedAPI = new GamesThreadedAPI(this);
+        gameThreadedAPI.getGameInfo(gameID, this);
+	}    
+	
+	@Override
+	public void onComplete(AsyncTaskResult<JSONObject> result) {
+    	System.out.println("GOT ON COMPLETE MESSAGE");
+    	makeGameBoard();
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		 if (requestCode == 1) {
+		     if(resultCode == RESULT_OK){      
+		    	 gameThreadedAPI.getGameInfo(gameID, this);
+		     }
+		     if (resultCode == RESULT_CANCELED) {    
+		         //Write your code if there's no result
+		     }
+//		 }
+	}
+
+    void makeGameBoard(){   
         ScrollView a = new ScrollView(this);
         a.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         
@@ -71,12 +94,19 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 					
 					@Override
 					public void onClick(View v) {
-//						GamesThreadedAPI GTAPI = new GamesThreadedAPI(getApplicationContext());
-//						GTAPI.getQuestion(gameId, ontaskcomplete);
+						GamesThreadedAPI GTAPI = new GamesThreadedAPI(getApplicationContext());
+						
 						int id = v.getId();
+						int y = id % BOARD_SIZE;
+						int x = id / BOARD_SIZE;
+						System.out.println(gameID);
+						System.out.println(x);
+						System.out.println(y);
+						
+						GTAPI.placeBricks(gameID, x, y, ontaskcomplete);
 						Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
 //						System.out.println("loltest"+id);
-				    	i.putExtra("id", id);
+				    	i.putExtra("gameID", gameID);
 //						startActivity(i);
 				    	startActivityForResult(i, 1);
 				    	
@@ -93,32 +123,5 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
         b.addView(c);
         a.addView(b);
         setContentView(a);
-		}
-	@Override
-	public void onComplete(AsyncTaskResult<JSONObject> result) {
-//		Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
-////    	i.putExtra("id", position);
-//    	startActivity(i);
-    	
 	}
-	
-	@Override
-	protected void onResume()		{
-		
-	}
-	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-		  if (requestCode == 1) {
-
-		     if(resultCode == RESULT_OK){      
-		         int result=data.getExtras().getInt("result");
-		         ImageButton b = (ImageButton) findViewById(result);
-					b.setImageResource(R.drawable.boardcellblue);
-		     }
-		     if (resultCode == RESULT_CANCELED) {    
-		         //Write your code if there's no result
-		     }
-		  }
-		}
 }

@@ -126,18 +126,17 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 		
 		public void onActivityResult(int requestCode, int resultCode, Intent data) {
 			//This is called by AddFriend Activity when it has added a friend
-			
-//			   super.onActivityResult(requestCode, resultCode, data);
-//			   System.out.println("THIS IS PRINT AND: "+requestCode);
-//			   if (requestCode == 1) {
-//				   System.out.println(resultCode);
+		
+			//If you need to take results from different fragments, use different requestCodes
+//			 if (requestCode == 1) {
+//				
 		     if(resultCode == RESULT_OK){      
 		    	 viewPager.setAdapter(fragmentAdapter);
 		    	 viewPager.setCurrentItem(2);
 		    	 Toast.makeText(this, "Friend was added", 2).show();
 		     }
 		     else if (resultCode == RESULT_CANCELED) {    
-		    	 Toast.makeText(this, "Failed to add friend", 2).show();
+		    	 Toast.makeText(this, "Friend not found Or already exists", 2).show();
 		         //Write your code if there's no result
 		     }
 		}
