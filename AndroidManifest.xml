@@ -50,20 +50,22 @@
         
         <activity
             android:name="com.quizzingbricks.activities.answerQuestion.QuestionPromptActivity"
+
              android:label="@string/Question_Prompt">
+
         </activity>
         <activity 
-     android:name="com.quizzingbricks.activities.inactive.GridViewActivity">
+     		android:name="com.quizzingbricks.activities.inactive.GridViewActivity">
         </activity>
         <activity 
-     android:name="com.quizzingbricks.activities.menu.AddFriendActivity">
+     		android:name="com.quizzingbricks.activities.menu.AddFriendActivity">
         </activity>
         <activity 
-     android:name="com.quizzingbricks.activities.inactive.ActiveGamesMenuActivity"
+     		android:name="com.quizzingbricks.activities.inactive.ActiveGamesMenuActivity"
             android:label="@string/your_games">
         </activity>
         <activity 
-   android:name="com.quizzingbricks.activities.gameboard.GameBoardActivity"
+   			android:name="com.quizzingbricks.activities.gameboard.GameBoardActivity"
             android:label="GameBoard">
             </activity>
       <activity 

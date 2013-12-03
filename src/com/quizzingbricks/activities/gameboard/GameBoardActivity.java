@@ -55,6 +55,15 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
     	System.out.println("GOT ON COMPLETE MESSAGE");
+    	try {
+    		if(result.hasException())	{
+				System.out.println("Oh noes...");
+				result.getException().printStackTrace();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
     	makeGameBoard();
 	}
 	

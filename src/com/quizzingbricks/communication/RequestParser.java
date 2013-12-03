@@ -159,7 +159,6 @@ public class RequestParser {
 				jsonObject = new JSONObject(response.trim());
 			}
 			catch(JSONException je)	{
-				je.printStackTrace();
 				jsonObject = new JSONObject("{\"result\":\"ok\"}");
 			}
 			catch(IOException e)	{

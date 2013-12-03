@@ -11,6 +11,9 @@ import android.content.SharedPreferences.Editor;
 
 import com.quizzingbricks.activities.FirstStartActivity;
 import com.quizzingbricks.activities.LoginActivity;
+
+import com.quizzingbricks.activities.RegisterUserActivity;
+
 import com.quizzingbricks.activities.menu.MainMenuActivity;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
