@@ -50,16 +50,10 @@ public class UserThreadedAPI extends AbstractThreadedAPI {
 		getCall.execute();
 	}
 	
-	
-	public void getActiveGamesList(OnTaskCompleteAsync onTaskCompleteClass)	{
-		getCall.addOnTaskComplete(onTaskCompleteClass);
-		getCall.addToTheEndOfUrl(serverUserApiPath + "me/activegames/");
-		getCall.execute();
-	}
-	
 	public void getOldGamesList(OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
 		getCall.addToTheEndOfUrl(serverUserApiPath + "/me/oldgames/");
+		getCall.execute();
 	}
 	
 	public void getFriendsList(OnTaskCompleteAsync onTaskCompleteClass)	{

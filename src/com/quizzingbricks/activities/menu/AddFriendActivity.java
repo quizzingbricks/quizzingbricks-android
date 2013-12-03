@@ -39,30 +39,31 @@ public class AddFriendActivity extends Activity implements OnTaskCompleteAsync{
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
 		// TODO Response to user that friend has been added?
+		System.out.println("GOT RESULT IN ADD FRIEND");
+//		System.out.println(result.getResult().toString());
 		try {
-			 if (result.getResult().toString() == "OK"){
-//				 int lol = getIntent().getExtras().getInt("id");
-//				 System.out.println(lol);
-				 Intent returnIntent = new Intent();
-//				 returnIntent.putExtra("result",lol);
-				 setResult(RESULT_OK,returnIntent);     
-				 finish();
-//				finishActivity(1);
-//				GTAPI.sendAnswer(gameId, 1, this);
+			if(result.hasException())	{
+				System.out.println("Oh noes...");
+				result.getException().printStackTrace();
 			}
-			else {
-//				String selectedValue = (String) getListAdapter().getItem(position);
-//				Toast.makeText(this, selectedValue, Toast.LENGTH_SHORT).show();
+			else if (result.getResult().toString() == "OK"){
+				System.out.println(result.getResult().toString());
 				Intent returnIntent = new Intent();
-//				 returnIntent.putExtra("result",1);
-				 setResult(RESULT_CANCELED,returnIntent);     
-				 finish();
+				setResult(RESULT_OK,returnIntent);     
+				finish();
+
 			}
+//			else {
+//
+//				Intent returnIntent = new Intent();
+//				setResult(RESULT_CANCELED,returnIntent);     
+//				finish();
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		Intent returnIntent = new Intent();
-		setResult(RESULT_OK,returnIntent);
+		setResult(RESULT_CANCELED,returnIntent);
 		finish();
 		
 		

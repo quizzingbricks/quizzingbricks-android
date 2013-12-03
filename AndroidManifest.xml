@@ -50,8 +50,9 @@
         
         <activity
             android:name="com.quizzingbricks.activities.answerQuestion.QuestionPromptActivity"
-             android:label="@string/Question_Prompt"
-             >
+
+             android:label="@string/Question_Prompt">
+
         </activity>
         <activity 
      		android:name="com.quizzingbricks.activities.inactive.GridViewActivity">

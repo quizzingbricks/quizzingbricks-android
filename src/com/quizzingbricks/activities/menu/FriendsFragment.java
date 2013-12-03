@@ -47,20 +47,18 @@ public class FriendsFragment extends ListFragment implements OnTaskCompleteAsync
 			// TODO Auto-generated method stub
 			 	ArrayList<String> newfriendslist = new ArrayList<String>();
 				newfriendslist.add("Add Friend");
-				
-
 				try {
+					if(result.hasException())	{
+						System.out.println("Oh noes...");
+						result.getException().printStackTrace();
+					}
 					JSONArray asd = result.getResult().getJSONArray("friends");
 					for (int i = 0; i < asd.length(); i++) {
-						JSONObject x = (JSONObject)asd.get(i);
-						newfriendslist.add(x.toString());
-					}
-						
-						
-					
-					
-				} catch (Exception e) {
-					
+						JSONObject friendJson = asd.getJSONObject(i);
+						Object friendEmail = friendJson.get("email");
+						newfriendslist.add(friendEmail.toString());
+					}									
+				} catch (Exception e) {			
 					e.printStackTrace();
 					newfriendslist.add("No Friends");
 				}
