@@ -2,12 +2,6 @@ package com.quizzingbricks.activities.gameboard;
 
 
 
-import com.quizzingbricks.R;
-import com.quizzingbricks.R.drawable;
-import com.quizzingbricks.R.id;
-import com.quizzingbricks.R.layout;
-import com.quizzingbricks.activities.menu.MenuActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+
+import com.quizzingbricks.R;
+import com.quizzingbricks.activities.menu.MainMenuActivity;
  
 public class GridViewActivity extends Activity {
 	GridViewAdapter ia;
@@ -66,7 +63,7 @@ public class GridViewActivity extends Activity {
     	gridView.setAdapter(ia);
     }
     public void gotomenu(){
-    	Intent i = new Intent(getApplicationContext(), MenuActivity.class);
+    	Intent i = new Intent(getApplicationContext(), MainMenuActivity.class);
 //    	i.putExtra("id", position);
     	startActivity(i);
     }

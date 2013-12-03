@@ -8,12 +8,14 @@ import org.json.JSONObject;
 import com.quizzingbricks.R;
 
 
+import com.quizzingbricks.activities.gameboard.GameBoardActivity;
 import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
 import com.quizzingbricks.tools.SimplePopupWindow;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -24,14 +26,7 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
     
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.questionprompt);
-//        md = new QuestionPromptAdapter(this, new ArrayString[] {  "Question","Answer 1","Answer 2","Answer 3","Answer 4" });
-//		setListAdapter(md);
-        
-//      gameId = getIntent().getExtras().getInt("id");
-//		GamesThreadedAPI gt = new GamesThreadedAPI(this);
-//		gt.getQuestion(gameId, this);
-        this.gameId = 0; //Remove this later
+        this.gameId = getIntent().getIntExtra("gameID", 0); 
         new GamesThreadedAPI(this).getQuestion(gameId, this);
     }
     
@@ -78,14 +73,17 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 	}
 	
 	private void handleAnswer(JSONObject answerObject)	{
-		System.out.println("Yay handling questions");
 		try	{
 			String isAnswerCorrect = answerObject.getString("isCorrect");
 			if(isAnswerCorrect.equals("true"))	{ 
-				new SimplePopupWindow(this).createPopupWindow("Correct Answer", getApplicationContext().getString(R.string.correct_answer));
+				new SimplePopupWindow(this).createPopupWindowWithResult("Correct Answer", 
+						getApplicationContext().getString(R.string.correct_answer),
+						RESULT_OK);
 			}
 			else if(isAnswerCorrect.equals("false"))	{
-				new SimplePopupWindow(this).createPopupWindow("Incorrect Answer", getApplicationContext().getString(R.string.incorrect_answer));
+				new SimplePopupWindow(this).createPopupWindowWithResult("Incorrect Answer", 
+						getApplicationContext().getString(R.string.incorrect_answer),
+						RESULT_CANCELED);
 			}
 			else	{
 				new SimplePopupWindow(this).createPopupWindow("Error", getApplicationContext().getString(R.string.unknow_server_answer));

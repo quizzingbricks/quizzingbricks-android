@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import com.quizzingbricks.R;
 import com.quizzingbricks.R.drawable;
 import com.quizzingbricks.activities.answerQuestion.QuestionPromptActivity;
-import com.quizzingbricks.activities.menu.MenuActivity;
 import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
@@ -35,11 +34,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
-//	GameBoardView mview;
-	int gameId = 1;
-	ArrayList<Integer> gameboard;
-	OnTaskCompleteAsync ontaskcomplete;
-	int BOARD_SIZE = 8;
+//	private GameBoardView mview;
+	private int gameId = 1;
+	private ArrayList<Integer> gameboard;
+	private OnTaskCompleteAsync ontaskcomplete;
+	private int BOARD_SIZE = 8;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +57,10 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
         c.setOrientation(LinearLayout.VERTICAL);
         
         for (int i = 0; i < BOARD_SIZE; i++) {
-        	LinearLayout d = new LinearLayout(this);
-            d.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-            d.setPadding(-5, 0, -5, 0);
-            d.setOrientation(LinearLayout.HORIZONTAL);
+        	LinearLayout buttonContainer = new LinearLayout(this);
+            buttonContainer.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            buttonContainer.setPadding(-5, 0, -5, 0);
+            buttonContainer.setOrientation(LinearLayout.HORIZONTAL);
             for (int j = 0; j < BOARD_SIZE; j++) {
             	ImageButton ib = new ImageButton(this);
             	ib.setImageResource(R.drawable.boardcellempty);
@@ -86,9 +85,9 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 					}
 				});
 //                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            	d.addView(ib);//new Button(this));
+            	buttonContainer.addView(ib);//new Button(this));
     		}
-            c.addView(d);
+            c.addView(buttonContainer);
 		}
         b.addView(c);
         a.addView(b);
@@ -102,21 +101,23 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
     	
 	}
 	
-	@Override
-	protected void onResume()		{
-		
-	}
+//	@Override
+//	protected void onResume()		{
+//		
+//	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		  if (requestCode == 1) {
 
-		     if(resultCode == RESULT_OK){      
-		         int result=data.getExtras().getInt("result");
-		         ImageButton b = (ImageButton) findViewById(result);
-					b.setImageResource(R.drawable.boardcellblue);
+		     if(resultCode == RESULT_OK){    
+		    	 System.out.println("Yay a correct answer");
+//		         int result=data.getExtras().getInt("result");
+//		         ImageButton b = (ImageButton) findViewById(result);
+//					b.setImageResource(R.drawable.boardcellblue);
 		     }
-		     if (resultCode == RESULT_CANCELED) {    
+		     if (resultCode == RESULT_CANCELED) {
+		    	 System.out.println("Oh noes");
 		         //Write your code if there's no result
 		     }
 		  }
