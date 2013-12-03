@@ -2,7 +2,7 @@ package com.quizzingbricks.communication.apiObjects;
 
 import org.apache.http.message.BasicNameValuePair;
 
-import com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls.AsyncApiPostCall;
+import com.quizzingbricks.communication.apiObjects.apiCalls.AsyncApiPostCall;
 
 import android.content.Context;
 

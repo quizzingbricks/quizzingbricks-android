@@ -1,4 +1,4 @@
-package com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls;
+package com.quizzingbricks.communication.apiObjects.apiCalls;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;

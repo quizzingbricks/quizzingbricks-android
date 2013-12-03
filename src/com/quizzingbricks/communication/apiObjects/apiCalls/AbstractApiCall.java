@@ -1,4 +1,4 @@
-package com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls;
+package com.quizzingbricks.communication.apiObjects.apiCalls;
 
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.RequestParser;

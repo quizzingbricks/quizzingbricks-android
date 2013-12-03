@@ -121,6 +121,7 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 	}
 	
 	private void changeToMainMenuActivity()	{
+		//Currently MainMenu instead of Menu
 		Intent intent = new Intent(this.context, MenuActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

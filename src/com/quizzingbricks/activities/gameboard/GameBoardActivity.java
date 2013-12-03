@@ -60,10 +60,12 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
         for (int i = 0; i < BOARD_SIZE; i++) {
         	LinearLayout d = new LinearLayout(this);
             d.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            d.setPadding(-5, 0, -5, 0);
             d.setOrientation(LinearLayout.HORIZONTAL);
             for (int j = 0; j < BOARD_SIZE; j++) {
             	ImageButton ib = new ImageButton(this);
             	ib.setImageResource(R.drawable.boardcellempty);
+            	ib.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             	ib.setId((i*BOARD_SIZE)+j);
             	ib.setOnClickListener(new OnClickListener() {
 					
