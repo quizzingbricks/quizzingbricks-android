@@ -8,20 +8,12 @@
     <TextView android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Design Games Screen"
+        android:text="Games Screen"
         android:textSize="20dp"
         android:layout_centerInParent="true"
         android:id="@+id/textfield"
         />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Start Game"
-        android:textSize="20dp"
-        android:layout_below="@id/textfield"
-         android:layout_centerInParent="true"
-        />
+   
      
  
 </RelativeLayout>

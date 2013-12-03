@@ -101,9 +101,7 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 		QuestionPromptAdapter md = new QuestionPromptAdapter(this, list);
 		setListAdapter(md);
 	}
-	public void loadQuestion(){
-		Toast.makeText(this, "lol", 2);
-	}
+	
 }
 class QuestionPromptAdapter extends ArrayAdapter<String> {
 	private final Context context;
