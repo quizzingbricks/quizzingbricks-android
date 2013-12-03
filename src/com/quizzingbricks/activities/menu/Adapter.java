@@ -1,5 +1,7 @@
 package com.quizzingbricks.activities.menu;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +14,10 @@ import com.quizzingbricks.R;
  class Adapter 
 	 extends ArrayAdapter<String> {
 		private final Context context;
-		public String[] values;
+		public ArrayList<String> values;
 //		private final String[] values;
 	 
-		public Adapter(Context context, String[] values) {
+		public Adapter(Context context, ArrayList<String> values) {
 			
 			super(context, R.layout.list_layout_no_image, values);		
 			this.values = values;
@@ -31,7 +33,7 @@ import com.quizzingbricks.R;
 			View rowView = inflater.inflate(R.layout.list_layout_no_image, parent, false);
 			TextView textView = (TextView) rowView.findViewById(R.id.label);
 //			ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
-			textView.setText(values[position]);
+			textView.setText(values.get(position));
 	 
 			// Change icon based on name
 //			String s = values[position];

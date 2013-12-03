@@ -30,22 +30,36 @@
         </activity>
         <activity
 
-            android:name="com.quizzingbricks.activities.menu.MenuActivity"
+            android:name="com.quizzingbricks.activities.inactive.MenuActivity"
             android:label="@string/menu" >
+        </activity>
+        <activity
+
+            android:name="com.quizzingbricks.activities.menu.MainMenuActivity"
+            android:label="@string/app_name"
+              >
         </activity>
         <activity
             android:name="com.quizzingbricks.MainActivity"
             android:label="@string/title_activity_game_board" >
         </activity>
         <activity
+            android:name="com.quizzingbricks.Menu.GameListFragment"
+            android:label="@string/title_activity_game_board" >
+        </activity>
+        
+        <activity
             android:name="com.quizzingbricks.activities.gameboard.QuestionPromptActivity"
              android:label="@string/Question_Prompt">
         </activity>
         <activity 
-     android:name="com.quizzingbricks.activities.gameboard.GridViewActivity">
+     android:name="com.quizzingbricks.activities.inactive.GridViewActivity">
         </activity>
         <activity 
-     android:name="com.quizzingbricks.activities.menu.ActiveGamesMenuActivity"
+     android:name="com.quizzingbricks.activities.menu.AddFriendActivity">
+        </activity>
+        <activity 
+     android:name="com.quizzingbricks.activities.inactive.ActiveGamesMenuActivity"
             android:label="@string/your_games">
         </activity>
         <activity 
@@ -53,7 +67,7 @@
             android:label="GameBoard">
             </activity>
       <activity 
-          android:name="com.quizzingbricks.activities.menu.FriendsListActivity"
+          android:name="com.quizzingbricks.activities.inactive.FriendsListActivity"
           android:label="@string/friends_list">
       </activity>
        
