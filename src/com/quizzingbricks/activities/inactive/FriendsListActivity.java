@@ -17,8 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.quizzingbricks.R;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 public class FriendsListActivity extends ListActivity implements OnTaskCompleteAsync{

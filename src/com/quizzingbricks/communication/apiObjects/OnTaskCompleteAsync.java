@@ -1,4 +1,4 @@
-package com.quizzingbricks.communication.apiObjects.asyncTasks;
+package com.quizzingbricks.communication.apiObjects;
 
 import org.json.JSONObject;
 

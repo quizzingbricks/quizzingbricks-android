@@ -1,4 +1,4 @@
-package com.quizzingbricks.communication.apiObjects.asyncTasks;
+package com.quizzingbricks.communication.apiObjects;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class LobbyThreadedAPI extends AbstractThreadedAPI {
 	
 	public void createLobby(int size, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverLobbyApiPath + "/create/");
+		postCall.addToTheEndOfUrl(serverLobbyApiPath);
 		postCall.execute(new BasicNameValuePair("size", Integer.toString(size)));
 	}
 	

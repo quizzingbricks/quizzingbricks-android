@@ -1,8 +1,8 @@
-package com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls;
+package com.quizzingbricks.communication.apiObjects.apiCalls;
 
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.RequestParser;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskComplete;
+import com.quizzingbricks.communication.apiObjects.OnTaskComplete;
 import com.quizzingbricks.communication.jsonObject.SimpleJsonObject;
 
 import android.app.ProgressDialog;
@@ -69,7 +69,7 @@ public abstract class AbstractApiCall<Params, Progress, Result> extends AsyncTas
 			});
 			progressDialog.show();
 		}
-	}
+	} 
 	
 	protected void onPostExecute(Result result)	{
 		if(popup == true)	{

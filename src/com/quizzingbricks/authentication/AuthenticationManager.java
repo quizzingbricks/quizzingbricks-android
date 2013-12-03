@@ -13,10 +13,9 @@ import android.content.SharedPreferences.Editor;
 import com.quizzingbricks.activities.FirstStartActivity;
 import com.quizzingbricks.activities.LoginActivity;
 import com.quizzingbricks.activities.RegisterUserActivity;
-import com.quizzingbricks.activities.inactive.MenuActivity;
-import com.quizzingbricks.activities.menu.MainMenuActivity;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
+import com.quizzingbricks.activities.menu.MenuActivity;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.exceptions.APIException;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
@@ -38,6 +37,15 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 	public void login(String email, String password)		{
 		UserThreadedAPI userAPI = new UserThreadedAPI(context, false);
 		userAPI.loginUserWithPopup(email, password, "Logging in", "Please wait...", context, this);
+	}
+	
+	public boolean hasToken()	{
+		if(getToken() == null)	{
+			return false;
+		}
+		else	{
+			return true;
+		}
 	}
 	
 	public String getToken()	{
@@ -114,7 +122,7 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 	
 	private void changeToMainMenuActivity()	{
 		//Currently MainMenu instead of Menu
-		Intent intent = new Intent(this.context, MainMenuActivity.class);
+		Intent intent = new Intent(this.context, MenuActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		this.context.startActivity(intent);

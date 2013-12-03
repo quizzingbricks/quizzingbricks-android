@@ -1,9 +1,9 @@
-package com.quizzingbricks.communication.apiObjects.asyncTasks;
+package com.quizzingbricks.communication.apiObjects;
 
 import com.quizzingbricks.authentication.AuthenticationManager;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls.AsyncApiDeleteCall;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls.AsyncApiGetCall;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls.AsyncApiPostCall;
+import com.quizzingbricks.communication.apiObjects.apiCalls.AsyncApiDeleteCall;
+import com.quizzingbricks.communication.apiObjects.apiCalls.AsyncApiGetCall;
+import com.quizzingbricks.communication.apiObjects.apiCalls.AsyncApiPostCall;
 
 import android.content.Context;
 

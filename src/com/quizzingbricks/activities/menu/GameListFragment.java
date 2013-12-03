@@ -15,8 +15,8 @@ import android.widget.ListView;
 
 import com.quizzingbricks.R;
 import com.quizzingbricks.activities.gameboard.GameBoardActivity;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 public class GameListFragment extends ListFragment implements OnTaskCompleteAsync {

@@ -11,8 +11,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.quizzingbricks.R;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 public class AddFriendActivity extends Activity implements OnTaskCompleteAsync{

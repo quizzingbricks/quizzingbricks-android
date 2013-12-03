@@ -9,10 +9,10 @@ import org.json.JSONObject;
 import com.quizzingbricks.R;
 
 import com.quizzingbricks.activities.gameboard.GameBoardActivity;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.GamesThreadedAPI;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.LobbyThreadedAPI;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.LobbyThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 

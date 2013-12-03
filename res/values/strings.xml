@@ -23,6 +23,10 @@
     <string name="register_user_password_text_hint">Make it strong!</string>
     <string name="register_user_rewrite_password_edit_header">Rewrite Password</string>
     <string name="register_user_rewrite_password_text_hint">And again</string>
+    <!-- Answer Question -->
+    <string name="correct_answer">The answer you have given is correct</string>
+    <string name="incorrect_answer">The answer you have given is incorrect</string>
+    <string name="unknow_server_answer">Unknown answer from server</string>
     <!-- Other -->
     <string name="title_activity_game_board">GameBoardActivity</string>
     <string name="title_activity_main_screen">MainScreen</string>

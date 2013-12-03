@@ -6,9 +6,10 @@ import org.json.JSONObject;
 
 import com.quizzingbricks.R;
 import com.quizzingbricks.R.drawable;
-import com.quizzingbricks.activities.inactive.MenuActivity;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.GamesThreadedAPI;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
+import com.quizzingbricks.activities.answerQuestion.QuestionPromptActivity;
+import com.quizzingbricks.activities.menu.MenuActivity;
+import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 import android.app.Activity;
@@ -95,11 +96,17 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 		}
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
-		Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
-//    	i.putExtra("id", position);
-    	startActivity(i);
+//		Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
+////    	i.putExtra("id", position);
+//    	startActivity(i);
     	
 	}
+	
+	@Override
+	protected void onResume()		{
+		
+	}
+	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		  if (requestCode == 1) {

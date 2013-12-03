@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.quizzingbricks.activities.gameboard.QuestionPromptActivity;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
+import com.quizzingbricks.activities.answerQuestion.QuestionPromptActivity;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 public class FriendsFragment extends ListFragment implements OnTaskCompleteAsync{
