@@ -23,22 +23,21 @@ public class GameListFragment extends ListFragment implements OnTaskCompleteAsyn
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		gameID = 1;
+		
+		//just set -1 so we don't get wierd errors
+		gameID = -1;
 		GamesThreadedAPI lt = new GamesThreadedAPI(getActivity());
 		lt.getActiveGames(this);
 	}
 	
-
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
 		// TODO Auto-generated method stub
-		
-		
+
 		if (list == null) {
 			list = new ArrayList<String>();
 		}
 		list.clear();
-//		list.add("Test game");
 		try {
 			if(result.hasException())	{
 				System.out.println("Oh noes...");
@@ -47,28 +46,27 @@ public class GameListFragment extends ListFragment implements OnTaskCompleteAsyn
 			else	{
 				JSONArray asd = result.getResult().getJSONArray("games");
 				for (int i = 0; i < asd.length(); i++) {
-//					JSONObject test = asd.getJSONObject(i);
 					Object gameid = asd.get(i);
 					list.add(gameid.toString());
-//					list.add(asd.toString());
-					
 				}
-			}
-			
-			
+			}	
 		} catch (Exception e) {
 			e.printStackTrace();
 			list.add("No Games");
 		}
-		
 		Adapter md = new Adapter(getActivity(), list);
 		setListAdapter(md);
 	}
+	
 	@Override
 	 public void onListItemClick(ListView l, View v, int position, long id) {
 		
 		Intent intent = new Intent(getActivity(), GameBoardActivity.class);
-		gameID = Integer.parseInt(list.get(position));
+		try {
+			gameID = Integer.parseInt(list.get(position));
+		} catch (Exception e) {
+			gameID = -1;
+		}
 		intent.putExtra("id", gameID);
     	startActivity(intent);
 
