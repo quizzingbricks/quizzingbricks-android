@@ -13,7 +13,7 @@ import android.content.SharedPreferences.Editor;
 import com.quizzingbricks.activities.FirstStartActivity;
 import com.quizzingbricks.activities.LoginActivity;
 import com.quizzingbricks.activities.RegisterUserActivity;
-import com.quizzingbricks.activities.menu.MenuActivity;
+import com.quizzingbricks.activities.menu.MainMenuActivity;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.exceptions.APIException;
@@ -122,7 +122,7 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 	
 	private void changeToMainMenuActivity()	{
 		//Currently MainMenu instead of Menu
-		Intent intent = new Intent(this.context, MenuActivity.class);
+		Intent intent = new Intent(this.context, MainMenuActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		this.context.startActivity(intent);

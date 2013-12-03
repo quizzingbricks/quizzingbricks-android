@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.quizzingbricks.R;
-import com.quizzingbricks.activities.menu.MenuActivity;
+import com.quizzingbricks.activities.gameboard.GameBoardActivity;
 import com.quizzingbricks.authentication.AuthenticationManager;
 
 public class FirstStartActivity extends Activity {
@@ -27,12 +27,14 @@ public class FirstStartActivity extends Activity {
     }
 	
 	public void changeToLoginActivity(View view)	{
-		Intent intent = new Intent(this, LoginActivity.class);
-		startActivity(intent);
+//		Intent intent = new Intent(this, LoginActivity.class);
+//		startActivity(intent);
+		startActivity(new Intent(this, GameBoardActivity.class));
 	}
 	
 	public void changeToRegisterUserActivity(View view)	{
-		Intent intent = new Intent(this, RegisterUserActivity.class);
-		startActivity(intent);
+//		Intent intent = new Intent(this, RegisterUserActivity.class);
+//		startActivity(intent);
+		startActivity(new Intent(this, GameBoardActivity.class));
 	}
 }
