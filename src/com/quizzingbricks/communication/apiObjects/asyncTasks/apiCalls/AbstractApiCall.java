@@ -2,7 +2,7 @@ package com.quizzingbricks.communication.apiObjects.asyncTasks.apiCalls;
 
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.RequestParser;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskComplete;
+import com.quizzingbricks.communication.apiObjects.OnTaskComplete;
 import com.quizzingbricks.communication.jsonObject.SimpleJsonObject;
 
 import android.app.ProgressDialog;

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.quizzingbricks.R;
 
 import com.quizzingbricks.authentication.AuthenticationManager;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
 import com.quizzingbricks.tools.SimplePopupWindow;
 
@@ -30,7 +30,7 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
         if(intent.hasExtra("Message"))	{
         	TextView textView = (TextView)findViewById(R.id.error_message_text);
         	textView.setText(intent.getStringExtra("Message"));
-        	new SimplePopupWindow(this).createErrorPopupWindow("Login error", intent.getStringExtra("Message"));
+        	new SimplePopupWindow(this).createPopupWindow("Login error", intent.getStringExtra("Message"));
         }
     }
 
@@ -52,7 +52,7 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
     	if(email.equals("") || password.equals(""))	{
     		TextView textView = (TextView)findViewById(R.id.error_message_text);
         	textView.setText("Please fill in all the fields");
-        	new SimplePopupWindow(this).createErrorPopupWindow("Login error", "Please fill in all the fields");
+        	new SimplePopupWindow(this).createPopupWindow("Login error", "Please fill in all the fields");
     	}
     	else	{
     		AuthenticationManager authManager = new AuthenticationManager(LoginActivity.this);

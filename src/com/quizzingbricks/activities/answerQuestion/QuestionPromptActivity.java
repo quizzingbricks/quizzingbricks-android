@@ -8,8 +8,8 @@ import org.json.JSONObject;
 import com.quizzingbricks.R;
 
 
-import com.quizzingbricks.communication.apiObjects.asyncTasks.GamesThreadedAPI;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
 import com.quizzingbricks.tools.SimplePopupWindow;
 
@@ -82,13 +82,13 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 		try	{
 			String isAnswerCorrect = answerObject.getString("isCorrect");
 			if(isAnswerCorrect.equals("true"))	{ 
-				new SimplePopupWindow(this).createErrorPopupWindow("Answer", getApplicationContext().getString(R.string.correct_answer));
+				new SimplePopupWindow(this).createPopupWindow("Correct Answer", getApplicationContext().getString(R.string.correct_answer));
 			}
 			else if(isAnswerCorrect.equals("false"))	{
-				new SimplePopupWindow(this).createErrorPopupWindow("Answer", getApplicationContext().getString(R.string.incorrect_answer));
+				new SimplePopupWindow(this).createPopupWindow("Incorrect Answer", getApplicationContext().getString(R.string.incorrect_answer));
 			}
 			else	{
-				new SimplePopupWindow(this).createErrorPopupWindow("Error", getApplicationContext().getString(R.string.unknow_server_answer));
+				new SimplePopupWindow(this).createPopupWindow("Error", getApplicationContext().getString(R.string.unknow_server_answer));
 			}
 		}
 		catch (Exception e)	{

@@ -14,8 +14,8 @@ import com.quizzingbricks.activities.FirstStartActivity;
 import com.quizzingbricks.activities.LoginActivity;
 import com.quizzingbricks.activities.RegisterUserActivity;
 import com.quizzingbricks.activities.menu.MenuActivity;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.OnTaskCompleteAsync;
-import com.quizzingbricks.communication.apiObjects.asyncTasks.UserThreadedAPI;
+import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.exceptions.APIException;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
