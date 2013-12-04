@@ -34,10 +34,8 @@ public class FirstStartActivity extends Activity {
     }
 	
 	public void changeToLoginActivity(View view)	{
-//		Intent intent = new Intent(this, LoginActivity.class);
-//		startActivity(intent);
-//		startActivity(new Intent(this, GameBoardActivity.class));
-		startActivity(new Intent(this, QuestionPromptActivity.class));
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
 	}
 	
 	public void changeToRegisterUserActivity(View view)	{
