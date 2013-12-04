@@ -11,6 +11,8 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+import com.quizzingbricks.activities.lobby.LobbyOwnerActivity;
+import com.quizzingbricks.activities.lobby.LobbySlaveActivity;
 import com.quizzingbricks.communication.apiObjects.LobbyThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
@@ -66,15 +68,18 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		// TODO Auto-generated method stub
-		super.onListItemClick(l, v, position, id);
-		if (position == 0) {
-			
-			 Intent i = new Intent(getActivity(), CreateLobbyActivity.class);
-			 startActivityForResult(i, 1);
-		} else {
-			
-		}
+//		// TODO Auto-generated method stub
+//        super.onListItemClick(l, v, position, id);
+//        if (position == 0) {
+//                 Intent i = new Intent(getActivity(), CreateLobbyActivity.class);
+//                 startActivityForResult(i, 1);
+//        } else if (lobbyownerlist.get(position)) {
+//                Intent i = new Intent(getActivity(), LobbyOwnerActivity.class);
+//                 startActivity(i);
+//        } else {
+//                Intent i = new Intent(getActivity(), LobbySlaveActivity.class);
+//                 startActivity(i);
+//        }
 		
 		
 	}

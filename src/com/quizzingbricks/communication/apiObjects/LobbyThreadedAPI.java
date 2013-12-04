@@ -60,5 +60,18 @@ public class LobbyThreadedAPI extends AbstractThreadedAPI {
 		SimpleJsonObject jsonObject = new SimpleJsonObject();
 		jsonObject.addJsonField(jsonStringList);
 		postCall.addSimpleJsonObject(jsonObject);
+		postCall.execute();
+	}
+	
+	public void startGame(int lobbyId, OnTaskCompleteAsync onTaskCompleteClass)	{
+		postCall.addOnTaskComplete(onTaskCompleteClass);
+		postCall.addToTheEndOfUrl(serverLobbyApiPath + "/" + Integer.toString(lobbyId) + "/start/");
+		postCall.execute();
+	}
+	
+	public void endGame(int lobbyId, OnTaskCompleteAsync onTaskCompleteClass)	{
+		postCall.addOnTaskComplete(onTaskCompleteClass);
+		postCall.addToTheEndOfUrl(serverLobbyApiPath + "/" + Integer.toString(lobbyId) + "/end/");
+		postCall.execute();
 	}
 }
