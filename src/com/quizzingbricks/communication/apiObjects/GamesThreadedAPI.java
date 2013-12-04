@@ -12,6 +12,10 @@ public class GamesThreadedAPI extends AbstractThreadedAPI {
 		super(context, true);
 	}
 	
+	public GamesThreadedAPI(Context context, String token) {
+		super(context, true, token);
+	}
+	
 	public void getGameInfo(int gameId, OnTaskCompleteAsync onTaskCompleteClass)	{
 		getCall.addOnTaskComplete(onTaskCompleteClass);
 		getCall.addToTheEndOfUrl(serverGameApiPath + Integer.toString(gameId));
