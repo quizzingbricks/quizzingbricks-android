@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.R.bool;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -16,8 +17,8 @@ import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
-	ArrayList<String> list;
-	
+	ArrayList<String> lobbynamelist;
+	ArrayList<Boolean> lobbyownerlist;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -30,11 +31,16 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
 		// TODO Auto-generated method stub
-		if (list == null) {
-			list = new ArrayList<String>();
+		if (lobbynamelist == null) {
+			lobbynamelist = new ArrayList<String>();
+		}if (lobbyownerlist == null) {
+			lobbyownerlist = new ArrayList<Boolean>();
 		}
-		list.clear();
-		list.add("+Create New Game");
+		lobbynamelist.clear();
+		lobbynamelist.add("+Create New Game");
+		lobbyownerlist.clear();
+		//This is a filler to make sure onListItemClick is correctly instansiated
+		lobbyownerlist.add(null);
 		try {
 			if(result.hasException())	{
 				System.out.println("Oh noes...");
@@ -53,14 +59,15 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 						lobbyname = "Lobby "+lobbyid.toString();
 					}
 //					String lobbyName = lobbyOwner.toString();
-					list.add(lobbyname);
+					lobbynamelist.add(lobbyname);
+					lobbyownerlist.add(lobbyowner);
 				}
 			}	
 		} catch (Exception e) {
 			e.printStackTrace();
-			list.add("No Lobbys");
+			lobbynamelist.add("No Lobbys");
 		}
-		Adapter md = new Adapter(getActivity(), list);
+		Adapter md = new Adapter(getActivity(), lobbynamelist);
 		setListAdapter(md);
 	}
 	
@@ -69,12 +76,17 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
 		if (position == 0) {
-			
 			 Intent i = new Intent(getActivity(), CreateLobbyActivity.class);
 			 startActivityForResult(i, 1);
+		} else if (lobbyownerlist.get(position)) {
+			Intent i = new Intent(getActivity(), LobbyOwnerActivity.class);
+			 startActivity(i);
 		} else {
-			
+			Intent i = new Intent(getActivity(), LobbySlaveActivity.class);
+			 startActivity(i);
 		}
+			
+		
 		
 		
 	}
