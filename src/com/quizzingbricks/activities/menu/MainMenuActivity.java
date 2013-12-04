@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.quizzingbricks.R;
 import com.quizzingbricks.authentication.AuthenticationManager;
+import com.quizzingbricks.communication.apiObjects.LobbyThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
@@ -40,8 +41,11 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	    ArrayList<String> friendslist;
 	    ArrayList<Fragment> fragmentList;
 	    FragmentAdapter fragmentAdapter;
-	 
-	    @Override 
+	    LobbyFragment lobbyfragment;
+	    GameListFragment gamelistfragment;
+	    FriendsFragment friendsfragment;
+	    
+	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.lobby_layout);
@@ -61,10 +65,13 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	        
 	     //Create Fragments
 	        fragmentList = new ArrayList<Fragment>();
-	        fragmentList.add(new GameListFragment());
+	        gamelistfragment = new GameListFragment();
+	        fragmentList.add(gamelistfragment);
 //	        fragmentList.add(new CreateGame());
-	        fragmentList.add(new LobbyFragment());
-	        fragmentList.add(new FriendsFragment());
+	        lobbyfragment = new LobbyFragment();
+	        fragmentList.add(lobbyfragment);
+	        friendsfragment = new FriendsFragment();
+	        fragmentList.add(friendsfragment);
 	        
 	      //New Adapter
 	        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
@@ -102,8 +109,16 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	
 		@Override
 		public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-			// TODO Auto-generated method stub
-			
+			System.out.println("ON TAB RESELECTED");
+			int whattab = arg0.getPosition();
+			if (whattab==1) {
+				LobbyThreadedAPI lobbyThreadedAPI = new LobbyThreadedAPI(this);
+				lobbyThreadedAPI.getGameLobbies(lobbyfragment);
+			} else if (whattab==2) {
+				UserThreadedAPI userThreadedAPI = new UserThreadedAPI(this);
+				 userThreadedAPI.getFriendsList(friendsfragment);
+			}
+
 		}
 
 		@Override
@@ -133,23 +148,29 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			System.out.println(requestCode);
 			 if (requestCode == 196609) {
 			     if(resultCode == RESULT_OK){      
-			    	 viewPager.setAdapter(fragmentAdapter);
-			    	 viewPager.setCurrentItem(2);
+//			    	 viewPager.setAdapter(fragmentAdapter);
+//			    	 viewPager.setCurrentItem(2);
+			    	 UserThreadedAPI userThreadedAPI = new UserThreadedAPI(this);
+					 userThreadedAPI.getFriendsList(friendsfragment);
 			    	 Toast.makeText(this, "Friend was added", 2).show();
+			    	
 			     }
 			     else if (resultCode == RESULT_CANCELED) {    
 			    	 Toast.makeText(this, "Friend not found Or already exists", 2).show();
-			         //Write your code if there's no result
 			     }
 			 } else if (requestCode == 131073) {
 			     if(resultCode == RESULT_OK){      
-//			    	 fragmentList.clear();
-//			    	 fragmentList.add(new GameListFragment());
+			    	 
+//			    	 ArrayList<Fragment> fragmentLists = new ArrayList<Fragment>();
+//			    	 fragmentLists.add(new GameListFragment());
 ////				        fragmentList.add(new CreateGame());
-//				        fragmentList.add(new LobbyFragment());
-//				        fragmentList.add(new FriendsFragment());
-			    	 viewPager.setAdapter(fragmentAdapter);
-			    	 viewPager.setCurrentItem(1);
+//			    	 fragmentLists.add(new LobbyFragment());
+//			    	 fragmentLists.add(new FriendsFragment());
+//			    	 FragmentAdapter fragmentAdapters = new FragmentAdapter(getSupportFragmentManager(), fragmentLists);
+//			    	 viewPager.setAdapter(fragmentAdapters);
+//			    	 viewPager.setCurrentItem(1);
+			    	 LobbyThreadedAPI lobbyThreadedAPI = new LobbyThreadedAPI(this);
+			    	 lobbyThreadedAPI.getGameLobbies(lobbyfragment);
 			    	 Toast.makeText(this, "Game created", 2).show();
 			     }
 			     else if (resultCode == RESULT_CANCELED) {    
@@ -170,11 +191,9 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			this.list=list;
 			// TODO Auto-generated constructor stub
 		}
+		
 		 @Override
 		    public Fragment getItem(int index) {
-			 	
-		      
-		 
 		        return list.get(index);
 		    }
 		 
@@ -185,56 +204,3 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 		    }
 		
 	}
-	 
-//	class TabsPagerAdapter extends FragmentPagerAdapter {
-//	Adapter ad;
-//	    public TabsPagerAdapter(FragmentManager fm, Adapter ad) {
-//	        super(fm);
-//	        this.ad=ad;
-//	    }
-//	 
-//	    @Override
-//	    public Fragment getItem(int index) {
-//	 
-//	        switch (index) {
-//	        case 0:
-//	            // Top Rated fragment activity
-////	        	ListFragment create_game = new GamesList();
-////	        	create_game.setListAdapter(ad);
-////	        	return create_game;
-//	        	return new GamesList();
-//	        case 1:
-////	            // Games fragment activity
-//	        	
-//	            return new CreateGame();
-//	        case 2:
-////	            // Movies fragment activity
-////	            return new FriendsList();
-//	        }
-//	 
-//	        return null;
-//	    }
-//	 
-//	    @Override
-//	    public int getCount() {
-//	        // get item count - equal to number of tabs
-//	        return 3;
-//	    }
-//	 
-//	}
-	 
-	class CreateGame extends Fragment {
-	 
-	    @Override
-	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	            Bundle savedInstanceState) {
-	 
-	        View rootView = inflater.inflate(R.layout.create_game, container, false);
-	         
-	        return rootView;
-	    }
-	}
-	
-	
-
-
