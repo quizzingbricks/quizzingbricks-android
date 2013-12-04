@@ -27,6 +27,8 @@
     <string name="correct_answer">The answer you have given is correct</string>
     <string name="incorrect_answer">The answer you have given is incorrect</string>
     <string name="unknow_server_answer">Unknown answer from server</string>
+    <string name="question_time_exceded">Question time exceded</string>
+    <string name="counter_start">Seconds remaining: 10</string>
     <!-- Other -->
     <string name="title_activity_game_board">GameBoardActivity</string>
     <string name="title_activity_main_screen">MainScreen</string>
