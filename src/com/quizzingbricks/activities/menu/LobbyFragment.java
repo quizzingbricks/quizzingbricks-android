@@ -48,9 +48,9 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 					boolean lobbyowner = lobbyObject.getBoolean("owner");
 					String lobbyname;
 					if (lobbyowner == true) {
-						lobbyname = lobbyid.toString()+", your lobby";
+						lobbyname = "Lobby "+lobbyid.toString()+"\nYou are owner";
 					}else {
-						lobbyname = lobbyid.toString();
+						lobbyname = "Lobby "+lobbyid.toString();
 					}
 //					String lobbyName = lobbyOwner.toString();
 					list.add(lobbyname);
