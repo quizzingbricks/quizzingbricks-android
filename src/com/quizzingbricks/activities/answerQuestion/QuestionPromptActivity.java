@@ -48,7 +48,7 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 		}
 		else {
 			System.out.println(result.getResult().toString());
-			}
+		}
 		
 	}
 	

@@ -26,8 +26,6 @@ public class FirstStartActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_first_start);
         if(authManager.isLoggedIn()) {
-        	this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        	setContentView(R.layout.activity_first_start);
         	Intent intent = new Intent(this, MainMenuActivity.class);
         	startActivity(intent);
         }

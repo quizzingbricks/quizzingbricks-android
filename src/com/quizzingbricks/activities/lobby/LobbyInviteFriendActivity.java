@@ -2,13 +2,16 @@ package com.quizzingbricks.activities.lobby;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.quizzingbricks.R;
 import com.quizzingbricks.communication.apiObjects.LobbyThreadedAPI;
@@ -45,8 +48,24 @@ public class LobbyInviteFriendActivity extends Activity implements OnTaskComplet
 
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
-		// TODO Handle error
-		finish();
+		JSONObject jsonResult = result.getResult();
+		if(result.hasException())	{
+			result.getException().printStackTrace();
+		}
+		else if(jsonResult.has("error"))	{
+			try {
+				Toast.makeText(this, jsonResult.getJSONObject("error").getString("message"), 3);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		}
+		else	{
+			finish();
+			Intent intent = new Intent(this, LobbyOwnerActivity.class);
+			intent.putExtra("l_id", lobbyId);
+			startActivity(intent);
+		}
 	}
 
 }
