@@ -33,7 +33,7 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 //	    private TabsPagerAdapter mAdapter;
 	    private ActionBar actionBar;
 	    // Tab titles
-	    private String[] tabs = { "Game List","New Game", "Friends" };
+	    private String[] tabs = { "Games","Lobbys", "Friends" };
 	    ArrayList<String> list;
 	    private Adapter ad;
 	    ArrayList<String> friendslist;
@@ -61,7 +61,8 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	     //Create Fragments
 	        fragmentList = new ArrayList<Fragment>();
 	        fragmentList.add(new GameListFragment());
-	        fragmentList.add(new CreateGame());
+//	        fragmentList.add(new CreateGame());
+	        fragmentList.add(new LobbyFragment());
 	        fragmentList.add(new FriendsFragment());
 	        
 	      //New Adapter
@@ -128,19 +129,34 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			//This is called by AddFriend Activity when it has added a friend
 		
 			//If you need to take results from different fragments, use different requestCodes
-//			 if (requestCode == 1) {
-//				
-		     if(resultCode == RESULT_OK){      
-		    	 viewPager.setAdapter(fragmentAdapter);
-		    	 viewPager.setCurrentItem(2);
-		    	 Toast.makeText(this, "Friend was added", 2).show();
-		     }
-		     else if (resultCode == RESULT_CANCELED) {    
-		    	 Toast.makeText(this, "Friend not found Or already exists", 2).show();
-		         //Write your code if there's no result
-		     }
+			System.out.println(requestCode);
+			 if (requestCode == 196609) {
+			     if(resultCode == RESULT_OK){      
+			    	 viewPager.setAdapter(fragmentAdapter);
+			    	 viewPager.setCurrentItem(2);
+			    	 Toast.makeText(this, "Friend was added", 2).show();
+			     }
+			     else if (resultCode == RESULT_CANCELED) {    
+			    	 Toast.makeText(this, "Friend not found Or already exists", 2).show();
+			         //Write your code if there's no result
+			     }
+			 } else if (requestCode == 131073) {
+			     if(resultCode == RESULT_OK){      
+//			    	 fragmentList.clear();
+//			    	 fragmentList.add(new GameListFragment());
+////				        fragmentList.add(new CreateGame());
+//				        fragmentList.add(new LobbyFragment());
+//				        fragmentList.add(new FriendsFragment());
+			    	 viewPager.setAdapter(fragmentAdapter);
+			    	 viewPager.setCurrentItem(1);
+			    	 Toast.makeText(this, "Game created", 2).show();
+			     }
+			     else if (resultCode == RESULT_CANCELED) {    
+			    	 Toast.makeText(this, "Could not make game", 2).show();
+			         //Write your code if there's no result
+			     }
+			 }
 		}
-
 	}
 	class FragmentAdapter extends FragmentPagerAdapter {
 		 ArrayList<Fragment> list;

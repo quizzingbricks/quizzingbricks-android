@@ -34,6 +34,7 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 	protected void onListItemClick(ListView l, View v, int position, long id) {
     	new GamesThreadedAPI(this).sendAnswer(gameId, position-1, this);
 	}
+    
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
 		if(result.hasException())	{
@@ -45,6 +46,9 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 		else if(result.getResult().has("isCorrect"))	{
 			handleAnswer(result.getResult());
 		}
+		else {
+			System.out.println(result.getResult().toString());
+			}
 		
 	}
 	
