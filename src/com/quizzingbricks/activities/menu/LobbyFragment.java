@@ -19,6 +19,7 @@ import com.quizzingbricks.tools.AsyncTaskResult;
 public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 	ArrayList<String> lobbynamelist;
 	ArrayList<Boolean> lobbyownerlist;
+	ArrayList<Integer> lobbyidlist;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -35,12 +36,16 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 			lobbynamelist = new ArrayList<String>();
 		}if (lobbyownerlist == null) {
 			lobbyownerlist = new ArrayList<Boolean>();
+		}if (lobbyidlist == null) {
+			lobbyidlist = new ArrayList<Integer>();
 		}
 		lobbynamelist.clear();
 		lobbynamelist.add("+Create New Game");
 		lobbyownerlist.clear();
 		//This is a filler to make sure onListItemClick is correctly instansiated
 		lobbyownerlist.add(null);
+		lobbyidlist.clear();
+		lobbyidlist.add(null);
 		try {
 			if(result.hasException())	{
 				System.out.println("Oh noes...");
@@ -50,17 +55,18 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 				JSONArray lobbyArray = result.getResult().getJSONArray("lobbies");
 				for (int i = 0; i < lobbyArray.length(); i++) {
 					JSONObject lobbyObject = lobbyArray.getJSONObject(i);
-					Object lobbyid = lobbyObject.get("l_id");
+					int lobbyid = lobbyObject.getInt("l_id");
 					boolean lobbyowner = lobbyObject.getBoolean("owner");
 					String lobbyname;
 					if (lobbyowner == true) {
-						lobbyname = "Lobby "+lobbyid.toString()+"\nYou are owner";
+						lobbyname = "Lobby "+lobbyid+"\nYou are owner";
 					}else {
-						lobbyname = "Lobby "+lobbyid.toString();
+						lobbyname = "Lobby "+lobbyid;
 					}
 //					String lobbyName = lobbyOwner.toString();
 					lobbynamelist.add(lobbyname);
 					lobbyownerlist.add(lobbyowner);
+					lobbyidlist.add(lobbyid);
 				}
 			}	
 		} catch (Exception e) {
@@ -79,11 +85,15 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 			 Intent i = new Intent(getActivity(), CreateLobbyActivity.class);
 			 startActivityForResult(i, 1);
 		} else if (lobbyownerlist.get(position)) {
-			Intent i = new Intent(getActivity(), LobbyOwnerActivity.class);
-			 startActivity(i);
+//			Intent i = new Intent(getActivity(), LobbyOwnerActivity.class);
+//			int lobbyid = lobbyidlist.get(position);
+//			i.putExtra("l_id", lobbyid);
+//			 startActivity(i);
 		} else {
-			Intent i = new Intent(getActivity(), LobbySlaveActivity.class);
-			 startActivity(i);
+//			Intent i = new Intent(getActivity(), LobbySlaveActivity.class);
+//			int lobbyid = lobbyidlist.get(position);
+//			i.putExtra("l_id", lobbyid);
+//			 startActivity(i);
 		}
 			
 		

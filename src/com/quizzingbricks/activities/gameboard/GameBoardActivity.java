@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import com.quizzingbricks.R;
 import com.quizzingbricks.R.drawable;
 import com.quizzingbricks.activities.answerQuestion.QuestionPromptActivity;
+import com.quizzingbricks.authentication.AuthenticationManager;
 
 import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
@@ -42,10 +43,18 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 	int BOARD_SIZE = 8;
 	GamesThreadedAPI gameThreadedAPI;
 	int y_coord, x_coord;
+	int myID;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AuthenticationManager AM = new AuthenticationManager(this);
+        try {
+        	 myID = AM.getUserId();
+		} catch (Exception e) {
+			e.printStackTrace();
+			myID =-1;
+		}
         Intent intentBuffer = getIntent();
         gameID = intentBuffer.getExtras().getInt("id");
         ontaskcomplete = this;
@@ -57,7 +66,6 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
     	System.out.println("GOT ON COMPLETE MESSAGE");
-    	int[] gameboards = null;
     	ArrayList<Integer> gameborder = new ArrayList<Integer>();
     	ArrayList<Integer> playerlist = new ArrayList<Integer>();
     	try {
@@ -93,9 +101,10 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 					System.out.println("player "+playerid+" answered"+playeranswerbool);
 				}
     			makeNewAndImprovedGameBoard(gameborder, playerlist);
+    			
     		} else if (result.getResult().has("errors")) {
 				System.out.println(result.getResult().getJSONArray("errors").get(0).toString());
-				Toast.makeText(this, "Move not allowed, you have already answered question", 2).show();
+				Toast.makeText(this, "Move not allowed", 2).show();
 			}
     		
 		} catch (Exception e) {
@@ -145,8 +154,19 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
         gameInfo.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         gameInfo.setOrientation(LinearLayout.HORIZONTAL);
         TextView playerinfo = new TextView(this);
-        playerinfo.append(playerlist.get(0).toString()+"= green, ");
-        playerinfo.append(playerlist.get(1).toString()+"= blue, ");
+        
+        if (myID == playerlist.get(0)) {
+        	playerinfo.append("You are green, ");
+		} else {
+			playerinfo.append(playerlist.get(0).toString()+"= green, ");
+		} 
+        if (myID == playerlist.get(1)) {
+        	playerinfo.append("You are blue, ");
+		} else {
+			playerinfo.append(playerlist.get(1).toString()+"= blue, ");
+		} 
+        
+        
         gameInfo.addView(playerinfo);
 		c.addView(gameInfo);
         

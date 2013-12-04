@@ -31,6 +31,7 @@ public class AddFriendActivity extends Activity implements OnTaskCompleteAsync{
 	public void sendAddFriend(View view){
 		EditText emailEdit = (EditText) findViewById(R.id.add_friend_email);
     	String email = emailEdit.getText().toString();
+//    	System.out.println(email);
 		UserThreadedAPI userThreadedAPI = new UserThreadedAPI(this);
 	    userThreadedAPI.addFriendToFriendsList(email, this);
 //	    Toast.makeText(this, "lol", 2).show();
@@ -46,7 +47,7 @@ public class AddFriendActivity extends Activity implements OnTaskCompleteAsync{
 				System.out.println("Oh noes...");
 				result.getException().printStackTrace();
 			}
-			else if (result.getResult().toString() == "OK"){
+			else if (result.getResult().get("result").equals("ok")){
 				System.out.println(result.getResult().toString());
 				Intent returnIntent = new Intent();
 				setResult(RESULT_OK,returnIntent);     
