@@ -118,10 +118,11 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //		 if (requestCode == 1) {
-		     if(resultCode == RESULT_OK){      
+		     if(resultCode == RESULT_OK){
+		    	 GamesThreadedAPI gamesThreadedAPI = new GamesThreadedAPI(this);
 		    	 gameThreadedAPI.getGameInfo(gameID, this);
 		     }
-		     if (resultCode == RESULT_CANCELED) {    
+		     else if (resultCode == RESULT_CANCELED) {    
 		         //Write your code if there's no result
 		     }
 //		 }

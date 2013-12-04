@@ -49,6 +49,10 @@ public abstract class AbstractApiCall<Params, Progress, Result> extends AsyncTas
 		this.popup = true;
 	}
 	
+	public void cancelRequest()	{
+		requestParser.cancelRequest();
+	}
+	
 	public void removePopup()	{
 		this.popup = false;
 	}
