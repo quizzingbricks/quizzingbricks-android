@@ -32,7 +32,7 @@ public class CreateLobbyActivity  extends Activity implements OnTaskCompleteAsyn
 				System.out.println("Oh noes...");
 				result.getException().printStackTrace();
 			}
-			else if (result.getResult().has("l_id")){
+			else if (result.getResult().has("lobby")){
 				System.out.println(result.getResult().toString());
 				Intent returnIntent = new Intent();
 				setResult(RESULT_OK,returnIntent);     

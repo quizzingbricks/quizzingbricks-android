@@ -150,7 +150,6 @@ public class RequestParser {
 		HttpResponse httpResponse = httpClient.execute(httpRequest);
 		HttpEntity httpEntity = httpResponse.getEntity();
 		
-		httpClient.getConnectionManager().shutdown();
 		int httpStatusCode = httpResponse.getStatusLine().getStatusCode();
 		if(httpStatusCode == 200)	{
 			JSONObject jsonObject;
@@ -165,6 +164,7 @@ public class RequestParser {
 				e.printStackTrace();
 				jsonObject = new JSONObject("{\"responseContent\":\"empty\"}");
 			}
+			httpClient.getConnectionManager().shutdown();
 			return jsonObject;
 		}
 		else if(httpStatusCode == 400)	{
@@ -174,20 +174,25 @@ public class RequestParser {
 				jsonObject = new JSONObject(response.trim());
 				//TODO: handle multiple error objects in the JSON array
 				JSONObject jsonErrorMessage = jsonObject.getJSONArray("errors").getJSONObject(0);
+				httpClient.getConnectionManager().shutdown();
 				throw new APIException(jsonErrorMessage.getString("message"), jsonErrorMessage.getInt("code"), httpStatusCode);
 			}
 			catch(JSONException e)	{
 				e.printStackTrace();
+				httpClient.getConnectionManager().shutdown();
 				throw new APIException("API Error: bad request, " + serverUrl, 0, httpStatusCode);
 			}
 		}
 		else if(httpStatusCode == 404)	{
+			httpClient.getConnectionManager().shutdown();
 			throw new APIException("API Error: faulty endpoint path, " + serverUrl, 0, httpStatusCode);
 		}
 		else if(httpStatusCode == 500)	{
+			httpClient.getConnectionManager().shutdown();
 			throw new APIException("API Error: internal server error, " + serverUrl, 0, httpStatusCode);
 		}
 		else	{
+			httpClient.getConnectionManager().shutdown();
 			System.out.println("HTTP status code: " + httpStatusCode);
 			throw new APIException("API Error: " + serverUrl, 0, httpStatusCode);
 		}
