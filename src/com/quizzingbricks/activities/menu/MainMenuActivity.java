@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quizzingbricks.R;
+import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
@@ -40,7 +41,7 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	    ArrayList<Fragment> fragmentList;
 	    FragmentAdapter fragmentAdapter;
 	 
-	    @Override
+	    @Override 
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.lobby_layout);
@@ -156,6 +157,10 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			         //Write your code if there's no result
 			     }
 			 }
+		}
+		@Override
+		public void onBackPressed() {
+		    finish();
 		}
 	}
 	class FragmentAdapter extends FragmentPagerAdapter {

@@ -40,14 +40,14 @@ public class SimplePopupWindow {
     	dialogBuilder.show();
 	}
 	
-	public void createPopupWindowWithResult(String title, String message, final int result)	{
+	public void createPopupWindowWithResult(String title, String message, final int result, final Intent intent)	{
 		setTitleAndMessage(title, message);
     	final Activity innerContext = (Activity) this.context;
     	dialogBuilder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
-				innerContext.setResult(result, new Intent());
+				innerContext.setResult(result, intent);
 				innerContext.finish();
 			}
 		});

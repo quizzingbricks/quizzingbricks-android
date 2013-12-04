@@ -91,7 +91,8 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 			    	counterTextView.setText("Seconds remaining: 0");
 			    	new SimplePopupWindow(contextForTimer).createPopupWindowWithResult("Time exceded", 
 							getApplicationContext().getString(R.string.question_time_exceded),
-							RESULT_CANCELED);
+							RESULT_CANCELED,
+							getIntent());
 			    }
 			};
 			aCounter.start();
@@ -109,12 +110,14 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 			if(isAnswerCorrect.equals("true"))	{ 
 				new SimplePopupWindow(this).createPopupWindowWithResult("Correct Answer", 
 						getApplicationContext().getString(R.string.correct_answer),
-						RESULT_OK);
+						RESULT_OK,
+						getIntent());
 			}
 			else if(isAnswerCorrect.equals("false"))	{
 				new SimplePopupWindow(this).createPopupWindowWithResult("Incorrect Answer", 
 						getApplicationContext().getString(R.string.incorrect_answer),
-						RESULT_CANCELED);
+						RESULT_CANCELED,
+						getIntent());
 			}
 			else	{
 				new SimplePopupWindow(this).createPopupWindow("Error", getApplicationContext().getString(R.string.unknow_server_answer));
