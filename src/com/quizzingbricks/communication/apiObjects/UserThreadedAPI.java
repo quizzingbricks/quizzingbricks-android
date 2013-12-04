@@ -18,6 +18,10 @@ public class UserThreadedAPI extends AbstractThreadedAPI {
 		super(context, sendWithToken);
 	}
 	
+	public UserThreadedAPI(Context context, String token) {
+		super(context, true, token);
+	}
+	
 	public void registerUser(String email, String username, String password, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
 		postCall.addToTheEndOfUrl(this.serverUserApiPath);

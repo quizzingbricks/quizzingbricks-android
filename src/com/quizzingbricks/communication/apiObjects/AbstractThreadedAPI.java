@@ -32,6 +32,23 @@ public abstract class AbstractThreadedAPI {
 		deleteCall = new AsyncApiDeleteCall(token);
 	}
 	
+	public AbstractThreadedAPI(Context context, boolean sendWithToken, String token)	{
+		this.token = token;
+		postCall = new AsyncApiPostCall(token);
+		getCall = new AsyncApiGetCall(token);
+		deleteCall = new AsyncApiDeleteCall(token);
+	}
+	
+	public void CancelRequest()	{
+		postCall.cancelRequest();
+		getCall.cancelRequest();
+		deleteCall.cancelRequest();
+		
+		postCall.cancel(true);
+		getCall.cancel(true);
+		deleteCall.cancel(true);
+	}
+	
 	protected String getToken()	{
 		return token;
 	}

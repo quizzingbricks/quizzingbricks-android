@@ -17,6 +17,10 @@ public class LobbyThreadedAPI extends AbstractThreadedAPI {
 		super(context, true);
 	}
 	
+	public LobbyThreadedAPI(Context context, String token) {
+		super(context, true, token);
+	}
+	
 	public void createLobby(int size, OnTaskCompleteAsync onTaskCompleteClass)	{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
 		postCall.addToTheEndOfUrl(serverLobbyApiPath);
