@@ -41,6 +41,7 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 	OnTaskCompleteAsync ontaskcomplete;
 	int BOARD_SIZE = 8;
 	GamesThreadedAPI gameThreadedAPI;
+	int y_coord, x_coord;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,16 +60,20 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
     	int[] gameboards = null;
     	ArrayList<Integer> gameborder = new ArrayList<Integer>();
     	ArrayList<Integer> playerlist = new ArrayList<Integer>();
-    	int player1 = -1;
-    	int player2 = -1;
-    	int player3 = -1;
-    	int player4 = -1;
     	try {
     		if(result.hasException())	{
 				System.out.println("Oh noes...");
 				result.getException().printStackTrace();
-			}
-    		else{
+    		
+			//THIS IS PLACE BRICK
+    		} else if (result.getResult().has("result")) {
+    			System.out.println("IN PLACE BRICK");
+    			Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
+		    	i.putExtra("gameID", gameID);
+		    	startActivityForResult(i, 1);
+		    	
+		    //THIS IS GET GAMEBOARD
+			} else if (result.getResult().has("players")){
     			JSONObject bigJson = result.getResult();
     			JSONArray playerArray = bigJson.getJSONArray("players");
     			System.out.println(playerArray);
@@ -87,20 +92,28 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 					playerlist.add(Integer.parseInt(playerid.toString()));
 					System.out.println("player "+playerid+" answered"+playeranswerbool);
 				}
-    		}
+    			makeNewAndImprovedGameBoard(gameborder, playerlist);
+    		} else if (result.getResult().has("errors")) {
+				System.out.println(result.getResult().getJSONArray("errors").get(0).toString());
+				Toast.makeText(this, "Move not allowed, you have already answered question", 2).show();
+			}
+    		
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			
+			//IF ELSE FAIL JUST MAKE EMPTY GAMEBOARD
+			LinearLayout asd = new LinearLayout(this);
+			Button panicbutton = new Button(this);
+			panicbutton.setText("PANIC BUTTON");
+			panicbutton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {System.out.println("PANIC");}});
+			asd.addView(panicbutton);
+			setContentView(asd);
+			System.out.println("Exception in onComplete, PANIC: make empty gameboard");
+//			makeGameBoard();
 		}
-    	System.out.println(gameborder.size());
-    	if (gameborder.size() != 0){
-    		makeNewAndImprovedGameBoard(gameborder, playerlist);
-    	} else {
-    		
-    		makeGameBoard();
-    	}
-    	
-    	
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -124,6 +137,18 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
         LinearLayout c = new LinearLayout(this);
         c.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         c.setOrientation(LinearLayout.VERTICAL);
+        
+        
+        //Extra text for player
+        LinearLayout gameInfo = new LinearLayout(this);
+        gameInfo.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        gameInfo.setOrientation(LinearLayout.HORIZONTAL);
+        TextView playerinfo = new TextView(this);
+        playerinfo.append(playerlist.get(0).toString()+"= green, ");
+        playerinfo.append(playerlist.get(1).toString()+"= blue, ");
+        gameInfo.addView(playerinfo);
+		c.addView(gameInfo);
+        
         for (int i = 0; i < BOARD_SIZE; i++) {
         	LinearLayout d = new LinearLayout(this);
             d.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -142,18 +167,18 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 						GamesThreadedAPI GTAPI = new GamesThreadedAPI(getApplicationContext());
 						
 						int id = v.getId();
-						int y = id % BOARD_SIZE;
-						int x = id / BOARD_SIZE;
+						x_coord = id / BOARD_SIZE;
+						y_coord = id % BOARD_SIZE;
 						System.out.println(gameID);
-						System.out.println(x);
-						System.out.println(y);
+						System.out.println(x_coord);
+						System.out.println(y_coord);
 						
-						GTAPI.placeBricks(gameID, x, y, ontaskcomplete);
-						Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
-//						System.out.println("loltest"+id);
-				    	i.putExtra("gameID", gameID);
-//						startActivity(i);
-				    	startActivityForResult(i, 1);
+						GTAPI.placeBricks(gameID, x_coord, y_coord, ontaskcomplete);
+//						Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
+////						System.out.println("loltest"+id);
+//				    	i.putExtra("gameID", gameID);
+////						startActivity(i);
+//				    	startActivityForResult(i, 1);
 				    	
 //				    	 ImageButton b = (ImageButton) findViewById(id);
 //							b.setImageResource(R.drawable.boardcellblue);
@@ -187,7 +212,6 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 						ib.setImageResource(R.drawable.boardcellempty);
 					}
 				} 
-            	
             	d.addView(ib);//new Button(this));
     		}
             c.addView(d);

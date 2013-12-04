@@ -35,6 +35,12 @@
         </activity>
         <activity
 
+            android:name="com.quizzingbricks.activities.menu.CreateLobbyActivity"
+             >
+        </activity>
+        
+        <activity
+
             android:name="com.quizzingbricks.activities.menu.MainMenuActivity"
             android:label="@string/app_name"
               >
