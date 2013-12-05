@@ -10,6 +10,7 @@ import com.quizzingbricks.R;
 import com.quizzingbricks.R.layout;
 import com.quizzingbricks.R.menu;
 import com.quizzingbricks.activities.answerQuestion.QuestionPromptAdapter;
+import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.LobbyThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
@@ -17,16 +18,20 @@ import com.quizzingbricks.tools.AsyncTaskResult;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAsync {
 
@@ -37,7 +42,8 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 		super.onCreate(savedInstanceState);
 		this.lobbyId = getIntent().getIntExtra("l_id", 0);
 		ActionBar ab = getActionBar();
-	    ab.setTitle("Lobby");
+	    ab.setTitle("Lobby " + Integer.toString(lobbyId));
+	    ab.setDisplayHomeAsUpEnabled(true);
 		new LobbyThreadedAPI(this).getLobbyInfo(this.lobbyId, this);
 	}
 
@@ -52,6 +58,17 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 	public void onBackPressed() {
 		finish();
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	        case android.R.id.home:
+	            finish();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	        }
+    }
 
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
@@ -63,7 +80,17 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 			if(jsonResult.has("lobby"))	{
 				createOwnerLobby(result.getResult());
 			}
+			else if(jsonResult.has("errors"))	{
+				try {
+					System.out.println("Error message from server: " + jsonResult.getJSONObject("errors").getString("message"));
+					Toast.makeText(this, jsonResult.getJSONObject("errors").getString("message"), Toast.LENGTH_SHORT).show();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			else	{
+				Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
 				finish();
 			}
 		}
@@ -106,7 +133,8 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 			
 			jsonPlayerList = jsonObject.getJSONObject("lobby").getJSONArray("players");
 			for(int i=0; i<=jsonPlayerList.length()-1; i++)	{
-				playerList.add(jsonPlayerList.getJSONObject(i).getString("u_mail"));
+				JSONObject currentUser = jsonPlayerList.getJSONObject(i);
+				playerList.add(currentUser.getString("u_mail") + " - " + currentUser.getString("status"));
 			}
 			QuestionPromptAdapter adapter = new QuestionPromptAdapter(this, playerList, "Not needed");
 			

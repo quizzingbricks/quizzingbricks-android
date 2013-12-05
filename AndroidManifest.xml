@@ -80,7 +80,6 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -95,15 +94,19 @@
         </activity>
         <activity
             android:name="com.quizzingbricks.activities.lobby.LobbyOwnerActivity"
-            android:label="@string/title_activity_lobby_owner" >
+            android:label="@string/title_activity_lobby_owner"
+            android:parentActivityName="com.quizzingbricks.activities.menu.MainMenuActivity"  
+            >
         </activity>
         <activity
             android:name="com.quizzingbricks.activities.lobby.LobbySlaveActivity"
-            android:label="@string/title_activity_lobby_slave" >
+            android:label="@string/title_activity_lobby_slave"
+            >
         </activity>
         <activity
             android:name="com.quizzingbricks.activities.lobby.LobbyInviteFriendActivity"
-            android:label="@string/title_activity_lobby_invite_friend" >
+            android:label="@string/title_activity_lobby_invite_friend" 
+            >
         </activity>
     </application>
 
