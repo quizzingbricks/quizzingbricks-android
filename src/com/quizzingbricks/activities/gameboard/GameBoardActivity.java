@@ -82,11 +82,25 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 		    	
 		    //THIS IS GET GAMEBOARD
 			} else if (result.getResult().has("players")){
+				System.out.println("THIS IS GAMEBOARD");
     			JSONObject bigJson = result.getResult();
     			JSONArray playerArray = bigJson.getJSONArray("players");
     			System.out.println(playerArray);
+    			
+    			boolean quizzfirst = false;
+    			for (int i = 0; i < playerArray.length(); i++) {
+    				int playerid = playerArray.getJSONObject(i).getInt("userId");
+    				int playerstate = playerArray.getJSONObject(i).getInt("state");
+    				System.out.println(playerstate);
+    				boolean quizzstate = playerid == myID && playerstate == 1;
+    				if (quizzstate) {
+						System.out.println("quizzfirst "+quizzfirst);
+    					quizzfirst=true;
+					} 
+    			}
 //    			Object gameid = bigJson.get("gameid");
-    			JSONArray board = bigJson.getJSONArray("board");
+    			
+				JSONArray board = bigJson.getJSONArray("board");
 //    			System.out.println(gameid);
     			System.out.println(board);
     			for (int i = 0; i < board.length(); i++) {
@@ -96,12 +110,19 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 //    			gameboards = (int[]) board.get(index);
     			for (int i = 0; i < playerArray.length(); i++) {
     				Object playerid = playerArray.getJSONObject(i).get("userId");
+    				Object playerstate = playerArray.getJSONObject(i).get("state");
 					Object playeranswerbool = playerArray.getJSONObject(i).get("answeredCorrectly");
 					playerlist.add(Integer.parseInt(playerid.toString()));
 					System.out.println("player "+playerid+" answered"+playeranswerbool);
 				}
     			makeNewAndImprovedGameBoard(gameborder, playerlist);
     			
+    		//Quizz fight, start quizz first, (after printing gameboard) 
+    			if (quizzfirst) {
+    				Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
+    		    	i.putExtra("gameID", gameID);
+    		    	startActivityForResult(i, 1);
+    			}
     		} else if (result.getResult().has("errors")) {
 				System.out.println(result.getResult().getJSONArray("errors").get(0).toString());
 				Toast.makeText(this, "Move not allowed", 2).show();

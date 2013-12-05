@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.quizzingbricks.R;
 import com.quizzingbricks.authentication.AuthenticationManager;
+import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.LobbyThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
@@ -117,6 +118,9 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			} else if (whattab==2) {
 				UserThreadedAPI userThreadedAPI = new UserThreadedAPI(this);
 				 userThreadedAPI.getFriendsList(friendsfragment);
+			} else if (whattab==0) {
+				GamesThreadedAPI lt = new GamesThreadedAPI(this);
+				lt.getActiveGames(gamelistfragment);
 			}
 
 		}
