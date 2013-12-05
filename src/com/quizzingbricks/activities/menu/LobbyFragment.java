@@ -90,12 +90,12 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 			Intent i = new Intent(getActivity(), LobbyOwnerActivity.class);
 			int lobbyid = lobbyidlist.get(position);
 			i.putExtra("l_id", lobbyid);
-			 startActivity(i);
+			 startActivityForResult(i,1);
 		} else {
 			Intent i = new Intent(getActivity(), LobbySlaveActivity.class);
 			int lobbyid = lobbyidlist.get(position);
 			i.putExtra("l_id", lobbyid);
-			 startActivity(i);
+			startActivityForResult(i,1);
 		}
 			
 		

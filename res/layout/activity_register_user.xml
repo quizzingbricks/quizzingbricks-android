@@ -53,24 +53,24 @@
         android:inputType="textNoSuggestions|textEmailAddress"
         />
     
-    <TextView
-        android:id="@+id/register_user_username_edit_header"
-        android:layout_below="@id/register_user_email_edit"
-        android:text="@string/register_user_username_edit_header"
-        style="@style/inputBoxHeader" 
-    	/>
-    <EditText 
-        android:id="@+id/register_user_username_edit"
-        android:layout_below="@id/register_user_username_edit_header"
-        style="@style/inputBoxScreenWidth"
-        android:hint="@string/register_user_username_text_hint"
-        android:inputType="textNoSuggestions|textVisiblePassword"
-        />
+<!--     <TextView -->
+<!--         android:id="@+id/register_user_username_edit_header" -->
+<!--         android:layout_below="@id/register_user_email_edit" -->
+<!--         android:text="@string/register_user_username_edit_header" -->
+<!--         style="@style/inputBoxHeader"  -->
+<!--     	/> -->
+<!--     <EditText  -->
+<!--         android:id="@+id/register_user_username_edit" -->
+<!--         android:layout_below="@id/register_user_username_edit_header" -->
+<!--         style="@style/inputBoxScreenWidth" -->
+<!--         android:hint="@string/register_user_username_text_hint" -->
+<!--         android:inputType="textNoSuggestions|textVisiblePassword" -->
+<!--         /> -->
     
     
     <TextView
         android:id="@+id/register_user_password_edit_header"
-        android:layout_below="@id/register_user_username_edit"
+        android:layout_below="@id/register_user_email_edit"
         android:text="@string/register_user_password_edit_header"
         style="@style/inputBoxHeader" 
     	/>
