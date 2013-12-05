@@ -97,13 +97,13 @@ public class RequestParser {
 		}
 	}
 	
-	public JSONObject postJsonToServer(String serverUrl, String token, SimpleJsonObject simpleJsonObject) throws APIException	{
+	public JSONObject postJsonToServer(String serverUrl, String token, JSONObject simpleJsonObject) throws APIException	{
 		try	{
 			HttpPost httpPost= new HttpPost(serverUrl);
 			httpPost.addHeader("token", token);
 			httpPost.addHeader("Content-type", "application/json");
-			httpPost.setEntity(new StringEntity(simpleJsonObject.toJsonString()));
-			
+			httpPost.setEntity(new StringEntity(simpleJsonObject.toString()));
+			System.out.println("Sending " + simpleJsonObject.toString());
 			return executeAndGetRequest(httpPost, serverUrl);
 		}
 		catch(APIException se)	{

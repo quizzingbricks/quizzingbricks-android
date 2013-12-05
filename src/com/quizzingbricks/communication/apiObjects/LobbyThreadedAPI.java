@@ -3,6 +3,9 @@ package com.quizzingbricks.communication.apiObjects;
 import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.quizzingbricks.communication.jsonObject.SimpleJsonObject;
 import com.quizzingbricks.communication.jsonObject.jsonPairs.JsonPairStringList;
@@ -53,13 +56,18 @@ public class LobbyThreadedAPI extends AbstractThreadedAPI {
 		getCall.execute();
 	}
 	
-	public void invitetoLobby(int lobbyId, List<String> users, OnTaskCompleteAsync onTaskCompleteClass)		{
+	public void invitetoLobby(int lobbyId, List<Integer> users, OnTaskCompleteAsync onTaskCompleteClass)		{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
 		postCall.addToTheEndOfUrl(serverLobbyApiPath + Integer.toString(lobbyId) + "/accept/");
-		JsonPairStringList jsonStringList = new JsonPairStringList("invite", users);
-		SimpleJsonObject jsonObject = new SimpleJsonObject();
-		jsonObject.addJsonField(jsonStringList);
-		postCall.addSimpleJsonObject(jsonObject);
+		try {
+			JSONArray jsonArray = new JSONArray();
+			for(int user : users)	{
+				jsonArray.put(user);
+			}
+			postCall.addSimpleJsonObject(new JSONObject().putOpt("invite", jsonArray));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		postCall.execute();
 	}
 	

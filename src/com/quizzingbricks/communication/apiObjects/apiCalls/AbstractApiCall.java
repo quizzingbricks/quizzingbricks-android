@@ -1,5 +1,7 @@
 package com.quizzingbricks.communication.apiObjects.apiCalls;
 
+import org.json.JSONObject;
+
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.RequestParser;
 import com.quizzingbricks.communication.apiObjects.OnTaskComplete;
@@ -20,7 +22,7 @@ public abstract class AbstractApiCall<Params, Progress, Result> extends AsyncTas
 	protected Boolean popup = false;
 	protected ProgressDialog progressDialog;
 	
-	protected SimpleJsonObject simpleJsonObject;
+	protected JSONObject jsonObject;
 	
 	public AbstractApiCall(String token)	{
 		this.token = token;
@@ -38,8 +40,8 @@ public abstract class AbstractApiCall<Params, Progress, Result> extends AsyncTas
 		this.onTaskCompleteClass = onTaskCompleteClass;
 	}
 	
-	public void addSimpleJsonObject(SimpleJsonObject simpleJsonObject)	{
-		this.simpleJsonObject = simpleJsonObject;
+	public void addSimpleJsonObject(JSONObject jsonObject)	{
+		this.jsonObject = jsonObject;
 	}
 	
 	public void addPopup(String popUpTitle, String popUpMessage, Context context)	{
