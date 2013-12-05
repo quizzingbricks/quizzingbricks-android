@@ -73,6 +73,7 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
 		JSONObject jsonResult = result.getResult();
+		System.out.println(jsonResult.toString());
 		if(result.hasException())	{
 			result.getException().printStackTrace();
 		}
@@ -90,7 +91,7 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 				}
 			}
 			else	{
-				Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
+				setResult(RESULT_OK, new Intent());
 				finish();
 			}
 		}
@@ -163,7 +164,6 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 		
 		@Override
 		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
 			new LobbyThreadedAPI(context).startGame(lobbyId, lobbyOwnerActivity);
 		}
 		
