@@ -95,7 +95,7 @@
         <activity
             android:name="com.quizzingbricks.activities.lobby.LobbyOwnerActivity"
             android:label="@string/title_activity_lobby_owner"
-            android:parentActivityName="com.quizzingbricks.activities.menu.MainMenuActivity"  
+           
             >
         </activity>
         <activity
