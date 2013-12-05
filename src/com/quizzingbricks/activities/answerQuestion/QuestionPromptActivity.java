@@ -52,6 +52,14 @@ public class QuestionPromptActivity extends ListActivity implements OnTaskComple
 		
 	}
 	
+	@Override
+	public void onBackPressed() {
+		if(aCounter != null)	{
+			aCounter.cancel();
+		}
+		finish();
+	}
+	
 	private void handleQuestion(JSONObject questionObject)	{
 		try {
 			ArrayList<String> questionAlternatives = new ArrayList<String>();

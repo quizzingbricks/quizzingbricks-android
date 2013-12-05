@@ -55,11 +55,10 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	        list.add("first game");
 	        list.add("second game");
 	        ad = new Adapter(this, list);
-	        
+	         
 	     // Initilization
 	        viewPager = (ViewPager) findViewById(R.id.pager);
 	        actionBar = getActionBar();
-	        
 	     //Old Adapter
 //	        mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), ad);
 //	        viewPager.setAdapter(mAdapter);
@@ -77,7 +76,7 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	      //New Adapter
 	        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
 	      //Set adapter
-	        viewPager.setAdapter(fragmentAdapter);
+	        viewPager.setAdapter(fragmentAdapter); 
 	     
 	        
 	        

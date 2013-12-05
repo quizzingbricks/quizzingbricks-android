@@ -28,7 +28,7 @@ public class FirstStartActivity extends Activity {
         if(authManager.isLoggedIn()) {
         	Intent intent = new Intent(this, MainMenuActivity.class);
         	startActivity(intent);
-        }
+        } 
     } 
 	
 	public void changeToLoginActivity(View view)	{

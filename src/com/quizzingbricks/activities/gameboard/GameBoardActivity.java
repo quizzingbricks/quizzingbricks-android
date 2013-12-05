@@ -14,12 +14,14 @@ import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Path.FillType;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -57,17 +59,32 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 		}
         Intent intentBuffer = getIntent();
         gameID = intentBuffer.getExtras().getInt("id");
+        ActionBar ab = getActionBar();
+        ab.setTitle("Game " + gameID);
+        ab.setDisplayHomeAsUpEnabled(true);
         ontaskcomplete = this;
         gameboard = new ArrayList<Integer>();
         gameThreadedAPI = new GamesThreadedAPI(this);
         gameThreadedAPI.getGameInfo(gameID, this);
-	}    
+	}   
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	        case android.R.id.home:
+	            finish();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	        }
+    }
 	
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
     	System.out.println("GOT ON COMPLETE MESSAGE");
     	ArrayList<Integer> gameborder = new ArrayList<Integer>();
     	ArrayList<Integer> playerlist = new ArrayList<Integer>();
+    	ArrayList<String> playerEmailList = new ArrayList<String>();
     	try {
     		if(result.hasException())	{
 				System.out.println("Oh noes...");
@@ -113,9 +130,10 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
     				Object playerstate = playerArray.getJSONObject(i).get("state");
 					Object playeranswerbool = playerArray.getJSONObject(i).get("answeredCorrectly");
 					playerlist.add(Integer.parseInt(playerid.toString()));
+					playerEmailList.add(playerArray.getJSONObject(i).getString("email"));
 					System.out.println("player "+playerid+" answered"+playeranswerbool);
 				}
-    			makeNewAndImprovedGameBoard(gameborder, playerlist);
+    			makeNewAndImprovedGameBoard(gameborder, playerlist, playerEmailList);
     			
     		//Quizz fight, start quizz first, (after printing gameboard) 
     			if (quizzfirst) {
@@ -160,7 +178,7 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 //		 }
 	}
 	
-	void makeNewAndImprovedGameBoard(ArrayList<Integer> gameboards, ArrayList<Integer> playerlist){
+	void makeNewAndImprovedGameBoard(ArrayList<Integer> gameboards, ArrayList<Integer> playerlist, ArrayList<String> playerEmailList){
 		ScrollView a = new ScrollView(this);
         a.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         
@@ -181,12 +199,12 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
         if (myID == playerlist.get(0)) {
         	playerinfo.append("You are green, ");
 		} else {
-			playerinfo.append(playerlist.get(0).toString()+"= green, ");
+			playerinfo.append(playerEmailList.get(0).toString()+"= green, ");
 		} 
         if (myID == playerlist.get(1)) {
         	playerinfo.append("You are blue, ");
 		} else {
-			playerinfo.append(playerlist.get(1).toString()+"= blue, ");
+			playerinfo.append(playerEmailList.get(1).toString()+"= blue, ");
 		} 
         
         
@@ -211,8 +229,11 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 						GamesThreadedAPI GTAPI = new GamesThreadedAPI(getApplicationContext());
 						
 						int id = v.getId();
-						x_coord = id / BOARD_SIZE;
-						y_coord = id % BOARD_SIZE;
+//						x_coord = id / BOARD_SIZE;
+//						y_coord = id % BOARD_SIZE;
+						//FIXME: The coordinates are now swapped  
+						y_coord = id / BOARD_SIZE;
+						x_coord = id % BOARD_SIZE;
 						System.out.println(gameID);
 						System.out.println(x_coord);
 						System.out.println(y_coord);

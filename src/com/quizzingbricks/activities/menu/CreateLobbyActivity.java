@@ -2,9 +2,11 @@ package com.quizzingbricks.activities.menu;
 
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.quizzingbricks.R;
@@ -19,8 +21,22 @@ public class CreateLobbyActivity  extends Activity implements OnTaskCompleteAsyn
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_lobby);
-	
+		ActionBar ab = getActionBar();
+        ab.setTitle("Create Lobby");
+        ab.setDisplayHomeAsUpEnabled(true);
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	        case android.R.id.home:
+	        	setResult(RESULT_CANCELED);
+	            finish();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	        }
+    }
 	
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
@@ -29,7 +45,6 @@ public class CreateLobbyActivity  extends Activity implements OnTaskCompleteAsyn
 //		System.out.println(result.getResult().toString());
 		try {
 			if(result.hasException())	{
-				System.out.println("Oh noes...");
 				result.getException().printStackTrace();
 			}
 			else if (result.getResult().has("lobby")){

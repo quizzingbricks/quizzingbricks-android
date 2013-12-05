@@ -89,6 +89,7 @@ public class LobbySlaveActivity extends ListActivity implements OnTaskCompleteAs
 	
 	
 	private void createFriendsList(JSONObject jsonObject)	{
+		System.out.println(jsonObject.toString());
 		ArrayList<String> playerList = new ArrayList<String>();
 		JSONArray jsonPlayerList;
 		try {
@@ -122,7 +123,8 @@ public class LobbySlaveActivity extends ListActivity implements OnTaskCompleteAs
 //			setListAdapter(stringAdapter);
 			setListAdapter(adapter);
 			if(this.waitingForYourInviteAnswer)		{
-				makeYesNoPopup(jsonObject.getInt("l_id") ,jsonObject.getString("owner"));
+				makeYesNoPopup(jsonObject.getJSONObject("lobby").getInt("l_id") ,
+						jsonObject.getJSONObject("lobby").getJSONArray("players").getJSONObject(0).getString("u_mail"));
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -135,22 +137,22 @@ public class LobbySlaveActivity extends ListActivity implements OnTaskCompleteAs
 		dialogBuilder.setTitle("Invite");
     	dialogBuilder.setMessage("Accept invite from " + userName + "?");
     	final LobbySlaveActivity lobbySlaveActivity = (LobbySlaveActivity) this;
-    	dialogBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener()	{
-
-			@Override
-			public void onClick(DialogInterface dialog, int arg1) {
-				dialog.dismiss();
-				new LobbyThreadedAPI(lobbySlaveActivity).acceptLobbyInvitation(lobbyId, true, lobbySlaveActivity);
-			}
-    		
-    	});
-    	dialogBuilder.setNegativeButton("deny", new DialogInterface.OnClickListener(){
+    	dialogBuilder.setNegativeButton("Deny", new DialogInterface.OnClickListener(){
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
 				new LobbyThreadedAPI(lobbySlaveActivity).acceptLobbyInvitation(lobbyId, false, lobbySlaveActivity);
 			}
+    		
+    	});
+    	dialogBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener()	{
+    		
+    		@Override
+    		public void onClick(DialogInterface dialog, int arg1) {
+    			dialog.dismiss();
+    			new LobbyThreadedAPI(lobbySlaveActivity).acceptLobbyInvitation(lobbyId, true, lobbySlaveActivity);
+    		}
     		
     	});
     	dialogBuilder.show();

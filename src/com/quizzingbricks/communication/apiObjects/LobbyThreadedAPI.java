@@ -58,7 +58,7 @@ public class LobbyThreadedAPI extends AbstractThreadedAPI {
 	
 	public void invitetoLobby(int lobbyId, List<Integer> users, OnTaskCompleteAsync onTaskCompleteClass)		{
 		postCall.addOnTaskComplete(onTaskCompleteClass);
-		postCall.addToTheEndOfUrl(serverLobbyApiPath + Integer.toString(lobbyId) + "/accept/");
+		postCall.addToTheEndOfUrl(serverLobbyApiPath + Integer.toString(lobbyId) + "/invite/");
 		try {
 			JSONArray jsonArray = new JSONArray();
 			for(int user : users)	{
