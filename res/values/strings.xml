@@ -38,5 +38,8 @@
     <string name="friends_list">Friends List</string>
     <string name="your_games">Your Games</string>
     <string name="create_game">Create Game</string>
+    <string name="title_activity_lobby_owner">LobbyOwnerActivity</string>
+    <string name="title_activity_lobby_slave">LobbySlaveActivity</string>
+    <string name="title_activity_lobby_invite_friend">LobbyInviteFriendActivity</string>
 
 </resources>
