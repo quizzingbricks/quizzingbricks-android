@@ -152,7 +152,7 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 		System.out.println(resultCode);
 		     if(resultCode == RESULT_OK){
 //		    	 GamesThreadedAPI gamesThreadedAPI = new GamesThreadedAPI(this);
-		    	 gameThreadedAPI.getGameInfo(gameID, ontaskcomplete);
+//		    	 gameThreadedAPI.getGameInfo(gameID, ontaskcomplete);
 		     }
 		     else if (resultCode == RESULT_CANCELED) {    
 		         //Write your code if there's no result

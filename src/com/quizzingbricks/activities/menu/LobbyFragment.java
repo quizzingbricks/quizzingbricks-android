@@ -58,12 +58,13 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 				for (int i = 0; i < lobbyArray.length(); i++) {
 					JSONObject lobbyObject = lobbyArray.getJSONObject(i);
 					int lobbyid = lobbyObject.getInt("l_id");
+					int lobbysize = lobbyObject.getInt("size");
 					boolean lobbyowner = lobbyObject.getBoolean("owner");
 					String lobbyname;
 					if (lobbyowner == true) {
-						lobbyname = "Lobby "+lobbyid+"\nYou are owner";
+						lobbyname = "Lobby "+lobbyid+"  "+lobbysize+"\nYou are owner";
 					}else {
-						lobbyname = "Lobby "+lobbyid;
+						lobbyname = "Lobby "+lobbyid+"  "+lobbysize;
 					}
 //					String lobbyName = lobbyOwner.toString();
 					lobbynamelist.add(lobbyname);
@@ -90,12 +91,12 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 			Intent i = new Intent(getActivity(), LobbyOwnerActivity.class);
 			int lobbyid = lobbyidlist.get(position);
 			i.putExtra("l_id", lobbyid);
-			 startActivityForResult(i,1);
+			 startActivityForResult(i, 2);
 		} else {
 			Intent i = new Intent(getActivity(), LobbySlaveActivity.class);
 			int lobbyid = lobbyidlist.get(position);
 			i.putExtra("l_id", lobbyid);
-			startActivityForResult(i,1);
+			startActivity(i);
 		}
 			
 		
