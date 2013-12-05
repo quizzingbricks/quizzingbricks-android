@@ -47,16 +47,6 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 		return true;
 	}
 	
-//	public void sendFriendInvite(View view)		{
-//		EditText friendEdit = (EditText) findViewById(R.id.lobby_invite_friend_edit_text);
-//    	String friend = friendEdit.getText().toString();
-//    	
-//    	ArrayList<String> friendArray = new ArrayList<String>();
-//    	friendArray.add(friend);
-//    	
-//    	new LobbyThreadedAPI(this).invitetoLobby(lobbyId, friendArray, this);
-//	}
-	
 	@Override
 	public void onBackPressed() {
 		finish();
@@ -88,6 +78,7 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 			}		
 		}
 		else	{
+			Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
 			finish();
 			Intent intent = new Intent(this, LobbyOwnerActivity.class);
 			intent.putExtra("l_id", lobbyId);
