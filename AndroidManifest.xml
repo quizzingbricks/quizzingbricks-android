@@ -8,14 +8,16 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
-	
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>    
-	<uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
     <application
         android:allowBackup="true"
@@ -24,26 +26,18 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.quizzingbricks.activities.LoginActivity"
-            android:label="@string/app_name" 
-            android:parentActivityName="com.quizzingbricks.activities.FirstStartActivity"
-            >
+            android:label="@string/app_name"
+            android:parentActivityName="com.quizzingbricks.activities.FirstStartActivity" >
         </activity>
         <activity
-
             android:name="com.quizzingbricks.activities.inactive.MenuActivity"
             android:label="@string/menu" >
         </activity>
-        <activity
-
-            android:name="com.quizzingbricks.activities.menu.CreateLobbyActivity"
-             >
+        <activity android:name="com.quizzingbricks.activities.menu.CreateLobbyActivity" >
         </activity>
-        
         <activity
-
             android:name="com.quizzingbricks.activities.menu.MainMenuActivity"
-            android:label="@string/app_name"
-              >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.quizzingbricks.MainActivity"
@@ -53,59 +47,67 @@
             android:name="com.quizzingbricks.Menu.GameListFragment"
             android:label="@string/title_activity_game_board" >
         </activity>
-        
         <activity
             android:name="com.quizzingbricks.activities.answerQuestion.QuestionPromptActivity"
-             android:label="@string/Question_Prompt"
-             >
+            android:label="@string/Question_Prompt" >
         </activity>
-        <activity 
-     		android:name="com.quizzingbricks.activities.inactive.GridViewActivity">
+        <activity android:name="com.quizzingbricks.activities.inactive.GridViewActivity" >
         </activity>
-        <activity 
-     		android:name="com.quizzingbricks.activities.menu.AddFriendActivity">
+        <activity android:name="com.quizzingbricks.activities.menu.AddFriendActivity" >
         </activity>
-        <activity 
-     		android:name="com.quizzingbricks.activities.inactive.ActiveGamesMenuActivity"
-            android:label="@string/your_games">
+        <activity
+            android:name="com.quizzingbricks.activities.inactive.ActiveGamesMenuActivity"
+            android:label="@string/your_games" >
         </activity>
-        <activity 
-   			android:name="com.quizzingbricks.activities.gameboard.GameBoardActivity"
-            android:label="GameBoard">
-            </activity>
-      <activity 
-          android:name="com.quizzingbricks.activities.inactive.FriendsListActivity"
-          android:label="@string/friends_list">
-      </activity>
-       
-		<activity
+        <activity
+            android:name="com.quizzingbricks.activities.gameboard.GameBoardActivity"
+            android:label="GameBoard" >
+        </activity>
+        <activity
+            android:name="com.quizzingbricks.activities.inactive.FriendsListActivity"
+            android:label="@string/friends_list" >
+        </activity>
+        <activity
             android:name="com.quizzingbricks.activities.MainScreenActivity"
             android:label="@string/title_activity_main_screen"
             android:parentActivityName="com.quizzingbricks.activities.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.quizzingbricks.Login" 
-                />
+                android:value="com.quizzingbricks.Login" />
         </activity>
         <activity
-		    android:name="com.quizzingbricks.activities.FirstStartActivity"
-		    android:label="@string/app_name"
-		    >
-			<intent-filter>
+            android:name="com.quizzingbricks.activities.FirstStartActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-		</activity>
-		
-		<activity
-		    android:name="com.quizzingbricks.activities.RegisterUserActivity"
-		    android:label="@string/app_name"
-		    android:parentActivityName="com.quizzingbricks.activities.FirstStartActivity"
-		    ></activity>
-        <activity android:name="com.quizzingbricks.activities.menu.LobbyActivity"
-            android:label="@string/create_game"
-            ></activity>
-
+        </activity>
+        <activity
+            android:name="com.quizzingbricks.activities.RegisterUserActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.quizzingbricks.activities.FirstStartActivity" >
+        </activity>
+        <activity
+            android:name="com.quizzingbricks.activities.menu.LobbyActivity"
+            android:label="@string/create_game" >
+        </activity>
+        <activity
+            android:name="com.quizzingbricks.activities.lobby.LobbyOwnerActivity"
+            android:label="@string/title_activity_lobby_owner"
+            android:parentActivityName="com.quizzingbricks.activities.menu.MainMenuActivity"  
+            >
+        </activity>
+        <activity
+            android:name="com.quizzingbricks.activities.lobby.LobbySlaveActivity"
+            android:label="@string/title_activity_lobby_slave"
+            >
+        </activity>
+        <activity
+            android:name="com.quizzingbricks.activities.lobby.LobbyInviteFriendActivity"
+            android:label="@string/title_activity_lobby_invite_friend" 
+            >
+        </activity>
     </application>
 
 </manifest>

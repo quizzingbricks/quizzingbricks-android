@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quizzingbricks.R;
+import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.GamesThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.LobbyThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
@@ -181,6 +182,10 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			         //Write your code if there's no result
 			     }
 			 }
+		}
+		@Override
+		public void onBackPressed() {
+		    finish();
 		}
 	}
 	class FragmentAdapter extends FragmentPagerAdapter {
