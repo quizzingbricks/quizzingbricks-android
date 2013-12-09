@@ -174,12 +174,14 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 		Intent intent = new Intent(this.context, MainMenuActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); //Only for api level 11
 		this.context.startActivity(intent);
 	}
 	
 	private void changeToFirstStartActivity()	{
 		Intent intent = new Intent(context, FirstStartActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); //Only for api level 11
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}
@@ -188,6 +190,7 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 		Intent intent = new Intent(context, LoginActivity.class);
 		intent.putExtra("Message", message);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); //Only for api level 11
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}
