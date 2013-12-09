@@ -108,7 +108,7 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 			int whiteSpacePadding = 20;
 		
 			Button addFriendButton = new Button(this);
-			addFriendButton.setText("Add friend");
+			addFriendButton.setText("Add player");
 			addFriendButton.setOnClickListener(new Button.OnClickListener() {
 			    public void onClick(View v) {
 			    	Intent intent = new Intent(context, LobbyInviteFriendActivity.class);
