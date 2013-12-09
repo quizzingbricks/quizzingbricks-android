@@ -36,6 +36,13 @@ import android.widget.Toast;
 public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAsync {
 
 	private int lobbyId;
+	private int resultRequestCode = 11;
+	private int ADD_FRIEND_BUTTON_ID = 0;
+	private int START_GAME_ID = 1;
+	
+	private Button addFriendButton;
+	private Button startGameButton;
+	private TextView playerListHeader;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,12 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 		ActionBar ab = getActionBar();
 	    ab.setTitle("Lobby " + Integer.toString(lobbyId));
 	    ab.setDisplayHomeAsUpEnabled(true);
-		new LobbyThreadedAPI(this).getLobbyInfo(this.lobbyId, this);
+	    
+	    addFriendButton = new Button(this);
+	    startGameButton = new Button(this);
+	    playerListHeader = new TextView(this);
+	    
+	    new LobbyThreadedAPI(this).getLobbyInfo(this.lobbyId, this);
 	}
 
 	@Override
@@ -91,61 +103,94 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 				}
 			}
 			else	{
-				setResult(RESULT_OK, new Intent());
 				finish();
 			}
 		}
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == 11)	{
+			handleAddFriendResult(resultCode, data);
+		}
+		else	{
+			System.out.println("Unknown request code in LobbyOwnerActivity, " + requestCode);
+		}
+	}
+	
+	private void handleAddFriendResult(int resultCode, Intent data)	{
+		if(resultCode == RESULT_OK)	{
+			Toast.makeText(this, "Friend added", Toast.LENGTH_LONG);
+			redrawOwnerLobby();
+		}
+		else if(resultCode == RESULT_CANCELED)	{
+			if(data.hasExtra("canceledByUser"))	{
+				redrawOwnerLobby();
+			}
+			else if(data.hasExtra("errorMessage"))	{
+				Toast.makeText(this, data.getStringExtra("errorMessage"), Toast.LENGTH_LONG).show();
+			}
+			else	{
+				Toast.makeText(this, "Unknown error", Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+	
+	private void redrawOwnerLobby()	{
+		ListView listView = getListView();
+		listView.removeHeaderView(this.addFriendButton);
+		listView.removeHeaderView(this.startGameButton);
+		listView.removeHeaderView(this.playerListHeader);
+		new LobbyThreadedAPI(this).getLobbyInfo(this.lobbyId, this);
+	}
+	
 	private void createOwnerLobby(JSONObject jsonObject)	{
-		try {
-			ArrayList<String> playerList = new ArrayList<String>();
-			JSONArray jsonPlayerList;
-			ListView listView = getListView();
-			
-			final Context context = this; 
-			final int lobbyId = this.lobbyId;
-			int whiteSpacePadding = 20;
+		ListView listView = getListView();
 		
-			Button addFriendButton = new Button(this);
-			addFriendButton.setText("Add friend");
-			addFriendButton.setOnClickListener(new Button.OnClickListener() {
-			    public void onClick(View v) {
-			    	Intent intent = new Intent(context, LobbyInviteFriendActivity.class);
-			    	intent.putExtra("l_id", lobbyId);
-			    	((Activity) context).finish();
-		            context.startActivity(intent);
-			    }
-			});
-			addFriendButton.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
-			listView.addHeaderView(addFriendButton);
-			
-			Button startGameButton = new Button(this);
-			startGameButton.setText("Start game");
-			startGameButton.setOnClickListener(new OnStartGameClick(this, this, this));
-			startGameButton.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
-			listView.addHeaderView(startGameButton);
-			
-			TextView textView = new TextView(this);
-			textView.setTextSize(18);
-			textView.setText("Players in lobby");
-			textView.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
-			listView.addHeaderView(textView, "Players in lobby", false);
-			
+		final Context context = this; 
+		final int lobbyId = this.lobbyId;
+		final int requestCode = this.resultRequestCode;
+		
+		int whiteSpacePadding = 20;
+		
+		addFriendButton.setId(ADD_FRIEND_BUTTON_ID);
+		addFriendButton.setText("Add friend");
+		addFriendButton.setOnClickListener(new Button.OnClickListener() {
+		    public void onClick(View v) {
+		    	Intent intent = new Intent(context, LobbyInviteFriendActivity.class);
+		    	intent.putExtra("l_id", lobbyId);
+		    	((LobbyOwnerActivity) context).startActivityForResult(intent, requestCode);
+		    }
+		});
+		addFriendButton.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
+		listView.addHeaderView(addFriendButton);
+		
+		startGameButton.setId(START_GAME_ID);
+		startGameButton.setText("Start game");
+		startGameButton.setOnClickListener(new OnStartGameClick(this, this, this));
+		startGameButton.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
+		listView.addHeaderView(startGameButton);
+		
+		playerListHeader.setTextSize(18);
+		playerListHeader.setText("Players in lobby");
+		playerListHeader.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
+		listView.addHeaderView(playerListHeader, "Players in lobby", false);
+		
+		makePlayerList(jsonObject);
+	}
+	
+	private void makePlayerList(JSONObject jsonObject)	{
+		ArrayList<String> playerList = new ArrayList<String>();
+		JSONArray jsonPlayerList;
+		try {
 			jsonPlayerList = jsonObject.getJSONObject("lobby").getJSONArray("players");
 			for(int i=0; i<=jsonPlayerList.length()-1; i++)	{
 				JSONObject currentUser = jsonPlayerList.getJSONObject(i);
 				playerList.add(currentUser.getString("u_mail") + " - " + currentUser.getString("status"));
 			}
-			QuestionPromptAdapter adapter = new QuestionPromptAdapter(this, playerList, "Not needed");
-			
-//			ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this, R.layout.list_layout_no_image, playerList);
-//			setListAdapter(stringAdapter);
-			
+			LobbyPlayerListAdapter adapter = new LobbyPlayerListAdapter(this, playerList);
 			setListAdapter(adapter);
-			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -164,9 +209,9 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 		
 		@Override
 		public void onClick(View arg0) {
+			this.activity.finish();
 			new LobbyThreadedAPI(context).startGame(lobbyId, lobbyOwnerActivity);
 		}
 		
 	}
-
 }

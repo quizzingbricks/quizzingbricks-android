@@ -49,6 +49,7 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 	
 	@Override
 	public void onBackPressed() {
+		setResult(RESULT_CANCELED, new Intent().putExtra("canceledByUser", true));
 		finish();
 	}
 	
@@ -70,19 +71,15 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 		}
 		else if(jsonResult.has("errors"))	{
 			try {
-				System.out.println("Error message from server: " + jsonResult.getJSONObject("errors").getString("message"));
-				Toast.makeText(this, jsonResult.getJSONObject("errors").getString("message"), Toast.LENGTH_SHORT).show();
+				setResult(RESULT_CANCELED, new Intent().putExtra("errorMessage", jsonResult.getJSONObject("errors").getString("message")));
+				finish();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}		
 		}
 		else	{
-			Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
+			setResult(RESULT_OK);
 			finish();
-			Intent intent = new Intent(this, LobbyOwnerActivity.class);
-			intent.putExtra("l_id", lobbyId);
-			startActivity(intent);
 		}
 	}
 	

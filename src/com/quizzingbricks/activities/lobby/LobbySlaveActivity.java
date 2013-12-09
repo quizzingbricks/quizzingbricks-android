@@ -117,10 +117,7 @@ public class LobbySlaveActivity extends ListActivity implements OnTaskCompleteAs
 				}
 				playerList.add(currentUser.getString("u_mail") + " - " + currentUser.getString("status"));
 			}
-			QuestionPromptAdapter adapter = new QuestionPromptAdapter(this, playerList, "Not needed");
-//			ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this, R.layout.list_layout_no_image, playerList);
-			
-//			setListAdapter(stringAdapter);
+			LobbyPlayerListAdapter adapter = new LobbyPlayerListAdapter(this, playerList);
 			setListAdapter(adapter);
 			if(this.waitingForYourInviteAnswer)		{
 				makeYesNoPopup(jsonObject.getJSONObject("lobby").getInt("l_id") ,
