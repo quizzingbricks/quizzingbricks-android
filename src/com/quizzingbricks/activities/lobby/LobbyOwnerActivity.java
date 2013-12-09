@@ -126,7 +126,6 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 		}
 		else if(resultCode == RESULT_CANCELED)	{
 			if(data.hasExtra("canceledByUser"))	{
-				Toast.makeText(this, "This should not happen", Toast.LENGTH_LONG).show();
 				redrawOwnerLobby();
 			}
 			else if(data.hasExtra("errorMessage"))	{

@@ -29,6 +29,10 @@
     <string name="unknow_server_answer">Unknown answer from server</string>
     <string name="question_time_exceded">Question time exceded</string>
     <string name="counter_start">Seconds remaining: 10</string>
+    <!-- Lobby -->
+    <string name="title_activity_lobby_owner">LobbyOwnerActivity</string>
+    <string name="title_activity_lobby_slave">LobbySlaveActivity</string>
+    <string name="title_activity_lobby_invite_friend">LobbyInviteFriendActivity</string>
     <!-- Other -->
     <string name="title_activity_game_board">GameBoardActivity</string>
     <string name="title_activity_main_screen">MainScreen</string>
@@ -38,8 +42,6 @@
     <string name="friends_list">Friends List</string>
     <string name="your_games">Your Games</string>
     <string name="create_game">Create Game</string>
-    <string name="title_activity_lobby_owner">LobbyOwnerActivity</string>
-    <string name="title_activity_lobby_slave">LobbySlaveActivity</string>
-    <string name="title_activity_lobby_invite_friend">LobbyInviteFriendActivity</string>
+    <string name="logout">Logout</string>
 
 </resources>
