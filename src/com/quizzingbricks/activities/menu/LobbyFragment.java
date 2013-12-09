@@ -42,7 +42,7 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 			lobbyidlist = new ArrayList<Integer>();
 		}
 		lobbynamelist.clear();
-		lobbynamelist.add("+Create New Game");
+		lobbynamelist.add("+ Create New Game");
 		lobbyownerlist.clear();
 		//This is a filler to make sure onListItemClick is correctly instansiated
 		lobbyownerlist.add(null);
@@ -59,12 +59,13 @@ public class LobbyFragment extends ListFragment implements OnTaskCompleteAsync {
 					JSONObject lobbyObject = lobbyArray.getJSONObject(i);
 					int lobbyid = lobbyObject.getInt("l_id");
 					int lobbysize = lobbyObject.getInt("size");
+					String lobbySize = lobbyObject.getString("size") + " player lobby";
 					boolean lobbyowner = lobbyObject.getBoolean("owner");
 					String lobbyname;
 					if (lobbyowner == true) {
-						lobbyname = "Lobby "+lobbyid+"  "+lobbysize+"\nYou are owner";
+						lobbyname = "Lobby "+lobbyid+"   ("+lobbySize+")\nYou are owner";
 					}else {
-						lobbyname = "Lobby "+lobbyid+"  "+lobbysize;
+						lobbyname = "Lobby "+lobbyid+"   ("+lobbySize +")";
 					}
 //					String lobbyName = lobbyOwner.toString();
 					lobbynamelist.add(lobbyname);

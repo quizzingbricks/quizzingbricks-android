@@ -30,7 +30,7 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 //	    private TabsPagerAdapter mAdapter;
 	    private ActionBar actionBar;
 	    // Tab titles
-	    private String[] tabs = { "Games","Lobbys", "Friends" };
+	    private String[] tabs = { "Games","Lobbies", "Friends" };
 	    ArrayList<String> list;
 	    private Adapter ad;
 	    ArrayList<String> friendslist;

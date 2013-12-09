@@ -42,7 +42,7 @@ public class FriendsFragment extends ListFragment implements OnTaskCompleteAsync
 		@Override
 		public void onComplete(AsyncTaskResult<JSONObject> result) {
 		 	ArrayList<String> newfriendslist = new ArrayList<String>();
-			newfriendslist.add("+Add Friend");
+			newfriendslist.add("+ Add Friend");
 			try {
 				if(result.hasException())	{
 					System.out.println("Oh noes...");
