@@ -203,6 +203,9 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 		}
 		@Override
 		public void onBackPressed() {
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+		    intent.addCategory(Intent.CATEGORY_HOME);
+		    startActivity(intent);
 		}
 		
 	}
