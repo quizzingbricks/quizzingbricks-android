@@ -131,7 +131,6 @@ public class AuthenticationManager extends Activity implements OnTaskCompleteAsy
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-//				changeToMainMenuActivity();
 			}
 			else if(jsonResult.has("id"))	{
 				try {
