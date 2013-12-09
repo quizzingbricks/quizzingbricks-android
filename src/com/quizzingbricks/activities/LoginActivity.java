@@ -2,6 +2,7 @@ package com.quizzingbricks.activities;
 
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.quizzingbricks.R;
 
 import com.quizzingbricks.authentication.AuthenticationManager;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
+import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 import com.quizzingbricks.tools.SimplePopupWindow;
 
@@ -32,7 +34,15 @@ public class LoginActivity extends Activity implements OnTaskCompleteAsync	{
         	textView.setText(intent.getStringExtra("Message"));
         	new SimplePopupWindow(this).createPopupWindow("Login error", intent.getStringExtra("Message"));
         }
+        ActionBar ab = getActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+	    new UserThreadedAPI(this).getFriendsList(this);
     }
+    
+    @Override
+	public void onBackPressed() {
+		finish();
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

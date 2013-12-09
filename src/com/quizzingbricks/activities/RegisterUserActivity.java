@@ -30,8 +30,8 @@ public class RegisterUserActivity extends Activity implements OnTaskCompleteAsyn
 		EditText emailEdit = (EditText) findViewById(R.id.register_user_email_edit);
 		String email = emailEdit.getText().toString();
 		
-		EditText usernameEdit = (EditText) findViewById(R.id.register_user_username_edit);
-		String username = usernameEdit.getText().toString();
+//		EditText usernameEdit = (EditText) findViewById(R.id.register_user_username_edit);
+		String username = "null";
 		
 		EditText passwordEdit = (EditText) findViewById(R.id.register_user_password_edit);
 		String password = passwordEdit.getText().toString();

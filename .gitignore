@@ -19,6 +19,9 @@ local.properties
 .metadata/
 .settings/
 
+# Android project file
+project.properties
+
 # Eclipse project files
 # .classpath
 # .project

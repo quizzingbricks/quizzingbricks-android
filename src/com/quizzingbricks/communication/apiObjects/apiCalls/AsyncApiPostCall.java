@@ -19,8 +19,8 @@ public class AsyncApiPostCall extends AbstractApiCall<BasicNameValuePair, Void, 
 	@Override
 	protected AsyncTaskResult<JSONObject> doInBackground(BasicNameValuePair... params) {
 		try	{
-			if(simpleJsonObject != null)	{
-				return new AsyncTaskResult<JSONObject>(this.requestParser.sendPostToServer(url, token, simpleJsonObject, params));
+			if(jsonObject != null)	{
+				return new AsyncTaskResult<JSONObject>(this.requestParser.postJsonToServer(url, token, jsonObject));
 			}
 			else	{
 				return new AsyncTaskResult<JSONObject>(this.requestParser.sendPostToServer(url, token, params));

@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         
-        android:onClick="create4"
+        android:onClick="create2"
         android:padding="16dp"
         android:text="Create 2 Player Game"
         />
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         
-        android:onClick="create2"
+        android:onClick="create4"
         android:padding="16dp"
         android:text="Create 4 Player Game"
         />

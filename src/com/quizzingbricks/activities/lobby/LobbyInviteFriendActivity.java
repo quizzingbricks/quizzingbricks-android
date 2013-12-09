@@ -27,7 +27,7 @@ import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
 import com.quizzingbricks.tools.AsyncTaskResult;
 
 public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCompleteAsync {
-	private ArrayList<String> userIdList = new ArrayList<String>(); //Will have the same positions as the users in the friends list
+	private ArrayList<Integer> userIdList = new ArrayList<Integer>(); //Will have the same positions as the users in the friends list
 	private int lobbyId;
 	
 	@Override
@@ -47,16 +47,6 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 		return true;
 	}
 	
-//	public void sendFriendInvite(View view)		{
-//		EditText friendEdit = (EditText) findViewById(R.id.lobby_invite_friend_edit_text);
-//    	String friend = friendEdit.getText().toString();
-//    	
-//    	ArrayList<String> friendArray = new ArrayList<String>();
-//    	friendArray.add(friend);
-//    	
-//    	new LobbyThreadedAPI(this).invitetoLobby(lobbyId, friendArray, this);
-//	}
-	
 	@Override
 	public void onBackPressed() {
 		finish();
@@ -64,8 +54,8 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		ArrayList<String> userToAdd = new ArrayList<String>();
-		userToAdd.add(this.userIdList.get(position));
+		ArrayList<Integer> userToAdd = new ArrayList<Integer>();
+		userToAdd.add(this.userIdList.get(position-1));
 		new LobbyThreadedAPI(this).invitetoLobby(this.lobbyId, userToAdd, this);
 	}
 
@@ -88,6 +78,7 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 			}		
 		}
 		else	{
+			Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
 			finish();
 			Intent intent = new Intent(this, LobbyOwnerActivity.class);
 			intent.putExtra("l_id", lobbyId);
@@ -111,7 +102,7 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 			jsonPlayerList = jsonObject.getJSONArray("friends");
 			for(int i=0; i<=jsonPlayerList.length()-1; i++)	{
 				playerList.add(jsonPlayerList.getJSONObject(i).getString("email"));
-				this.userIdList.add(jsonPlayerList.getJSONObject(i).getString("id"));
+				this.userIdList.add(jsonPlayerList.getJSONObject(i).getInt("id"));
 			}
 			QuestionPromptAdapter adapter = new QuestionPromptAdapter(this, playerList, "Not needed");
 //			ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this, R.layout.list_layout_no_image, playerList);

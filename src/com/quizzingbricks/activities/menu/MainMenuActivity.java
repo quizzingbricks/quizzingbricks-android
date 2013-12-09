@@ -55,11 +55,10 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	        list.add("first game");
 	        list.add("second game");
 	        ad = new Adapter(this, list);
-	        
+	         
 	     // Initilization
 	        viewPager = (ViewPager) findViewById(R.id.pager);
 	        actionBar = getActionBar();
-	        
 	     //Old Adapter
 //	        mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), ad);
 //	        viewPager.setAdapter(mAdapter);
@@ -77,7 +76,7 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	      //New Adapter
 	        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
 	      //Set adapter
-	        viewPager.setAdapter(fragmentAdapter);
+	        viewPager.setAdapter(fragmentAdapter); 
 	     
 	        
 	        
@@ -151,7 +150,7 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			//If you need to take results from different fragments, use different requestCodes
 			System.out.println(requestCode);
 			 if (requestCode == 196609) {
-			     if(resultCode == RESULT_OK){      
+			     if(resultCode == RESULT_OK){
 //			    	 viewPager.setAdapter(fragmentAdapter);
 //			    	 viewPager.setCurrentItem(2);
 			    	 UserThreadedAPI userThreadedAPI = new UserThreadedAPI(this);
@@ -180,6 +179,12 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			     else if (resultCode == RESULT_CANCELED) {    
 			    	 Toast.makeText(this, "Could not make game", 2).show();
 			         //Write your code if there's no result
+			     }
+			 } else if (requestCode == 131074) {
+			     if(resultCode == RESULT_OK){     
+			    	 LobbyThreadedAPI lobbyThreadedAPI = new LobbyThreadedAPI(this);
+			    	 lobbyThreadedAPI.getGameLobbies(lobbyfragment);
+			    	 Toast.makeText(this, "Game started", 2).show();
 			     }
 			 }
 		}

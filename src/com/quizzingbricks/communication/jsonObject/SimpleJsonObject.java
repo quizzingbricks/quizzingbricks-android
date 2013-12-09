@@ -22,9 +22,9 @@ public class SimpleJsonObject implements JsonObject {
 		String returnString = "{ \n";
 		LinkedList<JsonObject> localJsonPairList = jsonPairList; 
 		
-		while(localJsonPairList.size() > 1)	{
-			returnString += jsonPairList.poll().toJsonString() + ", \n";
-		}
+//		while(localJsonPairList.size() > 1)	{
+//			returnString += jsonPairList.poll().toJsonString() + ", \n";
+//		}
 		returnString += jsonPairList.poll().toJsonString() + "\n";
 		returnString += "}";
 		return returnString;
