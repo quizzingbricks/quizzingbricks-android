@@ -165,7 +165,7 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			     }
 			     else if (resultCode == RESULT_CANCELED) {    
 			    	 try {
-			    		 if (data.getBooleanExtra("back", false)) {
+			    		 if(!data.hasExtra("canceledByUser"))	{
 				    		 Toast.makeText(this, "Friend not found Or already exists", 2).show();
 						}
 					} catch (Exception e) {
@@ -189,8 +189,9 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			    	 Toast.makeText(this, "Game created", 2).show();
 			     }
 			     else if (resultCode == RESULT_CANCELED) {    
-			    	 Toast.makeText(this, "Could not make game", 2).show();
-			         //Write your code if there's no result
+			    	 if(!data.hasExtra("canceledByUser"))	{
+			    		 Toast.makeText(this, "Could not make game", 2).show();
+			    	 }
 			     }
 			 } else if (requestCode == 131074) {
 			     if(resultCode == RESULT_OK){     

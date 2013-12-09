@@ -1,4 +1,4 @@
-package com.quizzingbricks.activities.menu;
+package com.quizzingbricks.activities.lobby;
 
 import org.json.JSONObject;
 
@@ -20,23 +20,34 @@ public class CreateLobbyActivity  extends Activity implements OnTaskCompleteAsyn
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_create_lobby);
 		ActionBar ab = getActionBar();
         ab.setTitle("Create Lobby");
         ab.setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_create_lobby);
 	}
 	
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 	        case android.R.id.home:
-	        	setResult(RESULT_CANCELED);
-	            finish();
+	        	userBackButtonPress();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	        }
     }
+	
+	@Override
+	public void onBackPressed() {
+		userBackButtonPress();
+	}
+	
+	private void userBackButtonPress()	{
+		Intent intent = new Intent();
+		intent.putExtra("canceledByUser", true);
+		setResult(RESULT_CANCELED, intent);
+        finish();
+	}
 	
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
@@ -54,19 +65,14 @@ public class CreateLobbyActivity  extends Activity implements OnTaskCompleteAsyn
 				finish();
 
 			}
-//			else {
-//
-//				Intent returnIntent = new Intent();
-//				setResult(RESULT_CANCELED,returnIntent);     
-//				finish();
-//			}
+			else if(result.getResult().has("errors")) {
+				Intent returnIntent = new Intent();
+				setResult(RESULT_CANCELED,returnIntent);     
+				finish();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Intent returnIntent = new Intent();
-		setResult(RESULT_CANCELED,returnIntent);
-		finish();
-		
 	}
 	public void create2(View v){
 		LobbyThreadedAPI lobbyThreadedAPI = new LobbyThreadedAPI(this);

@@ -172,9 +172,9 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 		startGameButton.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
 		listView.addHeaderView(startGameButton);
 		
-		playerListHeader.setTextSize(18);
+		playerListHeader.setTextSize(24);
 		playerListHeader.setText("Players in lobby");
-		playerListHeader.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
+		playerListHeader.setPadding(whiteSpacePadding, whiteSpacePadding+40, whiteSpacePadding, whiteSpacePadding+20);
 		listView.addHeaderView(playerListHeader, "Players in lobby", false);
 		
 		makePlayerList(jsonObject);

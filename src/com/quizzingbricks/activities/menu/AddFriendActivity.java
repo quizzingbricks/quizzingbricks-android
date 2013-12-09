@@ -2,9 +2,11 @@ package com.quizzingbricks.activities.menu;
 
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,10 +22,10 @@ public class AddFriendActivity extends Activity implements OnTaskCompleteAsync{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_friend);
-		
-		
-		
+		ActionBar ab = getActionBar();
+		ab.setTitle("Add friend");
+        ab.setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_add_friend);
 		
 	  //Need input for inputting email of friend
 		//Need to give toast or something in onComplete to alert user
@@ -37,6 +39,30 @@ public class AddFriendActivity extends Activity implements OnTaskCompleteAsync{
 //	    Toast.makeText(this, "lol", 2).show();
 	    
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	        case android.R.id.home:
+	        	userBackButtonPress();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	        }
+    }
+	
+	@Override
+	public void onBackPressed() {
+		userBackButtonPress();
+	}
+	
+	private void userBackButtonPress()	{
+		Intent intent = new Intent();
+		intent.putExtra("canceledByUser", true);
+		setResult(RESULT_CANCELED, intent);
+        finish();
+	}
+	
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
 		// TODO Response to user that friend has been added?
