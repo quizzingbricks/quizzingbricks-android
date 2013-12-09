@@ -50,7 +50,7 @@ public class AddFriendActivity extends Activity implements OnTaskCompleteAsync{
 			else if (result.getResult().get("result").equals("ok")){
 				System.out.println(result.getResult().toString());
 				Intent returnIntent = new Intent();
-				setResult(RESULT_OK,returnIntent);     
+				setResult(RESULT_OK,returnIntent);  
 				finish();
 
 			}
@@ -66,7 +66,6 @@ public class AddFriendActivity extends Activity implements OnTaskCompleteAsync{
 		Intent returnIntent = new Intent();
 		setResult(RESULT_CANCELED,returnIntent);
 		finish();
-		
 		
 	}
 	

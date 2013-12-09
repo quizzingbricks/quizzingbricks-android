@@ -36,7 +36,6 @@ public class FriendsFragment extends ListFragment implements OnTaskCompleteAsync
 				 //Add new Friend
 				 Intent i = new Intent(getActivity(), AddFriendActivity.class);
 				 startActivityForResult(i, 1);
-
 			 }
 		  }
 		 
@@ -63,24 +62,4 @@ public class FriendsFragment extends ListFragment implements OnTaskCompleteAsync
 			setListAdapter(ad);
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
