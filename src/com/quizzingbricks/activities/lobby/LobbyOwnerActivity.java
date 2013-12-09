@@ -88,6 +88,7 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 		System.out.println(jsonResult.toString());
 		if(result.hasException())	{
 			result.getException().printStackTrace();
+			Toast.makeText(this, result.getException().getMessage(), Toast.LENGTH_SHORT);
 		}
 		else if(result.hasResult())	{
 			if(jsonResult.has("lobby"))	{
@@ -125,6 +126,7 @@ public class LobbyOwnerActivity extends ListActivity implements OnTaskCompleteAs
 		}
 		else if(resultCode == RESULT_CANCELED)	{
 			if(data.hasExtra("canceledByUser"))	{
+				Toast.makeText(this, "This should not happen", Toast.LENGTH_LONG).show();
 				redrawOwnerLobby();
 			}
 			else if(data.hasExtra("errorMessage"))	{

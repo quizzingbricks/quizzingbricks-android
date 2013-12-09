@@ -159,7 +159,14 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			    	
 			     }
 			     else if (resultCode == RESULT_CANCELED) {    
-			    	 Toast.makeText(this, "Friend not found Or already exists", 2).show();
+			    	 try {
+			    		 if (data.getBooleanExtra("back", false)) {
+				    		 Toast.makeText(this, "Friend not found Or already exists", 2).show();
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+			    	 
 			     }
 			 } else if (requestCode == 131073) {
 			     if(resultCode == RESULT_OK){      

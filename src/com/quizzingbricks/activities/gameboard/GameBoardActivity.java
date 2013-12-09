@@ -147,7 +147,6 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 			}
     		
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			
 			//IF ELSE FAIL JUST MAKE EMPTY GAMEBOARD
@@ -195,17 +194,41 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
         gameInfo.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         gameInfo.setOrientation(LinearLayout.HORIZONTAL);
         TextView playerinfo = new TextView(this);
-        
-        if (myID == playerlist.get(0)) {
-        	playerinfo.append("You are green, ");
-		} else {
-			playerinfo.append(playerEmailList.get(0).toString()+"= green, ");
-		} 
-        if (myID == playerlist.get(1)) {
-        	playerinfo.append("You are blue, ");
-		} else {
-			playerinfo.append(playerEmailList.get(1).toString()+"= blue, ");
-		} 
+        if (playerlist.size() == 2) {
+        	System.out.println("list == 2");
+	        if (myID == playerlist.get(0)) {
+	        	playerinfo.append("You are blue, ");
+			} else {
+				playerinfo.append(playerEmailList.get(0).toString()+" is blue, ");
+			} 
+	        if (myID == playerlist.get(1)) {
+	        	playerinfo.append("You are green");
+			} else {
+				playerinfo.append(playerEmailList.get(1).toString()+" is green");
+			} 
+        } else {
+        	System.out.println("list == 4");
+        	if (myID == playerlist.get(0)) {
+	        	playerinfo.append("You are blue, ");
+			} else {
+				playerinfo.append(playerEmailList.get(0).toString()+" is blue, ");
+			} 
+	        if (myID == playerlist.get(1)) {
+	        	playerinfo.append("You are green, ");
+			} else {
+				playerinfo.append(playerEmailList.get(1).toString()+" is green, ");
+			}
+			if (myID == playerlist.get(2)) {
+	        	playerinfo.append("You are yellow, ");
+			} else {
+				playerinfo.append(playerEmailList.get(2).toString()+" is yellow, ");
+			} 
+	        if (myID == playerlist.get(3)) {
+	        	playerinfo.append("You are red, ");
+			} else {
+				playerinfo.append(playerEmailList.get(3).toString()+" is red");
+			}
+		}
         
         
         gameInfo.addView(playerinfo);
@@ -286,60 +309,60 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
         setContentView(a);
 	}
 	
-	
-    void makeGameBoard(){   
-        ScrollView a = new ScrollView(this);
-        a.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        
-        HorizontalScrollView b = new HorizontalScrollView(this);
-        b.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        
-        LinearLayout c = new LinearLayout(this);
-        c.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        c.setOrientation(LinearLayout.VERTICAL);
-        
-        for (int i = 0; i < BOARD_SIZE; i++) {
-        	LinearLayout d = new LinearLayout(this);
-            d.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-//            d.setPadding(-5, 0, -5, 0);
-            d.setOrientation(LinearLayout.HORIZONTAL);
-            for (int j = 0; j < BOARD_SIZE; j++) {
-            	ImageButton ib = new ImageButton(this);
-            	ib.setImageResource(R.drawable.boardcellempty);
-            	ib.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            	ib.setId((i*BOARD_SIZE)+j);
-            	ib.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						GamesThreadedAPI GTAPI = new GamesThreadedAPI(getApplicationContext());
-						
-						int id = v.getId();
-						int y = id % BOARD_SIZE;
-						int x = id / BOARD_SIZE;
-						System.out.println(gameID);
-						System.out.println(x);
-						System.out.println(y);
-						
-						GTAPI.placeBricks(gameID, x, y, ontaskcomplete);
-						Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
-//						System.out.println("loltest"+id);
-				    	i.putExtra("gameID", gameID);
-//						startActivity(i);
-				    	startActivityForResult(i, 1);
-				    	
-//				    	 ImageButton b = (ImageButton) findViewById(id);
-//							b.setImageResource(R.drawable.boardcellblue);
-
-					}
-				});
-//                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            	d.addView(ib);//new Button(this));
-    		}
-            c.addView(d);
-		}
-        b.addView(c);
-        a.addView(b);
-        setContentView(a);
-	}
+//	
+//    void makeGameBoard(){   
+//        ScrollView a = new ScrollView(this);
+//        a.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+//        
+//        HorizontalScrollView b = new HorizontalScrollView(this);
+//        b.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+//        
+//        LinearLayout c = new LinearLayout(this);
+//        c.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+//        c.setOrientation(LinearLayout.VERTICAL);
+//        
+//        for (int i = 0; i < BOARD_SIZE; i++) {
+//        	LinearLayout d = new LinearLayout(this);
+//            d.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+////            d.setPadding(-5, 0, -5, 0);
+//            d.setOrientation(LinearLayout.HORIZONTAL);
+//            for (int j = 0; j < BOARD_SIZE; j++) {
+//            	ImageButton ib = new ImageButton(this);
+//            	ib.setImageResource(R.drawable.boardcellempty);
+//            	ib.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+//            	ib.setId((i*BOARD_SIZE)+j);
+//            	ib.setOnClickListener(new OnClickListener() {
+//					
+//					@Override
+//					public void onClick(View v) {
+//						GamesThreadedAPI GTAPI = new GamesThreadedAPI(getApplicationContext());
+//						
+//						int id = v.getId();
+//						int y = id % BOARD_SIZE;
+//						int x = id / BOARD_SIZE;
+//						System.out.println(gameID);
+//						System.out.println(x);
+//						System.out.println(y);
+//						
+//						GTAPI.placeBricks(gameID, x, y, ontaskcomplete);
+//						Intent i = new Intent(getApplicationContext(), QuestionPromptActivity.class);
+////						System.out.println("loltest"+id);
+//				    	i.putExtra("gameID", gameID);
+////						startActivity(i);
+//				    	startActivityForResult(i, 1);
+//				    	
+////				    	 ImageButton b = (ImageButton) findViewById(id);
+////							b.setImageResource(R.drawable.boardcellblue);
+//
+//					}
+//				});
+////                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//            	d.addView(ib);//new Button(this));
+//    		}
+//            c.addView(d);
+//		}
+//        b.addView(c);
+//        a.addView(b);
+//        setContentView(a);
+//	}
 }
