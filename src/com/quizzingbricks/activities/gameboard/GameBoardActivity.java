@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.graphics.Path.FillType;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,13 +40,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
-	int gameID;
-	ArrayList<Integer> gameboard;
-	OnTaskCompleteAsync ontaskcomplete;
-	int BOARD_SIZE = 8;
-	GamesThreadedAPI gameThreadedAPI;
-	int y_coord, x_coord;
-	int myID;
+	private int gameID;
+	private ArrayList<Integer> gameboard;
+	private OnTaskCompleteAsync ontaskcomplete;
+	private int BOARD_SIZE = 8;
+	private GamesThreadedAPI gameThreadedAPI;
+	private int y_coord, x_coord;
+	private int myID;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,13 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 	            return super.onOptionsItemSelected(item);
 	        }
     }
+	
+	 @Override
+	    public boolean onCreateOptionsMenu(Menu menu) {
+	        // Inflate the menu items for use in the action bar
+	        getMenuInflater().inflate(R.menu.game_board, menu);
+	        return super.onCreateOptionsMenu(menu);
+	    }
 	
 	@Override
 	public void onComplete(AsyncTaskResult<JSONObject> result) {
@@ -175,6 +183,10 @@ public class GameBoardActivity extends Activity implements OnTaskCompleteAsync{
 		         //Write your code if there's no result
 		     }
 //		 }
+	}
+	
+	public void updateGameBoard(MenuItem menuItem)	{
+		new GamesThreadedAPI(this).getGameInfo(gameID, this);
 	}
 	
 	void makeNewAndImprovedGameBoard(ArrayList<Integer> gameboards, ArrayList<Integer> playerlist, ArrayList<String> playerEmailList){
