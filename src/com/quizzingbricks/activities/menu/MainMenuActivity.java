@@ -1,7 +1,6 @@
 package com.quizzingbricks.activities.menu;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
@@ -13,14 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.quizzingbricks.R;
@@ -36,7 +30,7 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 //	    private TabsPagerAdapter mAdapter;
 	    private ActionBar actionBar;
 	    // Tab titles
-	    private String[] tabs = { "Games","Lobbys", "Friends" };
+	    private String[] tabs = { "Games","Lobbies", "Friends" };
 	    ArrayList<String> list;
 	    private Adapter ad;
 	    ArrayList<String> friendslist;
@@ -79,7 +73,7 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	        viewPager.setAdapter(fragmentAdapter); 
 	     
 	        
-	        
+	        actionBar.setTitle("Home");
 	        actionBar.setHomeButtonEnabled(false);
 	        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);        
 	 
@@ -105,6 +99,17 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 	            public void onPageScrollStateChanged(int arg0) {
 	            }
 	        });
+	    }
+	    
+	    public void onLogoutPressed(MenuItem view)	{
+			new AuthenticationManager(this).logout();
+		}
+	    
+	    @Override
+	    public boolean onCreateOptionsMenu(Menu menu) {
+	        // Inflate the menu items for use in the action bar
+	        getMenuInflater().inflate(R.menu.main_menu_activity, menu);
+	        return super.onCreateOptionsMenu(menu);
 	    }
 	
 		@Override
@@ -159,7 +164,14 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			    	
 			     }
 			     else if (resultCode == RESULT_CANCELED) {    
-			    	 Toast.makeText(this, "Friend not found Or already exists", 2).show();
+			    	 try {
+			    		 if(!data.hasExtra("canceledByUser"))	{
+				    		 Toast.makeText(this, "Friend not found Or already exists", 2).show();
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+			    	 
 			     }
 			 } else if (requestCode == 131073) {
 			     if(resultCode == RESULT_OK){      
@@ -177,8 +189,9 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 			    	 Toast.makeText(this, "Game created", 2).show();
 			     }
 			     else if (resultCode == RESULT_CANCELED) {    
-			    	 Toast.makeText(this, "Could not make game", 2).show();
-			         //Write your code if there's no result
+			    	 if(!data.hasExtra("canceledByUser"))	{
+			    		 Toast.makeText(this, "Could not make game", 2).show();
+			    	 }
 			     }
 			 } else if (requestCode == 131074) {
 			     if(resultCode == RESULT_OK){     
@@ -190,8 +203,11 @@ public class MainMenuActivity extends FragmentActivity implements ActionBar.TabL
 		}
 		@Override
 		public void onBackPressed() {
-		    finish();
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+		    intent.addCategory(Intent.CATEGORY_HOME);
+		    startActivity(intent);
 		}
+		
 	}
 	class FragmentAdapter extends FragmentPagerAdapter {
 		 ArrayList<Fragment> list;

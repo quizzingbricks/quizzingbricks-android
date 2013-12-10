@@ -1,4 +1,4 @@
-package com.quizzingbricks.activities.answerQuestion;
+package com.quizzingbricks.activities.lobby;
 
 import java.util.ArrayList;
 
@@ -11,18 +11,17 @@ import android.widget.TextView;
 
 import com.quizzingbricks.R;
 
-public class QuestionPromptAdapter extends ArrayAdapter<String> {
-	private final Context context;
-	private ArrayList<String> values;
-	private String question;
- 
-	public QuestionPromptAdapter(Context context, ArrayList<String> values, String question) {	
-		super(context, R.layout.list_layout_no_image, values);
-		this.values = values;
-		this.context = context;
-		this.question = question;
-	}
+public class LobbyPlayerListAdapter extends ArrayAdapter<String> {
 
+	private Context context;
+	private ArrayList<String> values;
+	
+	public LobbyPlayerListAdapter(Context context, ArrayList<String> values) {
+		super(context, R.layout.list_layout_no_image, values);
+		this.context = context;
+		this.values = values;
+	}
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -31,4 +30,5 @@ public class QuestionPromptAdapter extends ArrayAdapter<String> {
 		textView.setText(values.get(position));
 		return rowView;
 	}
+	
 }

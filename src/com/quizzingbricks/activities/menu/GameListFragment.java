@@ -46,7 +46,6 @@ public class GameListFragment extends ListFragment implements OnTaskCompleteAsyn
 		gamenamelist.clear();
 		try {
 			if(result.hasException())	{
-				System.out.println("Oh noes...");
 				result.getException().printStackTrace();
 			}
 			else	{
@@ -58,14 +57,15 @@ public class GameListFragment extends ListFragment implements OnTaskCompleteAsyn
 					int gamestate = onegame.getInt("state");
 					
 					String gamename;
+					String gameType = gamesize.toString() + " player";
 					if (gamestate==0) {
-						gamename = "Game "+gameid.toString()+"   ("+gamesize.toString()+")\nYou can place brick";
+						gamename = "Game "+gameid.toString()+"   ("+gameType+")\nYou can place brick";
 					}else if (gamestate==1) {
-						gamename = "Game "+gameid.toString()+"   ("+gamesize.toString()+")\nSomeone tried to take you brick. Question fight!";
+						gamename = "Game "+gameid.toString()+"   ("+gameType+")\nSomeone tried to take you brick. Question fight!";
 					}else if (gamestate==2) {
-						gamename = "Game "+gameid.toString()+"   ("+gamesize.toString()+")\nYou are answering question!";	
+						gamename = "Game "+gameid.toString()+"   ("+gameType+")\nYou are answering question!";	
 					}else if (gamestate==3) {
-						gamename = "Game "+gameid.toString()+"   ("+gamesize.toString()+")\nWaiting for other player";	
+						gamename = "Game "+gameid.toString()+"   ("+gameType+")\nWaiting for other player";	
 					}else {
 						gamename = "Game "+gameid.toString()+" has bad state, contact support";
 					}

@@ -12,6 +12,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,7 +21,6 @@ import android.widget.Toast;
 
 import com.quizzingbricks.R;
 import com.quizzingbricks.activities.answerQuestion.QuestionPromptAdapter;
-import com.quizzingbricks.activities.menu.CreateLobbyActivity;
 import com.quizzingbricks.communication.apiObjects.LobbyThreadedAPI;
 import com.quizzingbricks.communication.apiObjects.OnTaskCompleteAsync;
 import com.quizzingbricks.communication.apiObjects.UserThreadedAPI;
@@ -37,8 +37,20 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 		this.lobbyId = getIntent().getIntExtra("l_id", 0);
 		ActionBar ab = getActionBar();
 	    ab.setTitle("Invite to Lobby " + Integer.toString(lobbyId));
+	    ab.setDisplayHomeAsUpEnabled(true);
 	    new UserThreadedAPI(this).getFriendsList(this);
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	        case android.R.id.home:
+	        	changeToPreviouseActivity();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	        }
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -49,6 +61,11 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 	
 	@Override
 	public void onBackPressed() {
+		changeToPreviouseActivity();
+	}
+	
+	private void changeToPreviouseActivity()	{
+		setResult(RESULT_CANCELED, new Intent().putExtra("canceledByUser", true));
 		finish();
 	}
 	
@@ -70,19 +87,15 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 		}
 		else if(jsonResult.has("errors"))	{
 			try {
-				System.out.println("Error message from server: " + jsonResult.getJSONObject("errors").getString("message"));
-				Toast.makeText(this, jsonResult.getJSONObject("errors").getString("message"), Toast.LENGTH_SHORT).show();
+				setResult(RESULT_CANCELED, new Intent().putExtra("errorMessage", jsonResult.getJSONObject("errors").getString("message")));
+				finish();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}		
 		}
 		else	{
-			Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
+			setResult(RESULT_OK);
 			finish();
-			Intent intent = new Intent(this, LobbyOwnerActivity.class);
-			intent.putExtra("l_id", lobbyId);
-			startActivity(intent);
 		}
 	}
 	
@@ -92,10 +105,10 @@ public class LobbyInviteFriendActivity extends ListActivity implements OnTaskCom
 		ListView listView = getListView();
 		
 		TextView textView = new TextView(this);
-		textView.setTextSize(18);
+		textView.setTextSize(24);
 		int whiteSpacePadding = 20;
 		textView.setText("Friends List");
-		textView.setPadding(whiteSpacePadding, whiteSpacePadding, whiteSpacePadding, whiteSpacePadding+20);
+		textView.setPadding(whiteSpacePadding, whiteSpacePadding+20, whiteSpacePadding, whiteSpacePadding+20);
 		listView.addHeaderView(textView, "Friends List", false);
 		
 		try {

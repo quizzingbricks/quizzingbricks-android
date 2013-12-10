@@ -33,7 +33,7 @@
             android:name="com.quizzingbricks.activities.inactive.MenuActivity"
             android:label="@string/menu" >
         </activity>
-        <activity android:name="com.quizzingbricks.activities.menu.CreateLobbyActivity" >
+        <activity android:name="com.quizzingbricks.activities.lobby.CreateLobbyActivity" >
         </activity>
         <activity
             android:name="com.quizzingbricks.activities.menu.MainMenuActivity"

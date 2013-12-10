@@ -13,16 +13,12 @@
     
     >
     
+    <!-- TODO: find out what causes a crash when the text view is removed -->
     <TextView
         android:id="@+id/text_email"
-        style="@style/textHeader"
         android:layout_alignParentTop="true"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Friend By Email" 
         />
     
     <EditText 

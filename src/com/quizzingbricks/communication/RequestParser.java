@@ -169,9 +169,9 @@ public class RequestParser {
 		}
 		else if(httpStatusCode == 400)	{
 			try	{
-				JSONObject jsonObject;
 				String response = EntityUtils.toString(httpEntity);
-				jsonObject = new JSONObject(response.trim());
+				System.out.println("Return string: " + response.trim());
+				JSONObject jsonObject = new JSONObject(response.trim());
 				//TODO: handle multiple error objects in the JSON array
 				JSONObject jsonErrorMessage = jsonObject.getJSONArray("errors").getJSONObject(0);
 				httpClient.getConnectionManager().shutdown();

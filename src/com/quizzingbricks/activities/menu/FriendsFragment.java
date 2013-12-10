@@ -36,14 +36,13 @@ public class FriendsFragment extends ListFragment implements OnTaskCompleteAsync
 				 //Add new Friend
 				 Intent i = new Intent(getActivity(), AddFriendActivity.class);
 				 startActivityForResult(i, 1);
-
 			 }
 		  }
 		 
 		@Override
 		public void onComplete(AsyncTaskResult<JSONObject> result) {
 		 	ArrayList<String> newfriendslist = new ArrayList<String>();
-			newfriendslist.add("+Add Friend");
+			newfriendslist.add("+ Add Friend");
 			try {
 				if(result.hasException())	{
 					System.out.println("Oh noes...");
@@ -63,24 +62,4 @@ public class FriendsFragment extends ListFragment implements OnTaskCompleteAsync
 			setListAdapter(ad);
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
